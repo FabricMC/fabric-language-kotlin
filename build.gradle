@@ -1,0 +1,114 @@
+buildscript {
+    repositories {
+        jcenter()
+        maven {
+        	name = "Fabric"
+        	url = "http://maven.fabricmc.net"
+        }
+    }
+    dependencies {
+        classpath "net.fabricmc:fabric-loom:0.0.1-SNAPSHOT"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlin_version}"
+    }
+}
+
+plugins {
+	id "idea"
+	id "maven"
+	id "com.github.johnrengelman.shadow" version "1.2.3"
+	id "net.minecrell.licenser" version "0.2.1"
+}
+
+apply plugin: "kotlin"
+apply plugin: "net.fabricmc.loom"
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+minecraft {
+	version = mc_version
+	fabricVersion = fabric_version
+}
+
+license {
+	header file("HEADER")
+	include "**/*.java"
+	include "**/*.kt"
+}
+
+repositories {
+	jcenter()
+}
+
+dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib:${kotlin_version}"
+    compile "org.jetbrains.kotlin:kotlin-reflect:${kotlin_version}"
+    compile "org.jetbrains.kotlin:kotlin-runtime:${kotlin_version}"
+}
+
+shadowJar {
+	classifier = ""
+	dependencies {
+		include(dependency("org.jetbrains.kotlin:kotlin-stdlib:${kotlin_version}"))
+		include(dependency("org.jetbrains.kotlin:kotlin-reflect:${kotlin_version}"))
+		include(dependency("org.jetbrains.kotlin:kotlin-runtime:${kotlin_version}"))
+	}
+}
+
+tasks.build.dependsOn shadowJar
+
+artifacts {
+	archives shadowJar
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            if (project.hasProperty('mavenPass')) {
+                repository(url: 'http://mavenupload.modmuss50.me/') {
+                    authentication(userName: 'buildslave', password: project.getProperty('mavenPass'))
+                }
+            } else {
+               repository(url: 'file:///var/www/maven/')
+            }
+
+            pom {
+                artifactId = project.archivesBaseName
+
+                project {
+                    name = project.name
+                    description = project.description
+                    packaging = 'jar'
+                    url = project.url
+
+                    scm {
+                        url = project.url
+                        connection = 'scm:git:git@github.com:FabricMC/fabric-language-kotlin.git'
+                        developerConnection = 'scm:git:git@github.com:FabricMC/fabric-language-kotlin.git'
+                    }
+
+                    issueManagement {
+                        system = 'GitHub'
+                        url = 'https://github.com/FabricMC/fabric-language-kotlin/issues'
+                    }
+
+                    licenses {
+                        license {
+                            name = 'Apache License 2.0'
+                            url = 'https://github.com/FabricMC/fabric-language-kotlin/blob/master/LICENSE'
+                            distribution = 'repo'
+                        }
+                    }
+
+                    developers {
+                        developer {
+                            id = 'shadowfacts'
+                            name = 'shadowfacts'
+                            roles { role 'developer' }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
