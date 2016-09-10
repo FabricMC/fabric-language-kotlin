@@ -22,6 +22,8 @@ plugins {
 apply plugin: "kotlin"
 apply plugin: "net.fabricmc.loom"
 
+archivesBaseName = modid
+
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
