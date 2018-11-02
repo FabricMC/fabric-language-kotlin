@@ -16,15 +16,15 @@
 
 package net.fabricmc.language.kotlin
 
-import net.fabricmc.base.loader.Init
-import net.fabricmc.base.loader.language.ILanguageAdapter
+
+import net.fabricmc.loader.language.ILanguageAdapter
 import org.apache.logging.log4j.LogManager
 
 class KotlinLanguageAdapter : ILanguageAdapter {
 
     private val logger = LogManager.getFormatterLogger("KotlinLanguageAdapter")
 
-    override fun createModInstance(clazz: Class<*>): Any {
+    override fun createInstance(clazz: Class<*>): Any {
         try {
             val instanceField = clazz.getField("INSTANCE")
             val instance = instanceField.get(null) ?: throw NullPointerException()
@@ -33,15 +33,6 @@ class KotlinLanguageAdapter : ILanguageAdapter {
         } catch (e: Exception) {
             logger.debug("Unable to find INSTANCE field for ${clazz.name}, constructing new instance")
             return clazz.newInstance()
-        }
-    }
-
-    override fun callInitializationMethods(instance: Any) {
-        instance.javaClass.declaredMethods.forEach {
-            if (it.isAnnotationPresent(Init::class.java) && it.parameterCount == 0) {
-                it.isAccessible = true
-                it.invoke(instance)
-            }
         }
     }
 
