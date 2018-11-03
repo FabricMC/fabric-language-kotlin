@@ -1,5 +1,4 @@
 {
-    "id": "kotlin",
-    "group": "net.fabricmc.language",
+    "id": "net.fabricmc.language.kotlin",
     "version": "0.1.0"
 }

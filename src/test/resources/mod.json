@@ -2,6 +2,6 @@
     "id": "kotlin-test",
     "group": "net.fabricmc.language",
     "version": "1.0.0",
-    "modClass": "net.fabricmc.language.kotlin.TestMod",
+    "initializer": "net.fabricmc.language.kotlin.TestMod",
     "languageAdapter": "net.fabricmc.language.kotlin.KotlinLanguageAdapter"
 }

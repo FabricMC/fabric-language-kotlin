@@ -25,14 +25,14 @@ class KotlinLanguageAdapter : ILanguageAdapter {
     private val logger = LogManager.getFormatterLogger("KotlinLanguageAdapter")
 
     override fun createInstance(clazz: Class<*>): Any {
-        try {
+        return try {
             val instanceField = clazz.getField("INSTANCE")
             val instance = instanceField.get(null) ?: throw NullPointerException()
             logger.debug("Found INSTANCE field for ${clazz.name}")
-            return instance
+            instance
         } catch (e: Exception) {
             logger.debug("Unable to find INSTANCE field for ${clazz.name}, constructing new instance")
-            return clazz.newInstance()
+            clazz.newInstance()
         }
     }
 
