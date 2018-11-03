@@ -16,6 +16,9 @@
 
 package net.fabricmc.language.kotlin
 
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
 import net.fabricmc.api.ModInitializer
 import org.apache.logging.log4j.LogManager
 
@@ -23,10 +26,27 @@ object TestMod : ModInitializer {
 
     val logger = LogManager.getFormatterLogger("KotlinLanguageTest")
 
-    override fun onInitialize() {
+    override fun onInitialize()  {
         logger.info("**************************")
         logger.info("Hello from Kotlin")
         logger.info("**************************")
+
+        runBlocking {
+            val channel = Channel<Int>()
+            testSuspend(channel)
+            for(k in channel) {
+                logger.info("received: $k")
+            }
+        }
+
     }
 
+    suspend fun testSuspend(channel: Channel<Int>) {
+        for (i in (0..10)) {
+            for (j in (0..10)) {
+                delay(1)
+                channel.send((i * 10) + j)
+            }
+        }
+    }
 }
