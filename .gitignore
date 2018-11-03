@@ -3,12 +3,13 @@
 
 # Folders
 !/gradle
+!/buildSrc
 !/src
 
 # Files
 !/.gitattributes
 !/.gitignore
-!/build.gradle
+!/build.gradle.kts
 !/gradle.properties
 !/gradlew
 !/gradlew.bat
@@ -16,4 +17,7 @@
 !/Jenkinsfile
 !/LICENSE
 !/README.md
-!/settings.gradle
+!/settings.gradle.kts
+
+build/
+.gradle/
