@@ -7,7 +7,7 @@ plugins {
     id("maven")
     id("com.github.johnrengelman.shadow") version "2.0.4"
     id("net.minecrell.licenser") version "0.4.1"
-    id("fabric-loom") version Fabric.loomVersion
+    id("fabric-loom") version Fabric.Loom.version
 }
 
 base {
@@ -24,7 +24,7 @@ apply(from = "https://github.com/FabricMC/fabric-docs/raw/master/gradle/maven.gr
 configure<LoomGradleExtension> {
     version = Minecraft.version
     fabricVersion = Fabric.version
-    pomfVersion = Fabric.pomfVersion
+    pomfVersion = Fabric.Pomf.version
 }
 
 license {
@@ -40,6 +40,7 @@ repositories {
 dependencies {
     compile(Kotlin.stdLib)
     compile(Kotlin.reflect)
+    compile(KotlinX.Coroutines.dependency)
 }
 
 val shadowJar by tasks.getting(ShadowJar::class) {
@@ -47,6 +48,7 @@ val shadowJar by tasks.getting(ShadowJar::class) {
     dependencies {
         include(dependency(Kotlin.stdLib))
         include(dependency(Kotlin.reflect))
+        include(dependency(KotlinX.Coroutines.dependency))
     }
 }
 

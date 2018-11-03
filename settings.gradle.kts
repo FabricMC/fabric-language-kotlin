@@ -1,7 +1,6 @@
 pluginManagement {
     repositories {
-        mavenLocal()
-        mavenCentral()
+//        mavenCentral()
         maven(url = "http://maven.modmuss50.me"){
             name = "Fabric"
         }

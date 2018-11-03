@@ -4,10 +4,21 @@ object Kotlin {
     const val reflect = "org.jetbrains.kotlin:kotlin-reflect:$version"
 }
 
+object KotlinX {
+    object Coroutines {
+        const val version = "1.0.0"
+        const val dependency = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$version"
+    }
+}
+
 object Fabric {
     const val version = "0.1.0.39"
-    const val loomVersion = "0.0.12-SNAPSHOT"
-    const val pomfVersion = "17"
+    object Loom {
+        const val version = "0.0.12-SNAPSHOT"
+    }
+    object Pomf {
+        const val version = "17"
+    }
 }
 
 object Constants {
@@ -15,6 +26,8 @@ object Constants {
     const val modid = "fabric-language-kotlin"
     const val description = "Fabric language module for Kotlin"
     const val url = "https://github.com/FabricMC/fabric-language-kotlin"
+
+    const val version = "0.1.0"
 }
 
 object Minecraft {
