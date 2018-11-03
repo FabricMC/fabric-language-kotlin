@@ -7,7 +7,7 @@ node {
 
    sh "rm -rf build/libs/"
    sh "chmod +x gradlew"
-   sh "./gradlew setupFabric build --refresh-dependencies --stacktrace"
+   sh "./gradlew setup build --refresh-dependencies --stacktrace"
 
    stage "Archive artifacts"
 
