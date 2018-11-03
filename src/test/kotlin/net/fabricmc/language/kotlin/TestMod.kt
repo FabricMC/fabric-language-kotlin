@@ -16,15 +16,14 @@
 
 package net.fabricmc.language.kotlin
 
-import net.fabricmc.base.loader.Init
+import net.fabricmc.api.ModInitializer
 import org.apache.logging.log4j.LogManager
 
-object TestMod {
+object TestMod : ModInitializer {
 
     val logger = LogManager.getFormatterLogger("KotlinLanguageTest")
 
-    @Init
-    fun init() {
+    override fun onInitialize() {
         logger.info("**************************")
         logger.info("Hello from Kotlin")
         logger.info("**************************")
