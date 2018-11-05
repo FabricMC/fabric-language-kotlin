@@ -18,22 +18,11 @@ package net.fabricmc.language.kotlin
 
 
 import net.fabricmc.loader.language.ILanguageAdapter
-import org.apache.logging.log4j.LogManager
 
 class KotlinLanguageAdapter : ILanguageAdapter {
 
-    private val logger = LogManager.getFormatterLogger("KotlinLanguageAdapter")
-
     override fun createInstance(clazz: Class<*>): Any {
-        return try {
-            val instanceField = clazz.getField("INSTANCE")
-            val instance = instanceField.get(null) ?: throw NullPointerException()
-            logger.debug("Found INSTANCE field for ${clazz.name}")
-            instance
-        } catch (e: Exception) {
-            logger.debug("Unable to find INSTANCE field for ${clazz.name}, constructing new instance")
-            clazz.newInstance()
-        }
+        return clazz.kotlin.objectInstance ?: clazz.newInstance()
     }
 
 }
