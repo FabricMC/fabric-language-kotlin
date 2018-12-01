@@ -7,9 +7,9 @@ node {
 
    sh "rm -rf build/libs/"
    sh "chmod +x gradlew"
-   sh "./gradlew setup build --refresh-dependencies --stacktrace"
+   sh "./gradlew setup build --refresh-dependencies --full-stacktrace"
 
    stage "Archive artifacts"
 
-   archive 'build/libs/*'
+   sh "./gradlew publish"
 }

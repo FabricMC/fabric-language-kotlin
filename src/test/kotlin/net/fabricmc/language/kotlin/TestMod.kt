@@ -18,7 +18,6 @@ package net.fabricmc.language.kotlin
 
 import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -44,13 +43,13 @@ object TestMod : ModInitializer {
                 logger.info("received: $k")
             }
         }
-        testSuspend(channel)
-    }
-
-    suspend fun testSuspend(channel: Channel<Int>) = coroutineScope {
-        for (i in (0 until 10)) {
-            delay(100)
-            channel.send(i)
+        launch(CoroutineName("sender")) {
+            for (i in (0 until 10)) {
+                delay(100)
+                channel.send(i)
+            }
+            channel.close()
         }
+        Unit
     }
 }
