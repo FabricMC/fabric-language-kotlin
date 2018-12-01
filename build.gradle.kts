@@ -1,11 +1,14 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
-import net.fabricmc.loom.LoomGradleExtension
+import net.fabricmc.loom.task.RemapJar
+import net.fabricmc.loom.task.RunClientTask
+import net.fabricmc.loom.task.RunServerTask
+import net.fabricmc.loom.util.ModRemapper
 
 plugins {
     kotlin("jvm") version Kotlin.version
-    id("idea")
-    id("maven")
-    id("com.github.johnrengelman.shadow") version "2.0.4"
+    idea
+    `maven-publish`
+    id("com.github.johnrengelman.shadow") version "4.0.3"
     id("net.minecrell.licenser") version "0.4.1"
     id("fabric-loom") version Fabric.Loom.version
 }
@@ -14,6 +17,12 @@ base {
     archivesBaseName = Constants.modid
 }
 
+val buildNumber = System.getenv("BUILD_NUMBER") ?: "local"
+
+group = Constants.group
+description = Constants.description
+version = Constants.modVersion + "-" + buildNumber
+
 java {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
@@ -21,10 +30,13 @@ java {
 
 apply(from = "https://github.com/FabricMC/fabric-docs/raw/master/gradle/maven.gradle")
 
-configure<LoomGradleExtension> {
-    version = Minecraft.version
-    fabricVersion = Fabric.version
-    pomfVersion = Fabric.Pomf.version
+minecraft {
+
+}
+
+mod {
+    //    id = Constants.modid // TODO: explore conditionals? or how to support multiple mods at once
+    version = Constants.modVersion + "-" + buildNumber
 }
 
 license {
@@ -33,11 +45,18 @@ license {
     include("**/*.kt")
 }
 
-repositories {
-    jcenter()
-}
-
 dependencies {
+    minecraft(group = "com.mojang", name = "minecraft", version = Minecraft.version)
+
+    mappings(group = "net.fabricmc", name = "pomf", version = "${Minecraft.version}.${Fabric.Pomf.version}")
+
+    modCompile(group = "net.fabricmc", name = "fabric-loader", version = Fabric.version)
+
+    shadow(Kotlin.stdLib)
+    shadow(Kotlin.reflect)
+    shadow(KotlinX.Coroutines.dependency)
+
+    // required for loom to find for test client
     compile(Kotlin.stdLib)
     compile(Kotlin.reflect)
     compile(KotlinX.Coroutines.dependency)
@@ -45,17 +64,89 @@ dependencies {
 
 val shadowJar by tasks.getting(ShadowJar::class) {
     classifier = ""
-    dependencies {
-        include(dependency(Kotlin.stdLib))
-        include(dependency(Kotlin.reflect))
-        include(dependency(KotlinX.Coroutines.dependency))
-    }
+    configurations = listOf(
+        (project.configurations.shadow as NamedDomainObjectProvider<Configuration>).get()
+    )
+    exclude("META-INF")
 }
 
-val build by tasks.getting(Task::class) {
+val build = tasks.getByName<Task>("build") {
     dependsOn(shadowJar)
 }
 
-artifacts {
-    add("archives", shadowJar)
+val remapJar = tasks.getByName<RemapJar>("remapJar") {
+    (this as Task).dependsOn(shadowJar)
+    jar = shadowJar.archivePath
+}
+
+val testJar = tasks.create<Jar>("testJar") {
+    classifier = "tests"
+    from(sourceSets.maybeCreate("test").output)
+}
+
+val remapTestJar = (tasks.create("remapTestJar", RemapJar::class) as RemapJar).apply {
+    (this as Task).dependsOn(testJar)
+    jar = testJar.archivePath
+}
+
+tasks.getByName("runClient") {
+    dependsOn(remapTestJar)
+}
+
+tasks.getByName("runServer") {
+    dependsOn(remapTestJar)
+}
+
+fun shadowComponents(publication: MavenPublication, vararg configurations: Configuration) {
+    publication.artifact(remapJar.jar) {
+        builtBy(remapJar)
+    }
+    publication.pom.withXml {
+        val dependenciesNode = asNode().appendNode("dependencies")
+
+        project.configurations.shadow.allDependencies.forEach {
+            if (it !is SelfResolvingDependency) {
+                val dependencyNode = dependenciesNode.appendNode("dependency")
+                dependencyNode.appendNode("groupId", it.group)
+                dependencyNode.appendNode("artifactId", it.name)
+                dependencyNode.appendNode("version", it.version)
+                dependencyNode.appendNode("scope", "runtime")
+            }
+        }
+        configurations.forEach { configuration ->
+            println("processing: $configuration")
+            configuration.dependencies.forEach { dependency ->
+                if (dependency !is SelfResolvingDependency) {
+                    val dependencyNode = dependenciesNode.appendNode("dependency")
+                    dependencyNode.appendNode("groupId", dependency.group)
+                    dependencyNode.appendNode("artifactId", dependency.name)
+                    dependencyNode.appendNode("version", dependency.version)
+                    dependencyNode.appendNode("scope", configuration.name)
+                }
+            }
+        }
+    }
+}
+
+publishing {
+    publications {
+        create("default", MavenPublication::class.java) {
+            groupId = project.group.toString()
+            artifactId = project.name.toLowerCase()
+            version = project.version.toString()
+
+            shadowComponents(this, (configurations.modCompile as NamedDomainObjectProvider<Configuration>).get())
+        }
+    }
+    repositories {
+        maven(url = "http://mavenupload.modmuss50.me/") {
+            val mavenPass: String? = project.properties["mavenPass"] as String?
+            mavenPass?.let {
+                credentials {
+                    username = "buildslave"
+                    password = mavenPass
+                }
+            }
+        }
+    }
 }
