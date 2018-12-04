@@ -28,15 +28,18 @@ java {
     targetCompatibility = JavaVersion.VERSION_1_8
 }
 
-apply(from = "https://github.com/FabricMC/fabric-docs/raw/master/gradle/maven.gradle")
-
 minecraft {
 
 }
 
-mod {
-    //    id = Constants.modid // TODO: explore conditionals? or how to support multiple mods at once
-    version = Constants.modVersion + "-" + buildNumber
+tasks.getByName<ProcessResources>("processResources") {
+    filesMatching("mod.json") {
+        expand(
+            mutableMapOf(
+                "version" to (Constants.modVersion + "-" + buildNumber)
+            )
+        )
+    }
 }
 
 license {
@@ -57,9 +60,9 @@ dependencies {
     shadow(KotlinX.Coroutines.dependency)
 
     // required for loom to find for test client
-    compile(Kotlin.stdLib)
-    compile(Kotlin.reflect)
-    compile(KotlinX.Coroutines.dependency)
+    implementation(Kotlin.stdLib)
+    implementation(Kotlin.reflect)
+    implementation(KotlinX.Coroutines.dependency)
 }
 
 val shadowJar by tasks.getting(ShadowJar::class) {

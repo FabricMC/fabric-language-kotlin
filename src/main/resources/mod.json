@@ -1,3 +1,4 @@
 {
-  "id": "fabric-language-kotlin"
+  "id": "fabric-language-kotlin",
+  "version": "$version"
 }
