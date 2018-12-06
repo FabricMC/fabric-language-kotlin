@@ -17,7 +17,7 @@ base {
     archivesBaseName = Constants.modid
 }
 
-val buildNumber = System.getenv("BUILD_NUMBER") ?: "local"
+val buildNumber = System.getenv("BUILD_NUMBER").let { number -> "build.$number" } ?: "local"
 
 group = Constants.group
 description = Constants.description
