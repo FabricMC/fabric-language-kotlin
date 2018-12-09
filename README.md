@@ -6,7 +6,7 @@ Add it as a dependency:
 
 ```groovy
 dependencies {
-	compile "net.fabricmc:fabric-language-kotlin:0.1.0"
+	compile "net.fabricmc:fabric-language-kotlin:1.3.10-8"
 }
 ```
 
@@ -24,7 +24,7 @@ Add a dependency entry to your `mod.json` file:
 {
 	"dependencies": {
 		"net.fabricmc.language.kotlin": {
-			"version": ">=0.1.0"
+			"version": ">=1.3.10-8"
 		}
 	}
 }
