@@ -17,7 +17,7 @@ base {
     archivesBaseName = Constants.modid
 }
 
-val buildNumber = System.getenv("BUILD_NUMBER").let { number -> "build.$number" } ?: "local"
+val buildNumber = System.getenv("BUILD_NUMBER") ?: "local"
 
 group = Constants.group
 description = Constants.description
@@ -36,7 +36,7 @@ tasks.getByName<ProcessResources>("processResources") {
     filesMatching("mod.json") {
         expand(
             mutableMapOf(
-                "version" to (Constants.modVersion + "-" + buildNumber)
+                "version" to version
             )
         )
     }
