@@ -53,13 +53,13 @@ dependencies {
 
     mappings(group = "net.fabricmc", name = "yarn", version = "${Minecraft.version}.${Fabric.Yarn.version}")
 
-    modCompile(group = "net.fabricmc", name = "fabric-loader", version = Fabric.version)
+    modCompile(group = "net.fabricmc", name = "fabric-loader", version = Fabric.version) { isTransitive = false }
 
     shadow(Kotlin.stdLib)
     shadow(Kotlin.reflect)
     shadow(KotlinX.Coroutines.dependency)
 
-    // required for loom to find for test client
+    // required for yarn to find for test client
     implementation(Kotlin.stdLib)
     implementation(Kotlin.reflect)
     implementation(KotlinX.Coroutines.dependency)
@@ -68,7 +68,7 @@ dependencies {
 val shadowJar by tasks.getting(ShadowJar::class) {
     classifier = ""
     configurations = listOf(
-        (project.configurations.shadow as NamedDomainObjectProvider<Configuration>).get()
+        project.configurations.shadow.get()
     )
     exclude("META-INF")
 }
@@ -138,7 +138,7 @@ publishing {
             artifactId = project.name.toLowerCase()
             version = project.version.toString()
 
-            shadowComponents(this, (configurations.modCompile as NamedDomainObjectProvider<Configuration>).get())
+            shadowComponents(this, configurations.modCompile.get())
         }
     }
     repositories {

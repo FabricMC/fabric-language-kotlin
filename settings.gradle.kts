@@ -1,6 +1,6 @@
 pluginManagement {
     repositories {
-        maven(url = "http://maven.modmuss50.me"){
+        maven(url = "http://maven.fabricmc.net"){
             name = "Fabric"
         }
         gradlePluginPortal()
