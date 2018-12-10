@@ -118,8 +118,12 @@ fun shadowComponents(publication: MavenPublication, vararg configurations: Confi
         }
         configurations.forEach { configuration ->
             println("processing: $configuration")
-            configuration.dependencies.forEach { dependency ->
+            configuration.dependencies.forEach inner@{ dependency ->
                 if (dependency !is SelfResolvingDependency) {
+                    if (dependency is ModuleDependency && !dependency.isTransitive) {
+                        return@inner
+                    }
+
                     val dependencyNode = dependenciesNode.appendNode("dependency")
                     dependencyNode.appendNode("groupId", dependency.group)
                     dependencyNode.appendNode("artifactId", dependency.name)
