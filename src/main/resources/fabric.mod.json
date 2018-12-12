@@ -1,4 +1,6 @@
 {
   "id": "fabric-language-kotlin",
+  "name": "Fabric Language Kotlin",
+  "description": "Fabric language module for Kotlin.",
   "version": "$version"
 }
