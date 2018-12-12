@@ -6,7 +6,7 @@ Add it as a dependency:
 
 ```groovy
 dependencies {
-	compile "net.fabricmc:fabric-language-kotlin:1.3.10-8"
+	compile "net.fabricmc:fabric-language-kotlin:1.3.10-1"
 }
 ```
 
@@ -18,14 +18,18 @@ Set the language adapter for your mod to use by setting the `languageAdapter` pr
 }
 ```
 
-Add a dependency entry to your `mod.json` file:
+Add a dependency entry to your `fabric.mod.json` file:
 
 ```json
 {
-	"dependencies": {
-		"net.fabricmc.language.kotlin": {
-			"version": ">=1.3.10-8"
+	"requires": {
+		"fabric-language-kotlin": {
+			"version": ">=1.3.10-1"
 		}
 	}
 }
 ```
+
+## Available Versions
+
+https://maven.fabricmc.net/net/fabricmc/fabric-language-kotlin/

@@ -1,15 +1,22 @@
 node {
-   stage 'Checkout'
+   stage('Checkout') {
+       def scmVars = checkout scm
+       env.GIT_COMMIT = scmVars.GIT_COMMIT
+       env.GIT_PREVIOUS_SUCCESSFUL_COMMIT = scmVars.GIT_PREVIOUS_SUCCESSFUL_COMMIT
+   }
 
-   checkout scm
+   stage('Build') {
+       sh "rm -rf build/libs/"
+       sh "chmod +x gradlew"
+       sh "./gradlew clean build --refresh-dependencies --full-stacktrace"
+   }
 
-   stage 'Build'
+   stage('Upload to curseforge') {
+       sh 'git log --format=format:%B ${GIT_PREVIOUS_SUCCESSFUL_COMMIT}..${GIT_COMMIT} > changelog.txt'
+       sh './gradlew -Prelease -Pchangelog_file=changelog.txt curseforge308769'
+   }
 
-   sh "rm -rf build/libs/"
-   sh "chmod +x gradlew"
-   sh "./gradlew clean build --refresh-dependencies --full-stacktrace"
-
-   stage "Archive artifacts"
-
-   sh "./gradlew publish"
+   stage('Archive artifacts') {
+       sh "./gradlew publish"
+   }
 }

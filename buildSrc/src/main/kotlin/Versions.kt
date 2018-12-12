@@ -16,11 +16,11 @@ object Minecraft {
 }
 
 object Fabric {
-    const val version = "0.2.0.59"
+    const val version = "0.2.0.62"
     object Loom {
         const val version = "0.1.0-SNAPSHOT"
     }
     object Yarn {
-        const val version = "1"
+        const val version = "7"
     }
 }
