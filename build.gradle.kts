@@ -68,15 +68,15 @@ dependencies {
     shadow(KotlinX.Coroutines.dependency)
 
     // required for yarn to find for test client
-    implementation(Kotlin.stdLib)
-    implementation(Kotlin.reflect)
-    implementation(KotlinX.Coroutines.dependency)
+    api(Kotlin.stdLib)
+    api(Kotlin.reflect)
+    api(KotlinX.Coroutines.dependency)
 }
 
 val shadowJar by tasks.getting(ShadowJar::class) {
     classifier = ""
     configurations = listOf(
-        project.configurations.shadow.get()
+        project.configurations.shadow
     )
     exclude("META-INF")
 }
@@ -109,9 +109,6 @@ tasks.getByName("runServer") {
 }
 
 fun shadowComponents(publication: MavenPublication, vararg configurations: Configuration) {
-    publication.artifact(remapJar.jar) {
-        builtBy(remapJar)
-    }
     publication.pom.withXml {
         val dependenciesNode = asNode().appendNode("dependencies")
 
@@ -143,6 +140,18 @@ fun shadowComponents(publication: MavenPublication, vararg configurations: Confi
     }
 }
 
+val sourcesJar = tasks.create<Jar>("sourcesJar") {
+    classifier = "sources"
+    from(sourceSets["main"].allSource)
+}
+
+//            // fails due to Jankson
+val javadoc = tasks.getByName<Javadoc>("javadoc") {}
+val javadocJar = tasks.create<Jar>("javadocJar") {
+    classifier = "javadoc"
+    from(javadoc)
+}
+
 publishing {
     publications {
         create("default", MavenPublication::class.java) {
@@ -150,7 +159,14 @@ publishing {
             artifactId = project.name.toLowerCase()
             version = project.version.toString()
 
-            shadowComponents(this, configurations.modCompile.get())
+            artifact(remapJar.jar) {
+                builtBy(remapJar)
+            }
+
+            artifact(sourcesJar)
+            artifact(javadocJar)
+
+            shadowComponents(this, configurations.modCompile)
         }
     }
     repositories {

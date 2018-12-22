@@ -12,15 +12,15 @@ object KotlinX {
 }
 
 object Minecraft {
-    const val version = "18w49a"
+    const val version = "18w50a"
 }
 
 object Fabric {
-    const val version = "0.2.0.62"
+    const val version = "0.3.0.74"
     object Loom {
-        const val version = "0.1.0-SNAPSHOT"
+        const val version = "0.2.0-SNAPSHOT"
     }
     object Yarn {
-        const val version = "7"
+        const val version = "64"
     }
 }

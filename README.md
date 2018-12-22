@@ -1,3 +1,5 @@
+![maven-badge](https://img.shields.io/maven-metadata/v/https/maven.fabricmc.net/net/fabricmc/fabric-language-kotlin//maven-metadata.xml.svg)
+
 # fabric-language-kotlin
 Fabric language module for [Kotlin](https://kotlinlang.org/). Adds support for using a Kotlin `object` as the main mod class and bundles the Kotlin libraries and runtime for you.
 
@@ -24,7 +26,7 @@ Add a dependency entry to your `fabric.mod.json` file:
 {
 	"requires": {
 		"fabric-language-kotlin": {
-			"version": ">=1.3.10-1"
+			"version": ">=1.3.10"
 		}
 	}
 }
