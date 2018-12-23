@@ -1,4 +1,4 @@
-![maven-badge](https://img.shields.io/maven-metadata/v/https/maven.fabricmc.net/net/fabricmc/fabric-language-kotlin//maven-metadata.xml.svg)
+![maven-badge](https://img.shields.io/maven-metadata/v/https/maven.fabricmc.net/net/fabricmc/fabric-language-kotlin/maven-metadata.xml.svg?style=flat-square&logo=Kotlin)
 
 # fabric-language-kotlin
 Fabric language module for [Kotlin](https://kotlinlang.org/). Adds support for using a Kotlin `object` as the main mod class and bundles the Kotlin libraries and runtime for you.
@@ -6,13 +6,25 @@ Fabric language module for [Kotlin](https://kotlinlang.org/). Adds support for u
 ## Usage
 Add it as a dependency:
 
-```groovy
+build.gradle.kts
+```kotlin
+configurations.runtimeOnly.extendsFrom(configurations.modCompile)
+
 dependencies {
-	compile "net.fabricmc:fabric-language-kotlin:1.3.10-1"
+	modCompile(group = "net.fabricmc", name = "fabric-language-kotlin", version = "1.3.10-27")
 }
 ```
 
-Set the language adapter for your mod to use by setting the `languageAdapter` property in the `mod.json` file:
+build.gradle
+```groovy
+configurations.runtimeOnly.extendsFrom(configurations.modCompile)
+
+dependencies {
+	modCompile(group: "net.fabricmc", name: "fabric-language-kotlin", version: "1.3.10-27")
+}
+```
+
+Set the language adapter for your mod to use by setting the `languageAdapter` property in the `fabric.mod.json` file:
 
 ```json
 {
