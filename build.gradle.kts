@@ -8,10 +8,9 @@ import net.fabricmc.loom.task.RemapJar
 import net.fabricmc.loom.task.RunClientTask
 import net.fabricmc.loom.task.RunServerTask
 import net.fabricmc.loom.util.ModRemapper
-import org.jetbrains.kotlin.serialization.js.DynamicTypeDeserializer.id
 
 plugins {
-    kotlin("jvm") version Kotlin.version
+    kotlin("jvm") version Jetbrains.Kotlin.version
     idea
     `maven-publish`
     id("com.github.johnrengelman.shadow") version "4.0.3"
@@ -29,7 +28,6 @@ val buildNumber = System.getenv("BUILD_NUMBER") ?: "local"
 group = Constants.group
 description = Constants.description
 version = "${Constants.modVersion}-$buildNumber"
-
 
 java {
     sourceCompatibility = JavaVersion.VERSION_1_8
@@ -56,6 +54,8 @@ license {
     include("**/*.kt")
 }
 
+configurations.api.extendsFrom(configurations.shadow)
+
 dependencies {
     minecraft(group = "com.mojang", name = "minecraft", version = Minecraft.version)
 
@@ -63,14 +63,12 @@ dependencies {
 
     modCompile(group = "net.fabricmc", name = "fabric-loader", version = Fabric.version) { isTransitive = false }
 
-    shadow(Kotlin.stdLib)
-    shadow(Kotlin.reflect)
-    shadow(KotlinX.Coroutines.dependency)
-
-    // required for yarn to find for test client
-    api(Kotlin.stdLib)
-    api(Kotlin.reflect)
-    api(KotlinX.Coroutines.dependency)
+    shadow(Jetbrains.Kotlin.stdLib)
+    shadow(Jetbrains.Kotlin.stdLibJkd8)
+    shadow(Jetbrains.Kotlin.reflect)
+    shadow(Jetbrains.annotations)
+    shadow(Jetbrains.KotlinX.coroutinesCore)
+    shadow(Jetbrains.KotlinX.coroutinesJdk8)
 }
 
 val shadowJar by tasks.getting(ShadowJar::class) {
@@ -108,8 +106,8 @@ tasks.getByName("runServer") {
     dependsOn(remapTestJar)
 }
 
-fun shadowComponents(publication: MavenPublication, vararg configurations: Configuration) {
-    publication.pom.withXml {
+fun MavenPublication.shadowComponents() {
+    pom.withXml {
         val dependenciesNode = asNode().appendNode("dependencies")
 
         project.configurations.shadow.allDependencies.forEach {
@@ -118,23 +116,7 @@ fun shadowComponents(publication: MavenPublication, vararg configurations: Confi
                 dependencyNode.appendNode("groupId", it.group)
                 dependencyNode.appendNode("artifactId", it.name)
                 dependencyNode.appendNode("version", it.version)
-                dependencyNode.appendNode("scope", "runtime")
-            }
-        }
-        configurations.forEach { configuration ->
-            println("processing: $configuration")
-            configuration.dependencies.forEach inner@{ dependency ->
-                if (dependency !is SelfResolvingDependency) {
-                    if (dependency is ModuleDependency && !dependency.isTransitive) {
-                        return@inner
-                    }
-
-                    val dependencyNode = dependenciesNode.appendNode("dependency")
-                    dependencyNode.appendNode("groupId", dependency.group)
-                    dependencyNode.appendNode("artifactId", dependency.name)
-                    dependencyNode.appendNode("version", dependency.version)
-                    dependencyNode.appendNode("scope", configuration.name)
-                }
+                dependencyNode.appendNode("scope", "provided")
             }
         }
     }
@@ -154,7 +136,7 @@ val javadocJar = tasks.create<Jar>("javadocJar") {
 
 publishing {
     publications {
-        create("default", MavenPublication::class.java) {
+        create("shadow", MavenPublication::class.java) {
             groupId = project.group.toString()
             artifactId = project.name.toLowerCase()
             version = project.version.toString()
@@ -166,7 +148,7 @@ publishing {
             artifact(sourcesJar)
             artifact(javadocJar)
 
-            shadowComponents(this, configurations.modCompile)
+            this.shadowComponents()
         }
     }
     repositories {
@@ -183,9 +165,9 @@ publishing {
 }
 val curse_api_key: String? by project
 if (curse_api_key != null && project.hasProperty("release")) {
+    val CURSEFORGE_RELEASE_TYPE: String by project
+    val CURSEFORGE_ID: String by project
     curseforge {
-        val CURSEFORGE_RELEASE_TYPE: String by project
-        val CURSEFORGE_ID: String by project
         options(closureOf<Options> {
             forgeGradleIntegration = false
         })
@@ -207,7 +189,7 @@ if (curse_api_key != null && project.hasProperty("release")) {
         })
     }
     project.afterEvaluate {
-        tasks.getByName<CurseUploadTask>("curseforge308769") {
+        tasks.getByName<CurseUploadTask>("curseforge${CURSEFORGE_ID}") {
             dependsOn(remapJar)
         }
     }
