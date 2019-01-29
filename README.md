@@ -8,6 +8,12 @@ Add it as a dependency:
 
 build.gradle.kts
 ```kotlin
+repositories {
+    maven(url = "https://kotlin.bintray.com/kotlinx") {
+        name = "Kotlin X"
+    }
+}
+
 configurations.runtimeOnly.extendsFrom(configurations.modCompile)
 
 dependencies {
@@ -17,6 +23,12 @@ dependencies {
 
 build.gradle
 ```groovy
+repositories {
+    maven {
+        url = "https://kotlin.bintray.com/kotlinx"
+        name = "Kotlin X"
+    }
+}
 configurations.runtimeOnly.extendsFrom(configurations.modCompile)
 
 dependencies {
@@ -25,17 +37,12 @@ dependencies {
 ```
 
 Set the language adapter for your mod to use by setting the `languageAdapter` property in the `fabric.mod.json` file:
-
-```json
-{
-    "languageAdapter": "net.fabricmc.language.kotlin.KotlinLanguageAdapter"
-}
-```
-
+and
 Add a dependency entry to your `fabric.mod.json` file:
 
 ```json
 {
+    "languageAdapter": "net.fabricmc.language.kotlin.KotlinLanguageAdapter",
 	"requires": {
 		"fabric-language-kotlin": {
 			"version": ">=1.3.10"

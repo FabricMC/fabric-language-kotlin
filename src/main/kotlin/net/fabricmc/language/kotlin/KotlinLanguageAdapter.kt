@@ -17,15 +17,15 @@
 package net.fabricmc.language.kotlin
 
 import net.fabricmc.loader.language.LanguageAdapter
-import org.apache.logging.log4j.LogManager
+//import org.apache.logging.log4j.LogManager
 
 class KotlinLanguageAdapter : LanguageAdapter {
 
-    private val logger = LogManager.getFormatterLogger("KotlinLanguageAdapter")
+//    private val logger = LogManager.getFormatterLogger("KotlinLanguageAdapter")
 
     override fun createInstance(clazz: Class<*>, options: LanguageAdapter.Options): Any =
         clazz.kotlin.objectInstance ?: run {
-            logger.debug("Unable to find Kotlin object instance for ${clazz.name}, constructing new instance")
+            System.err.println("Unable to find Kotlin object instance for ${clazz.name}, constructing new instance")
             clazz.newInstance()
         }
 }

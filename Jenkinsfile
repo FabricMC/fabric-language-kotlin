@@ -19,4 +19,8 @@ node {
    stage('Archive artifacts') {
        sh "./gradlew publish"
    }
+
+   stage('increment build') {
+       sh "./gradlew buildNumberIncrease"
+   }
 }
