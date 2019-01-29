@@ -13,6 +13,7 @@ plugins {
     id("com.github.johnrengelman.shadow") version "4.0.4"
     id("net.minecrell.licenser") version "0.4.1"
     id("com.matthewprenger.cursegradle") version "1.1.2"
+    id("fabric-loom") version Fabric.Loom.version apply false
 }
 
 base {

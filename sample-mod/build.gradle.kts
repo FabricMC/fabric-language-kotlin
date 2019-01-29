@@ -1,7 +1,7 @@
 plugins {
     kotlin("jvm")// version Jetbrains.Kotlin.version
     idea
-    id("fabric-loom") version Fabric.Loom.version
+    id("fabric-loom")// version Fabric.Loom.version
 }
 
 java {
@@ -44,7 +44,7 @@ dependencies {
 
     modCompile(group = "net.fabricmc", name = "fabric-loader", version = Fabric.Loader.version)
     modCompile(group = "net.fabricmc", name = "fabric", version = Fabric.API.version + ".+")
-    
+
     modCompile(rootProject)
 //    modCompile(group = "net.fabricmc", name = "fabric-language-kotlin", version = Fabric.LanguageKotlin.version)
 
