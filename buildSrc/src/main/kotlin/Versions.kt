@@ -1,4 +1,3 @@
-
 object Jetbrains {
     private const val annotationsVersion = "16.0.3"
     const val annotations = "org.jetbrains:annotations:$annotationsVersion"
@@ -20,4 +19,23 @@ object Fabric {
     object Loader {
         const val version = "0.3.4.+"
     }
+
+    object API {
+        const val version = "0.1.5"
+    }
+
+    object Loom {
+        const val version = "0.2.0-SNAPSHOT"
+    }
+
+    object Yarn {
+        const val version = "+"
+    }
+    object LanguageKotlin {
+        const val version = "${Jetbrains.Kotlin.version}+"
+    }
+}
+
+object Minecraft {
+    const val version = "19w04b"
 }

@@ -7,3 +7,5 @@ pluginManagement {
     }
 }
 rootProject.name = Constants.modid
+
+include("sample-mod")

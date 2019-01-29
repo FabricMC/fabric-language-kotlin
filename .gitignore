@@ -19,5 +19,7 @@
 !/README.md
 !/settings.gradle.kts
 
+!/sample-mod
+
 build/
 .gradle/
