@@ -14,10 +14,8 @@ repositories {
     }
 }
 
-configurations.runtimeOnly.extendsFrom(configurations.modCompile)
-
 dependencies {
-	modCompile(group = "net.fabricmc", name = "fabric-language-kotlin", version = "1.3.10-27")
+	api(group = "net.fabricmc", name = "fabric-language-kotlin", version = "1.3.10-27")
 }
 ```
 
@@ -29,12 +27,14 @@ repositories {
         name = "Kotlin X"
     }
 }
-configurations.runtimeOnly.extendsFrom(configurations.modCompile)
 
 dependencies {
-	modCompile(group: "net.fabricmc", name: "fabric-language-kotlin", version: "1.3.10-27")
+	api(group: "net.fabricmc", name: "fabric-language-kotlin", version: "1.3.10-27")
 }
 ```
+
+yes the fabric module does not touch any minecraft code so it never needs to be remapped
+
 
 Set the language adapter for your mod to use by setting the `languageAdapter` property in the `fabric.mod.json` file:
 and
