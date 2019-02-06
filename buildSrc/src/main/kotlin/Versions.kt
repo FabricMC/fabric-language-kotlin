@@ -37,5 +37,5 @@ object Fabric {
 }
 
 object Minecraft {
-    const val version = "19w04b"
+    const val version = "19w05a"
 }

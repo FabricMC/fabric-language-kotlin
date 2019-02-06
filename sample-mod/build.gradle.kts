@@ -45,8 +45,8 @@ dependencies {
     modCompile(group = "net.fabricmc", name = "fabric-loader", version = Fabric.Loader.version)
     modCompile(group = "net.fabricmc", name = "fabric", version = Fabric.API.version + ".+")
 
-    modCompile(rootProject)
-//    modCompile(group = "net.fabricmc", name = "fabric-language-kotlin", version = Fabric.LanguageKotlin.version)
+    api(rootProject)
+//    api(group = "net.fabricmc", name = "fabric-language-kotlin", version = Fabric.LanguageKotlin.version)
 
     // this line is required for idea to highlight code properly
 //    implementation(group = "net.fabricmc", name = "fabric-language-kotlin", version = Fabric.LanguageKotlin.version)
