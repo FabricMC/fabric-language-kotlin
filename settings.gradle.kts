@@ -8,4 +8,7 @@ pluginManagement {
 }
 rootProject.name = Constants.modid
 
-include("sample-mod")
+val includeSample: String by settings
+if (includeSample == "true") {
+    include("sample-mod")
+}

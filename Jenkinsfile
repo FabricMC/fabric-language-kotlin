@@ -5,7 +5,7 @@ pipeline {
             steps {
                 sh "rm -rf build/libs/"
                 sh "chmod +x gradlew"
-                sh "./gradlew clean :build --refresh-dependencies --full-stacktrace"
+                sh "./gradlew -PincludeSample=false clean build --refresh-dependencies --full-stacktrace"
             }
         }
 
@@ -15,7 +15,7 @@ pipeline {
             }
             steps {
                 sh 'git log --format=format:%B ${GIT_PREVIOUS_SUCCESSFUL_COMMIT}..${GIT_COMMIT} > changelog.txt'
-                sh './gradlew -Prelease -Pchangelog_file=changelog.txt :curseforge308769'
+                sh './gradlew -PincludeSample=false  -Prelease -Pchangelog_file=changelog.txt curseforge308769'
             }
         }
 
@@ -24,7 +24,7 @@ pipeline {
                 branch 'master'
             }
             steps {
-                sh "./gradlew :publish"
+                sh "./gradlew -PincludeSample=false publish"
             }
         }
 
@@ -33,7 +33,7 @@ pipeline {
                 branch 'master'
             }
             steps {
-                sh "./gradlew :buildNumberIncrease"
+                sh "./gradlew -PincludeSample=false buildNumberIncrease"
             }
         }
     }
