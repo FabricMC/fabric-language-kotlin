@@ -3,7 +3,7 @@ object Jetbrains {
     const val annotations = "org.jetbrains:annotations:$annotationsVersion"
 
     object Kotlin {
-        const val version = "1.3.20"
+        const val version = "1.3.21"
         const val stdLibJkd8 = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$version"
         const val reflect = "org.jetbrains.kotlin:kotlin-reflect:$version"
     }
@@ -17,7 +17,7 @@ object Jetbrains {
 
 object Fabric {
     object Loader {
-        const val version = "0.3.4.+"
+        const val version = "0.3.6.+"
     }
 
     object API {
