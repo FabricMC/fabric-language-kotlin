@@ -9,7 +9,7 @@ plugins {
     kotlin("jvm") version Jetbrains.Kotlin.version
     idea
     `maven-publish`
-    id("moe.nikky.persistentCounter") version "0.0.7-SNAPSHOT"
+    id("moe.nikky.persistentCounter") version "0.0.8-SNAPSHOT"
     id("com.github.johnrengelman.shadow") version "4.0.4"
     id("net.minecrell.licenser") version "0.4.1"
     id("com.matthewprenger.cursegradle") version "1.1.2"
@@ -27,12 +27,13 @@ counter {
 }
 val counter: CounterExtension = extensions.getByType()
 
-val buildNumber by counter.map
+val buildNumber = 1 // counter.
 val actualBuildNumber = buildNumber + 1
 
 group = Constants.group
 description = Constants.description
-version = "${Constants.modVersion}-$actualBuildNumber"
+version = System.getenv("BUILD_NUMBER")?.let { "${Constants.modVersion}+build.$actualBuildNumber" } 
+    ?: "${Constants.modVersion}+local"
 
 java {
     sourceCompatibility = JavaVersion.VERSION_1_8
@@ -99,9 +100,19 @@ fun MavenPublication.shadowComponents() {
                 dependencyNode.appendNode("groupId", it.group)
                 dependencyNode.appendNode("artifactId", it.name)
                 dependencyNode.appendNode("version", it.version)
-                dependencyNode.appendNode("scope", "compileOnly")
+                dependencyNode.appendNode("scope", "runtime") // or compileOnly
             }
         }
+//        project.configurations.implementation.allDependencies.forEach {
+//            logger.lifecycle("implementation: $it")
+//            if (it !is SelfResolvingDependency) {
+//                val dependencyNode = dependenciesNode.appendNode("dependency")
+//                dependencyNode.appendNode("groupId", it.group)
+//                dependencyNode.appendNode("artifactId", it.name)
+//                dependencyNode.appendNode("version", it.version)
+//                dependencyNode.appendNode("scope", "runtime")
+//            }
+//        }
     }
 }
 
@@ -140,17 +151,6 @@ publishing {
             artifact(javadocJar)
 
             shadowComponents()
-//            version = "${Constants.modVersion}-SNAPSHOT"
-//            pom.withXml {
-//                val dependenciesNode = asNode().appendNode("dependencies")
-//
-//                shadowPublication.let {
-//                    val dependencyNode = dependenciesNode.appendNode("dependency")
-//                    dependencyNode.appendNode("groupId", it.groupId)
-//                    dependencyNode.appendNode("artifactId", it.artifactId)
-//                    dependencyNode.appendNode("version", it.version)
-//                }
-//            }
         }
     }
     repositories {
@@ -204,8 +204,33 @@ tasks.create<Copy>("processMDTemplates") {
     filesMatching("**/*.template.md") {
         name = sourceName.substringBeforeLast(".template.md") + ".md"
         expand(
-            "KOTLIN_VERSION" to Jetbrains.Kotlin.version
+            "KOTLIN_VERSION" to Jetbrains.Kotlin.version,
+            "LOADER_VERSION" to Fabric.Loader.version
         )
     }
     destinationDir = rootDir
+}
+
+task<DefaultTask>("depsize") {
+    group = "help"
+    description = "prints dependency sizes"
+    doLast {
+        val formatStr = "%,10.2f"
+        val size = configurations.default.resolve()
+            .map { it.length() / (1024.0 * 1024.0) }.sum()
+
+        val out = buildString {
+            append("Total dependencies size:".padEnd(45))
+            append("${String.format(formatStr, size)} Mb\n\n")
+            configurations
+                .default
+                .resolve()
+                .sortedWith(compareBy { -it.length() })
+                .forEach {
+                    append(it.name.padEnd(45))
+                    append("${String.format(formatStr, (it.length() / 1024.0))} kb\n")
+                }
+        }
+        println(out)
+    }
 }

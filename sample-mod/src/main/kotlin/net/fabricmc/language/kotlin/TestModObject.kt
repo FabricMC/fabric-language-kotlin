@@ -24,19 +24,20 @@ import kotlinx.coroutines.runBlocking
 import net.fabricmc.api.ModInitializer
 import org.apache.logging.log4j.LogManager
 
-object TestMod : ModInitializer {
+object TestModObject : ModInitializer {
 
     val logger = LogManager.getFormatterLogger("KotlinLanguageTest")
 
     override fun onInitialize() = runBlocking {
         logger.info("**************************")
-        logger.info("Hello from Kotlin")
+        logger.info("Hello from Kotlin TestModObject")
         logger.info("**************************")
 
         // TODO: figure out how to make the logger actually display the coroutine debug info
         val prev = System.setProperty("kotlinx.coroutines.debug", "")
         logger.debug("'kotlinx.coroutines.debug' prev: $prev")
 
+        // look we can do coroutines
         val channel = Channel<Int>()
         launch(CoroutineName("printer")) {
             for (k in channel) {
@@ -50,6 +51,6 @@ object TestMod : ModInitializer {
             }
             channel.close()
         }
-        Unit
+        logger.info("done")
     }
 }

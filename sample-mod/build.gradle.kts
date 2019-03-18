@@ -50,9 +50,6 @@ dependencies {
     
 //    api(group = "net.fabricmc", name = "fabric-language-kotlin", version = Fabric.LanguageKotlin.version)
 
-    // this line is required for idea to highlight code properly
-//    implementation(group = "net.fabricmc", name = "fabric-language-kotlin", version = Fabric.LanguageKotlin.version)
-
     // required until modCompile also adds to compileOnly
 //    compileOnly(group = "net.fabricmc", name = "fabric-language-kotlin", version = Fabric.LanguageKotlin.version) {
 //        isTransitive = true

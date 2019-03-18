@@ -1,7 +1,42 @@
 {
-    "id": "kotlin-test",
-    "group": "net.fabricmc.language",
-    "version": "$version",
-    "initializer": "net.fabricmc.language.kotlin.TestMod",
-    "languageAdapter": "net.fabricmc.language.kotlin.KotlinLanguageAdapter"
+  "schemaVersion": 1,
+  "id": "kotlin-test",
+  "name": "Kotlin Test",
+  "version": "$version",
+  "entrypoints": {
+    "main": [
+      {
+        "adapter": "kotlin",
+        "value": "net.fabricmc.language.kotlin.TestModObject"
+      },
+      {
+        "adapter": "kotlin",
+        "value": "net.fabricmc.language.kotlin.TestModClass"
+      },
+      {
+        "adapter": "kotlin",
+        "value": "net.fabricmc.language.kotlin.TestModFun::init"
+      },
+      {
+        "adapter": "kotlin",
+        "value": "net.fabricmc.language.kotlin.companions.TestModFun\$Companion::init"
+      },
+      {
+        "adapter": "kotlin",
+        "value": "net.fabricmc.language.kotlin.TestModVal::initializer"
+      },
+      {
+        "adapter": "kotlin",
+        "value": "net.fabricmc.language.kotlin.companions.TestModVal\$Companion::initializer"
+      },
+      {
+        "adapter": "kotlin",
+        "value": "net.fabricmc.language.kotlin.toplevel.TestModFunKt::init"
+      }
+    ]
+  },
+  "depends": {
+    "fabric": ">=${fabricApiVersion}",
+    "fabric-language-kotlin": ">=${kotlinVersion}"
+  }
 }
