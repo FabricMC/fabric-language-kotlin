@@ -118,7 +118,7 @@ val javadocJar = tasks.create<Jar>("javadocJar") {
 
 publishing {
     publications {
-        create("shadow", MavenPublication::class.java) {
+        val shadowPublication = create("shadow", MavenPublication::class.java) {
 
             groupId = project.group.toString()
             artifactId = project.name.toLowerCase()
@@ -129,6 +129,28 @@ publishing {
             artifact(javadocJar)
 
             shadowComponents()
+        }
+        create("snapshot", MavenPublication::class.java) {
+            groupId = project.group.toString()
+            artifactId = project.name.toLowerCase()
+            version = "${Constants.modVersion}-SNAPSHOT"
+
+            artifact(shadowJar)
+            artifact(sourcesJar)
+            artifact(javadocJar)
+
+            shadowComponents()
+//            version = "${Constants.modVersion}-SNAPSHOT"
+//            pom.withXml {
+//                val dependenciesNode = asNode().appendNode("dependencies")
+//
+//                shadowPublication.let {
+//                    val dependencyNode = dependenciesNode.appendNode("dependency")
+//                    dependencyNode.appendNode("groupId", it.groupId)
+//                    dependencyNode.appendNode("artifactId", it.artifactId)
+//                    dependencyNode.appendNode("version", it.version)
+//                }
+//            }
         }
     }
     repositories {
