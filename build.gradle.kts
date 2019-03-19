@@ -32,7 +32,7 @@ val actualBuildNumber = buildNumber + 1
 
 group = Constants.group
 description = Constants.description
-version = "${Constants.modVersion}-$actualBuildNumber"
+version = "${Constants.modVersion}+$actualBuildNumber"
 
 java {
     sourceCompatibility = JavaVersion.VERSION_1_8
@@ -99,7 +99,7 @@ fun MavenPublication.shadowComponents() {
                 dependencyNode.appendNode("groupId", it.group)
                 dependencyNode.appendNode("artifactId", it.name)
                 dependencyNode.appendNode("version", it.version)
-                dependencyNode.appendNode("scope", "provided")
+                dependencyNode.appendNode("scope", "compileOnly")
             }
         }
     }
