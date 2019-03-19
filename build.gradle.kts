@@ -32,7 +32,7 @@ val actualBuildNumber = buildNumber + 1
 
 group = Constants.group
 description = Constants.description
-version = "${Constants.modVersion}+$actualBuildNumber"
+version = "${Constants.modVersion}-$actualBuildNumber"
 
 java {
     sourceCompatibility = JavaVersion.VERSION_1_8
