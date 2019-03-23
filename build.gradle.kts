@@ -196,3 +196,16 @@ if (curse_api_key != null && project.hasProperty("release")) {
         }
     }
 }
+
+tasks.create<Copy>("processMDTemplates") {
+    group = "documentation"
+    from(rootDir.resolve("templates"))
+    include("**/*.template.md")
+    filesMatching("**/*.template.md") {
+        name = sourceName.substringBeforeLast(".template.md") + ".md"
+        expand(
+            "KOTLIN_VERSION" to Jetbrains.Kotlin.version
+        )
+    }
+    destinationDir = rootDir
+}

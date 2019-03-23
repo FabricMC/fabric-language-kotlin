@@ -22,7 +22,7 @@ repositories {
 
 dependencies {
     // TODO: loader 0.4.0 will allow using modCompile
-	api(group = "net.fabricmc", name = "fabric-language-kotlin", version = "1.3.21+")
+	api(group = "net.fabricmc", name = "fabric-language-kotlin", version = "${KOTLIN_VERSION}+")
 }
 ```
 
@@ -41,7 +41,7 @@ repositories {
 
 dependencies {
     // TODO: loader 0.4.0 will allow using modCompile
-	api(group: "net.fabricmc", name: "fabric-language-kotlin", version: "1.3.21+")
+	api(group: "net.fabricmc", name: "fabric-language-kotlin", version: "${KOTLIN_VERSION}+")
 }
 ```
 
@@ -54,7 +54,7 @@ Add a dependency entry to your `fabric.mod.json` file:
     "languageAdapter": "net.fabricmc.language.kotlin.KotlinLanguageAdapter",
 	"requires": {
 		"fabric-language-kotlin": {
-			"version": ">=1.3.21"
+			"version": ">=${KOTLIN_VERSION}"
 		}
 	}
 }
