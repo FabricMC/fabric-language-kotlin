@@ -21,8 +21,9 @@ repositories {
 }
 
 dependencies {
-    // TODO: loader 0.4.0 will allow using modCompile
-	api(group = "net.fabricmc", name = "fabric-language-kotlin", version = "1.3.21+")
+    // TODO: loom 0.3.0 will allow using only modCompile
+	modCompile(group = "net.fabricmc", name = "fabric-language-kotlin", version = "1.3.21-SNAPSHOT")
+	compileOnly(group = "net.fabricmc", name = "fabric-language-kotlin", version = "1.3.21-SNAPSHOT")
 }
 ```
 
@@ -40,8 +41,9 @@ repositories {
 }
 
 dependencies {
-    // TODO: loader 0.4.0 will allow using modCompile
-	api(group: "net.fabricmc", name: "fabric-language-kotlin", version: "1.3.21+")
+    // TODO: loom 0.3.0 will allow using only modCompile
+	modCompile(group: "net.fabricmc", name: "fabric-language-kotlin", version: "1.3.21-SNAPSHOT")
+	compileOnly(group: "net.fabricmc", name: "fabric-language-kotlin", version: "1.3.21-SNAPSHOT")
 }
 ```
 
