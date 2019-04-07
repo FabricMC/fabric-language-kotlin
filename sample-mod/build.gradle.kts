@@ -44,6 +44,7 @@ dependencies {
 
     modCompile(group = "net.fabricmc", name = "fabric-loader", version = Fabric.Loader.version)
     modCompile(group = "net.fabricmc", name = "fabric", version = Fabric.API.version + ".+")
+    include(group = "net.fabricmc", name = "fabric", version = Fabric.API.version + ".+")
 
     modCompile(rootProject)
     compileOnly(rootProject)
