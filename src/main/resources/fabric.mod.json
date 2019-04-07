@@ -16,11 +16,7 @@
     "kotlin": "net.fabricmc.language.kotlin.KotlinAdapter"
   },
   "license": "Apache-2.0",
-  "icon": {
-    "128": "assets/fabric-language-kotlin/icon128.png",
-    "256": "assets/fabric-language-kotlin/icon256.png",
-    "512": "assets/fabric-language-kotlin/icon512.png"
-  },
+  "icon": "assets/fabric-language-kotlin/icon512.png",
   "custom": {
     "modmenu:api": true
   }
