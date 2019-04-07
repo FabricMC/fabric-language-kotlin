@@ -1,11 +1,27 @@
 {
   "schemaVersion": 1,
   "id": "fabric-language-kotlin",
+  "version": "$version",
   "name": "Fabric Language Kotlin",
   "description": "Fabric language module for Kotlin.",
-  "version": "$version",
+  "authors": [
+    "Nikky"
+  ],
+  "contact": {
+    "irc": "irc://irc.esper.net:6667/fabric",
+    "issues": "https://github.com/FabricMC/fabric-language-kotlin/issues",
+    "sources": "https://github.com/FabricMC/fabric-language-kotlin"
+  },
   "languageAdapters": {
     "kotlin": "net.fabricmc.language.kotlin.KotlinAdapter"
   },
-  "license": "Apache-2.0"
+  "license": "Apache-2.0",
+  "icon": {
+    "128": "assets/fabric-language-kotlin/icon128.png",
+    "256": "assets/fabric-language-kotlin/icon256.png",
+    "512": "assets/fabric-language-kotlin/icon512.png"
+  },
+  "custom": {
+    "modmenu:api": true
+  }
 }

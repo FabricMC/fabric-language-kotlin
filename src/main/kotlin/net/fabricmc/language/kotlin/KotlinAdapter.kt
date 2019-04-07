@@ -47,9 +47,9 @@ open class KotlinAdapter : LanguageAdapter {
             1 -> {
                 return if (type.isAssignableFrom(c)) {
                     // try to return the objectInstance first
-                    type.kotlin.objectInstance
+                    k.objectInstance as? T
                         ?: try {
-                            type.kotlin.createInstance()
+                            k.createInstance() as T
                         } catch (e: Exception) {
                             throw LanguageAdapterException(e)
                         }

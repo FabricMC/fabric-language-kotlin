@@ -47,6 +47,8 @@ dependencies {
 
     modCompile(rootProject)
     compileOnly(rootProject)
+
+    modCompile(group = "io.github.prospector.modmenu", name = "ModMenu", version = "+")
     
 //    api(group = "net.fabricmc", name = "fabric-language-kotlin", version = Fabric.LanguageKotlin.version)
 
