@@ -20,19 +20,18 @@ base {
     archivesBaseName = Constants.modid
 }
 
-counter {
-    variable(id = "buildNumber", key = Constants.modVersion) {
-        default = 0
-    }
-}
+val branch = System.getenv("GIT_BRANCH")
+    ?.takeUnless { it == "master" }
+    ?.let { "-$it" }
+    ?: ""
+
 val counter: CounterExtension = extensions.getByType()
 
-val buildNumber = 1 // counter.
-val actualBuildNumber = buildNumber + 1
+val buildNumber = counter.variable(id = "buildNumber", key = Constants.modVersion+branch)
 
 group = Constants.group
 description = Constants.description
-version = System.getenv("BUILD_NUMBER")?.let { "${Constants.modVersion}+build.$actualBuildNumber" } 
+version = System.getenv("BUILD_NUMBER")?.let { "${Constants.modVersion}+build.$buildNumber" } 
     ?: "${Constants.modVersion}+local"
 
 java {
