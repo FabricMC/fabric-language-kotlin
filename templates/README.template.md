@@ -81,6 +81,11 @@ for more info reference [format:modjson](https://fabricmc.net/wiki/format:modjso
 
 #### class reference
 
+as a `class`
+
+<details>
+  <summary>Click to view code</summary><p>
+
 ```json
 {
     "adapter": "kotlin",
@@ -88,7 +93,6 @@ for more info reference [format:modjson](https://fabricmc.net/wiki/format:modjso
 }
 ```
 
-as a `class`
 ```kotlin
 package mymod
 class MyMod : ModInitializer {
@@ -97,8 +101,20 @@ class MyMod : ModInitializer {
     }
 }
 ```
+</p></details>
 
 as a`object`
+
+<details>
+  <summary>Click to view code</summary><p>
+
+```json
+{
+    "adapter": "kotlin",
+    "value": "mymod.MyMod"
+}
+```
+
 ```kotlin
 package mymod
 object MyMod : ModInitializer {
@@ -107,8 +123,13 @@ object MyMod : ModInitializer {
     }
 }
 ```
+</p></details>
 
 as a `companion object`
+
+<details>
+  <summary>Click to view code</summary><p>
+
 ```json
 {
     "adapter": "kotlin",
@@ -126,6 +147,7 @@ class MyMod {
     }
 }
 ```
+</p></details>
 
 #### function reference
 
@@ -134,6 +156,10 @@ so they have to only contain initialization code,
 not return a initializer type
 
 in a `object`
+
+<details>
+  <summary>Click to view code</summary><p>
+
 ```json
 {
     "adapter": "kotlin",
@@ -149,8 +175,11 @@ object MyMod  {
     }
 }
 ```
+</p></details>
 
 in a `companion object`
+<details>
+  <summary>Click to view code</summary><p>
 
 ```json
 {
@@ -169,8 +198,12 @@ class MyMod  {
     }
 }
 ```
+</p></details>
 
 as top level function
+
+<details>
+  <summary>Click to view code</summary><p>
 
 the classname gets constructed by taking the filename and appending `Kt`
 ```json
@@ -188,8 +221,14 @@ fun init() {
     TODO()
 }
 ```
+</p></details>
 
 #### field reference
+
+in a `object`
+
+<details>
+  <summary>Click to view code</summary><p>
 
 ```json
 {
@@ -206,8 +245,12 @@ object MyMod  {
     }
 }
 ```
+</p></details>
 
-in a companion object
+in a `companion object`
+
+<details>
+  <summary>Click to view code</summary><p>
 
 ```json
 {
@@ -226,6 +269,7 @@ class MyMod  {
     }
 }
 ```
+</p></details>
 
 Companion objects can be used by appending `\$Companion` to the class
 take care of `processResource` there, it might try to expand it, in that case escape it
