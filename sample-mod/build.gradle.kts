@@ -29,14 +29,6 @@ repositories {
     jcenter()
 }
 
-//val provided = configurations.create("provided")
-//sourceSets {
-//    getByName("main") {
-//        compileClasspath += provided
-//    }
-//}
-//configurations.implementation.get().extendsFrom(configurations.modCompileMapped.get())
-
 dependencies {
     minecraft(group = "com.mojang", name = "minecraft", version = Minecraft.version)
 
@@ -50,13 +42,6 @@ dependencies {
     compileOnly(rootProject)
 
     modCompile(group = "io.github.prospector.modmenu", name = "ModMenu", version = "+")
-    
-//    api(group = "net.fabricmc", name = "fabric-language-kotlin", version = Fabric.LanguageKotlin.version)
-
-    // required until modCompile also adds to compileOnly
-//    compileOnly(group = "net.fabricmc", name = "fabric-language-kotlin", version = Fabric.LanguageKotlin.version) {
-//        isTransitive = true
-//    }
 }
 
 tasks.getByName<ProcessResources>("processResources") {
