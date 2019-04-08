@@ -24,8 +24,8 @@ repositories {
 
 dependencies {
     // TODO: loom 0.3.0 will allow using only modCompile
-	modCompile(group = "net.fabricmc", name = "fabric-loader", version = "0.4.0+build.114")
-    compileOnly(group = "net.fabricmc", name = "fabric-loader", version = "0.4.0+build.114")
+	modCompile(group = "net.fabricmc", name = "fabric-loader", version = "0.4.0+build.116")
+    compileOnly(group = "net.fabricmc", name = "fabric-loader", version = "0.4.0+build.116")
 
     modCompile(group = "net.fabricmc", name = "fabric-language-kotlin", version = "1.3.21-SNAPSHOT")
 	compileOnly(group = "net.fabricmc", name = "fabric-language-kotlin", version = "1.3.21-SNAPSHOT")
@@ -47,8 +47,8 @@ repositories {
 
 dependencies {
     // TODO: loom 0.3.0 will allow using only modCompile
-	modCompile(group: "net.fabricmc", name: "fabric-loader", version: "0.4.0+build.114")
-	compileOnly(group: "net.fabricmc", name: "fabric-loader", version: "0.4.0+build.114")
+	modCompile(group: "net.fabricmc", name: "fabric-loader", version: "0.4.0+build.116")
+	compileOnly(group: "net.fabricmc", name: "fabric-loader", version: "0.4.0+build.116")
 
 	modCompile(group: "net.fabricmc", name: "fabric-language-kotlin", version: "1.3.21-SNAPSHOT")
 	compileOnly(group: "net.fabricmc", name: "fabric-language-kotlin", version: "1.3.21-SNAPSHOT")
@@ -77,11 +77,10 @@ for more info reference [format:modjson](https://fabricmc.net/wiki/format:modjso
 }
 ```
 
-possible types for `value`:
-
 ### entrypoints samples
 
 #### class reference
+
 ```json
 {
     "adapter": "kotlin",
@@ -89,7 +88,7 @@ possible types for `value`:
 }
 ```
 
-using `object`
+as a`object`
 ```kotlin
 package mymod
 object MyMod : ModInitializer {
@@ -99,8 +98,7 @@ object MyMod : ModInitializer {
 }
 ```
 
-or using a `class`
-
+as a `class`
 ```kotlin
 package mymod
 class MyMod : ModInitializer {
@@ -110,8 +108,32 @@ class MyMod : ModInitializer {
 }
 ```
 
-### function reference
+as a `companion object`
+```json
+{
+    "adapter": "kotlin",
+    "value": "mymod.MyMod$Companion"
+}
+```
 
+```kotlin
+package mymod
+class MyMod {
+    companion object : ModInitializer {
+        override fun onInitialize() {
+            TODO()
+        }
+    }
+}
+```
+
+#### function reference
+
+functions do not get returned but executed, 
+so they have to only contain initialization code, 
+not return a initializer type
+
+in a `object`
 ```json
 {
     "adapter": "kotlin",
@@ -128,19 +150,85 @@ object MyMod  {
 }
 ```
 
-#### top level function reference
+in a `companion object`
 
+```json
+{
+    "adapter": "kotlin",
+    "value": "mymod.MyMod$Companion::init"
+}
+```
 
- - `object` classes extending the proper initializer
- - `class` with a default constructor extending the proper initializer
- - `val` of a Initializer in some `object`, separated with `::`, example: `package.SomeClass$Companion::initializer`
- - `fun` in some `object`, separated with `::`
- - top level `fun`, example : `package.MainKt::init`
+```kotlin
+package mymod
+class MyMod  {
+    companion object {
+        fun init() {
+            TODO()
+        }
+    }
+}
+```
+
+as top level function
+
+the classname gets constructed by taking the filename and appending `Kt`
+```json
+{
+    "adapter": "kotlin",
+    "value": "mymod.MyModKt::init"
+}
+```
+
+file: `src/main/kotlin/mymod/MyMod.kt`
+```kotlin
+package mymod
+
+fun init() {
+    TODO()
+}
+```
+
+#### field reference
+
+```json
+{
+    "adapter": "kotlin",
+    "value": "mymod.MyMod::initializer"
+}
+```
+
+```kotlin
+package mymod
+object MyMod  {
+    val initializer = ModInitializer {
+        TODO()
+    }
+}
+```
+
+in a companion object
+
+```json
+{
+    "adapter": "kotlin",
+    "value": "mymod.MyMod$Comanion::initializer"
+}
+```
+
+```kotlin
+package mymod
+class MyMod  {
+    companion object {
+        val initializer = ModInitializer {
+            TODO()
+        }
+    }
+}
+```
 
 Companion objects can be used by appending `$Companion` to the class
 take care of `processResource` there, it might try to expand it, in that case escape it
-
-top level functions can be used by adding `Kt` to the filename
 
 see examples in [sample-mod/fabric.mod.json](https://github.com/FabricMC/fabric-language-kotlin/blob/master/sample-mod/src/main/resources/fabric.mod.json)
 

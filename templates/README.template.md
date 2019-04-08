@@ -77,11 +77,10 @@ for more info reference [format:modjson](https://fabricmc.net/wiki/format:modjso
 }
 ```
 
-possible types for `value`:
-
 ### entrypoints samples
 
 #### class reference
+
 ```json
 {
     "adapter": "kotlin",
@@ -89,20 +88,20 @@ possible types for `value`:
 }
 ```
 
-as a`object`
+as a `class`
 ```kotlin
 package mymod
-object MyMod : ModInitializer {
+class MyMod : ModInitializer {
     override fun onInitialize() {
         TODO()
     }
 }
 ```
 
-as a `class`
+as a`object`
 ```kotlin
 package mymod
-class MyMod : ModInitializer {
+object MyMod : ModInitializer {
     override fun onInitialize() {
         TODO()
     }
@@ -120,7 +119,7 @@ as a `companion object`
 ```kotlin
 package mymod
 class MyMod {
-    comanion object : ModInitializer {
+    companion object : ModInitializer {
         override fun onInitialize() {
             TODO()
         }
@@ -130,6 +129,11 @@ class MyMod {
 
 #### function reference
 
+functions do not get returned but executed, 
+so they have to only contain initialization code, 
+not return a initializer type
+
+in a `object`
 ```json
 {
     "adapter": "kotlin",
@@ -146,7 +150,7 @@ object MyMod  {
 }
 ```
 
-as a `companion object`
+in a `companion object`
 
 ```json
 {

@@ -7,11 +7,15 @@
     "main": [
       {
         "adapter": "kotlin",
+        "value": "net.fabricmc.language.kotlin.TestModClass"
+      },
+      {
+        "adapter": "kotlin",
         "value": "net.fabricmc.language.kotlin.TestModObject"
       },
       {
         "adapter": "kotlin",
-        "value": "net.fabricmc.language.kotlin.TestModClass"
+        "value": "net.fabricmc.language.kotlin.companions.TestModObject\$Companion"
       },
       {
         "adapter": "kotlin",
