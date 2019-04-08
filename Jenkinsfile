@@ -33,7 +33,7 @@ pipeline {
                 branch 'master'
             }
             steps {
-                sh "./gradlew -PincludeSample=false buildNumberIncrease"
+                sh "./gradlew -PincludeSample=false buildNumberIncrement"
             }
         }
     }
