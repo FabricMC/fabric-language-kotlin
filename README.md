@@ -78,6 +78,59 @@ for more info reference [format:modjson](https://fabricmc.net/wiki/format:modjso
 ```
 
 possible types for `value`:
+
+### entrypoints samples
+
+#### class reference
+```json
+{
+    "adapter": "kotlin",
+    "value": "mymod.MyMod"
+}
+```
+
+using `object`
+```kotlin
+package mymod
+object MyMod : ModInitializer {
+    override fun onInitialize() {
+        TODO()
+    }
+}
+```
+
+or using a `class`
+
+```kotlin
+package mymod
+class MyMod : ModInitializer {
+    override fun onInitialize() {
+        TODO()
+    }
+}
+```
+
+### function reference
+
+```json
+{
+    "adapter": "kotlin",
+    "value": "mymod.MyMod::init"
+}
+```
+
+```kotlin
+package mymod
+object MyMod  {
+    fun init() {
+        TODO()
+    }
+}
+```
+
+#### top level function reference
+
+
  - `object` classes extending the proper initializer
  - `class` with a default constructor extending the proper initializer
  - `val` of a Initializer in some `object`, separated with `::`, example: `package.SomeClass$Companion::initializer`

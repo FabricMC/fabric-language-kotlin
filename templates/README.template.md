@@ -78,16 +78,153 @@ for more info reference [format:modjson](https://fabricmc.net/wiki/format:modjso
 ```
 
 possible types for `value`:
- - `object` classes extending the proper initializer
- - `class` with a default constructor extending the proper initializer
- - `val` of a Initializer in some `object`, separated with `::`, example: `package.SomeClass\$Companion::initializer`
- - `fun` in some `object`, separated with `::`
- - top level `fun`, example : `package.MainKt::init`
+
+### entrypoints samples
+
+#### class reference
+```json
+{
+    "adapter": "kotlin",
+    "value": "mymod.MyMod"
+}
+```
+
+as a`object`
+```kotlin
+package mymod
+object MyMod : ModInitializer {
+    override fun onInitialize() {
+        TODO()
+    }
+}
+```
+
+as a `class`
+```kotlin
+package mymod
+class MyMod : ModInitializer {
+    override fun onInitialize() {
+        TODO()
+    }
+}
+```
+
+as a `companion object`
+```json
+{
+    "adapter": "kotlin",
+    "value": "mymod.MyMod\$Companion"
+}
+```
+
+```kotlin
+package mymod
+class MyMod {
+    comanion object : ModInitializer {
+        override fun onInitialize() {
+            TODO()
+        }
+    }
+}
+```
+
+#### function reference
+
+```json
+{
+    "adapter": "kotlin",
+    "value": "mymod.MyMod::init"
+}
+```
+
+```kotlin
+package mymod
+object MyMod  {
+    fun init() {
+        TODO()
+    }
+}
+```
+
+as a `companion object`
+
+```json
+{
+    "adapter": "kotlin",
+    "value": "mymod.MyMod\$Companion::init"
+}
+```
+
+```kotlin
+package mymod
+class MyMod  {
+    companion object {
+        fun init() {
+            TODO()
+        }
+    }
+}
+```
+
+as top level function
+
+the classname gets constructed by taking the filename and appending `Kt`
+```json
+{
+    "adapter": "kotlin",
+    "value": "mymod.MyModKt::init"
+}
+```
+
+file: `src/main/kotlin/mymod/MyMod.kt`
+```kotlin
+package mymod
+
+fun init() {
+    TODO()
+}
+```
+
+#### field reference
+
+```json
+{
+    "adapter": "kotlin",
+    "value": "mymod.MyMod::initializer"
+}
+```
+
+```kotlin
+package mymod
+object MyMod  {
+    val initializer = ModInitializer {
+        TODO()
+    }
+}
+```
+
+in a companion object
+
+```json
+{
+    "adapter": "kotlin",
+    "value": "mymod.MyMod\$Comanion::initializer"
+}
+```
+
+```kotlin
+package mymod
+class MyMod  {
+    companion object {
+        val initializer = ModInitializer {
+            TODO()
+        }
+    }
+}
+```
 
 Companion objects can be used by appending `\$Companion` to the class
 take care of `processResource` there, it might try to expand it, in that case escape it
-
-top level functions can be used by adding `Kt` to the filename
 
 see examples in [sample-mod/fabric.mod.json](https://github.com/FabricMC/fabric-language-kotlin/blob/master/sample-mod/src/main/resources/fabric.mod.json)
 
