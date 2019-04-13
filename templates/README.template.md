@@ -61,8 +61,11 @@ Add a dependency entry to your `fabric.mod.json` file:
 
 for more info reference [format:modjson](https://fabricmc.net/wiki/format:modjson)
 
+do not forget to set the `schemaVersion` to `1` or it will fall back to schema `0` and will not attempt to load entrypoints
+
 ```json
 {
+    "schemaVersion":  1, 
     "entrypoints": {
         "main": [
             {
@@ -275,6 +278,16 @@ Companion objects can be used by appending `\$Companion` to the class
 take care of `processResource` there, it might try to expand it, in that case escape it
 
 see examples in [sample-mod/fabric.mod.json](https://github.com/FabricMC/fabric-language-kotlin/blob/master/sample-mod/src/main/resources/fabric.mod.json)
+
+## Bundled libraries
+
+```
+${BUNDLED_STDLIB}
+${BUNDLED_REFLECT}
+${BUNDLED_ANNOTATIONS}
+${BUNDLED_COROUTINES_CORE}
+${BUNDLED_COROUTINES_JDK8}
+```
 
 ## Available Versions
 

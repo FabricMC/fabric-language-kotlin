@@ -27,11 +27,11 @@ val branch = System.getenv("GIT_BRANCH")
 
 val counter: CounterExtension = extensions.getByType()
 
-val buildNumber = counter.variable(id = "buildNumber", key = Constants.modVersion+branch)
+val buildNumber = counter.variable(id = "buildNumber", key = Constants.modVersion + branch)
 
 group = Constants.group
 description = Constants.description
-version = System.getenv("BUILD_NUMBER")?.let { "${Constants.modVersion}+build.$buildNumber" } 
+version = System.getenv("BUILD_NUMBER")?.let { "${Constants.modVersion}+build.$buildNumber" }
     ?: "${Constants.modVersion}+local"
 
 java {
@@ -120,12 +120,6 @@ val sourcesJar = tasks.create<Jar>("sourcesJar") {
     from(sourceSets["main"].allSource)
 }
 
-val javadoc = tasks.getByName<Javadoc>("javadoc") {}
-val javadocJar = tasks.create<Jar>("javadocJar") {
-    classifier = "javadoc"
-    from(javadoc)
-}
-
 publishing {
     publications {
         val shadowPublication = create("shadow", MavenPublication::class.java) {
@@ -136,7 +130,6 @@ publishing {
 
             artifact(shadowJar)
             artifact(sourcesJar)
-            artifact(javadocJar)
 
             shadowComponents()
         }
@@ -147,7 +140,6 @@ publishing {
 
             artifact(shadowJar)
             artifact(sourcesJar)
-            artifact(javadocJar)
 
             shadowComponents()
         }
@@ -204,7 +196,12 @@ tasks.create<Copy>("processMDTemplates") {
         name = sourceName.substringBeforeLast(".template.md") + ".md"
         expand(
             "KOTLIN_VERSION" to Jetbrains.Kotlin.version,
-            "LOADER_VERSION" to Fabric.Loader.version
+            "LOADER_VERSION" to Fabric.Loader.version,
+            "BUNDLED_STDLIB" to Jetbrains.Kotlin.stdLibJkd8,
+            "BUNDLED_REFLECT" to Jetbrains.Kotlin.reflect,
+            "BUNDLED_ANNOTATIONS" to Jetbrains.annotations,
+            "BUNDLED_COROUTINES_CORE" to Jetbrains.KotlinX.coroutinesCore,
+            "BUNDLED_COROUTINES_JDK8" to Jetbrains.KotlinX.coroutinesJdk8
         )
     }
     destinationDir = rootDir

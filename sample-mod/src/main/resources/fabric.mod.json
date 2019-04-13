@@ -36,6 +36,10 @@
       {
         "adapter": "kotlin",
         "value": "net.fabricmc.language.kotlin.toplevel.TestModFunKt::init"
+      },
+      {
+        "adapter": "kotlin",
+        "value": "net.fabricmc.language.kotlin.toplevel.TestModFunJvmName::initJvmName"
       }
     ]
   },

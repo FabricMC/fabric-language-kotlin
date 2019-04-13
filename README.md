@@ -24,11 +24,11 @@ repositories {
 
 dependencies {
     // TODO: loom 0.3.0 will allow using only modCompile
-	modCompile(group = "net.fabricmc", name = "fabric-loader", version = "0.4.0+build.116")
-    compileOnly(group = "net.fabricmc", name = "fabric-loader", version = "0.4.0+build.116")
+	modCompile(group = "net.fabricmc", name = "fabric-loader", version = "0.4.0+build.121")
+    compileOnly(group = "net.fabricmc", name = "fabric-loader", version = "0.4.0+build.121")
 
-    modCompile(group = "net.fabricmc", name = "fabric-language-kotlin", version = "1.3.21-SNAPSHOT")
-	compileOnly(group = "net.fabricmc", name = "fabric-language-kotlin", version = "1.3.21-SNAPSHOT")
+    modCompile(group = "net.fabricmc", name = "fabric-language-kotlin", version = "1.3.30-SNAPSHOT")
+	compileOnly(group = "net.fabricmc", name = "fabric-language-kotlin", version = "1.3.30-SNAPSHOT")
 }
 ```
 
@@ -47,11 +47,11 @@ repositories {
 
 dependencies {
     // TODO: loom 0.3.0 will allow using only modCompile
-	modCompile(group: "net.fabricmc", name: "fabric-loader", version: "0.4.0+build.116")
-	compileOnly(group: "net.fabricmc", name: "fabric-loader", version: "0.4.0+build.116")
+	modCompile(group: "net.fabricmc", name: "fabric-loader", version: "0.4.0+build.121")
+	compileOnly(group: "net.fabricmc", name: "fabric-loader", version: "0.4.0+build.121")
 
-	modCompile(group: "net.fabricmc", name: "fabric-language-kotlin", version: "1.3.21-SNAPSHOT")
-	compileOnly(group: "net.fabricmc", name: "fabric-language-kotlin", version: "1.3.21-SNAPSHOT")
+	modCompile(group: "net.fabricmc", name: "fabric-language-kotlin", version: "1.3.30-SNAPSHOT")
+	compileOnly(group: "net.fabricmc", name: "fabric-language-kotlin", version: "1.3.30-SNAPSHOT")
 }
 ```
 
@@ -61,8 +61,11 @@ Add a dependency entry to your `fabric.mod.json` file:
 
 for more info reference [format:modjson](https://fabricmc.net/wiki/format:modjson)
 
+do not forget to set the `schemaVersion` to `1` or it will fall back to schema `0` and will not attempt to load entrypoints
+
 ```json
 {
+    "schemaVersion":  1, 
     "entrypoints": {
         "main": [
             {
@@ -72,7 +75,7 @@ for more info reference [format:modjson](https://fabricmc.net/wiki/format:modjso
         ]
     },
     "requires": {
-        "fabric-language-kotlin": ">=1.3.21"
+        "fabric-language-kotlin": ">=1.3.30"
     }
 }
 ```
@@ -275,6 +278,16 @@ Companion objects can be used by appending `$Companion` to the class
 take care of `processResource` there, it might try to expand it, in that case escape it
 
 see examples in [sample-mod/fabric.mod.json](https://github.com/FabricMC/fabric-language-kotlin/blob/master/sample-mod/src/main/resources/fabric.mod.json)
+
+## Bundled libraries
+
+```
+org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.3.30
+org.jetbrains.kotlin:kotlin-reflect:1.3.30
+org.jetbrains:annotations:16.0.3
+org.jetbrains.kotlinx:kotlinx-coroutines-core:1.2.0
+org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:1.2.0
+```
 
 ## Available Versions
 

@@ -10,7 +10,7 @@ java {
 }
 
 base {
-    archivesBaseName = Constants.modid
+    archivesBaseName = Constants.modid + "-test"
 }
 
 group = Constants.group
@@ -32,7 +32,7 @@ repositories {
 dependencies {
     minecraft(group = "com.mojang", name = "minecraft", version = Minecraft.version)
 
-    mappings(group = "net.fabricmc", name = "yarn", version = "${Minecraft.version}.${Fabric.Yarn.version}")
+    mappings(group = "net.fabricmc", name = "yarn", version = "${Minecraft.version}+build.${Fabric.Yarn.version}")
 
     modCompile(group = "net.fabricmc", name = "fabric-loader", version = Fabric.Loader.version)
     modCompile(group = "net.fabricmc", name = "fabric", version = Fabric.API.version + ".+")
