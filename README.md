@@ -255,7 +255,7 @@ in a `companion object`
 ```json
 {
     "adapter": "kotlin",
-    "value": "mymod.MyMod$Comanion::initializer"
+    "value": "mymod.MyMod$Companion::initializer"
 }
 ```
 
