@@ -17,7 +17,7 @@ object Jetbrains {
 
 object Fabric {
     object Loader {
-        const val version = "0.4.0+build.121" // https://maven.fabricmc.net/net/fabricmc/fabric-loader/
+        const val version = "0.4.1+build.122" // https://maven.fabricmc.net/net/fabricmc/fabric-loader/
     }
 
     object API {

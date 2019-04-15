@@ -1,3 +1,5 @@
+import org.gradle.api.internal.AbstractTask
+
 plugins {
     kotlin("jvm")// version Jetbrains.Kotlin.version
     idea
@@ -25,6 +27,7 @@ repositories {
     maven(url = "https://kotlin.bintray.com/kotlinx") {
         name = "Kotlinx"
     }
+    mavenLocal()
     mavenCentral()
     jcenter()
 }
@@ -43,6 +46,9 @@ dependencies {
 
     modCompile(group = "io.github.prospector.modmenu", name = "ModMenu", version = "+")
 }
+
+val shadowJar = rootProject.tasks.getByName<AbstractTask>("shadowJar")
+shadowJar.execute()
 
 tasks.getByName<ProcessResources>("processResources") {
     filesMatching("fabric.mod.json") {
