@@ -8,6 +8,7 @@
     "Nikky"
   ],
   "contact": {
+    "homepage": "https://minecraft.curseforge.com/projects/fabric-language-kotlin",
     "irc": "irc://irc.esper.net:6667/fabric",
     "issues": "https://github.com/FabricMC/fabric-language-kotlin/issues",
     "sources": "https://github.com/FabricMC/fabric-language-kotlin"

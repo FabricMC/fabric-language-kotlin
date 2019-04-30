@@ -1,4 +1,4 @@
-import org.gradle.api.internal.AbstractTask
+import net.fabricmc.loom.task.RemapJar
 
 plugins {
     kotlin("jvm")// version Jetbrains.Kotlin.version
@@ -18,7 +18,6 @@ base {
 group = Constants.group
 version = Constants.modVersion
 
-minecraft { }
 
 repositories {
     maven(url = "http://maven.fabricmc.net/") {
@@ -32,23 +31,33 @@ repositories {
     jcenter()
 }
 
+configurations.modCompile.extendsFrom(configurations.include)
+//configurations.compileOnly.extendsFrom(configurations.include)
+//configurations.compileOnly.extendsFrom(configurations.modCompile)
+
+minecraft {
+
+}
+
 dependencies {
     minecraft(group = "com.mojang", name = "minecraft", version = Minecraft.version)
-
     mappings(group = "net.fabricmc", name = "yarn", version = "${Minecraft.version}+build.${Fabric.Yarn.version}")
 
     modCompile(group = "net.fabricmc", name = "fabric-loader", version = Fabric.Loader.version)
-    modCompile(group = "net.fabricmc", name = "fabric", version = Fabric.API.version + ".+")
-    include(group = "net.fabricmc", name = "fabric", version = Fabric.API.version + ".+")
+//    modCompile(group = "net.fabricmc", name = "fabric", version = Fabric.API.version + "+build.+")
+    include(group = "net.fabricmc", name = "fabric", version = Fabric.API.version + "+build.+")
 
-    modCompile(rootProject)
-    compileOnly(rootProject)
+    modCompile(group = "net.fabricmc", name = "fabric-language-kotlin", version = "${Jetbrains.Kotlin.version}+local")
+//    modCompile(project(":"))
 
-    modCompile(group = "io.github.prospector.modmenu", name = "ModMenu", version = "+")
+    include(group = "io.github.prospector.modmenu", name = "ModMenu", version = "+")
 }
 
-val shadowJar = rootProject.tasks.getByName<AbstractTask>("shadowJar")
-shadowJar.execute()
+val publishToMavenLocal = rootProject.tasks.getByName<Task>("publishToMavenLocal")
+
+val remapJar = tasks.getByName<RemapJar>("remapJar") {
+    (this as Task).dependsOn(publishToMavenLocal)
+}
 
 tasks.getByName<ProcessResources>("processResources") {
     filesMatching("fabric.mod.json") {
