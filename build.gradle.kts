@@ -81,16 +81,16 @@ dependencies {
 
     modCompile(group = "net.fabricmc", name = "fabric-loader", version = Fabric.Loader.version)
 
-//    shadow(Jetbrains.Kotlin.stdLibJkd8)
-//    shadow(Jetbrains.Kotlin.reflect)
-//    shadow(Jetbrains.annotations)
-//    shadow(Jetbrains.KotlinX.coroutinesCore)
-//    shadow(Jetbrains.KotlinX.coroutinesJdk8)
-    include(Jetbrains.Kotlin.stdLibJkd8)
-    include(Jetbrains.Kotlin.reflect)
-    include(Jetbrains.annotations)
-    include(Jetbrains.KotlinX.coroutinesCore)
-    include(Jetbrains.KotlinX.coroutinesJdk8)
+    shadow(Jetbrains.Kotlin.stdLibJkd8)
+    shadow(Jetbrains.Kotlin.reflect)
+    shadow(Jetbrains.annotations)
+    shadow(Jetbrains.KotlinX.coroutinesCore)
+    shadow(Jetbrains.KotlinX.coroutinesJdk8)
+//    include(Jetbrains.Kotlin.stdLibJkd8)
+//    include(Jetbrains.Kotlin.reflect)
+//    include(Jetbrains.annotations)
+//    include(Jetbrains.KotlinX.coroutinesCore)
+//    include(Jetbrains.KotlinX.coroutinesJdk8)
 }
 
 
@@ -140,13 +140,14 @@ publishing {
             artifactId = project.name.toLowerCase()
             version = project.version.toString()
 
-//            artifact(shadowJar)
-            artifact(remapJar.jar) {
-                builtBy(remapJar)
-            }
-            artifact(sourcesJar) {
-                builtBy(remapSourcesJar)
-            }
+            artifact(shadowJar)
+//            artifact(remapJar.jar) {
+//                builtBy(remapJar)
+//            }
+            artifact(sourcesJar) 
+//            {
+//                builtBy(remapSourcesJar)
+//            }
 
             includeComponents()
         }
