@@ -145,7 +145,7 @@ if (curse_api_key != null && project.hasProperty("release")) {
                 changelogType = "markdown"
                 changelog = file(changelog_file as String)
             }
-            mainArtifact(remapJar.jar, closureOf<CurseArtifact> {
+            mainArtifact(file("${project.buildDir}/libs/${base.archivesBaseName}-${version}.jar"), closureOf<CurseArtifact> {
                 displayName = "Fabric Language Kotlin $version"
             })
         })
