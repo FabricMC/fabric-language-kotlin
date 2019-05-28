@@ -15,7 +15,7 @@ pipeline {
             }
             steps {
                 sh 'git log --format=format:%B ${GIT_PREVIOUS_SUCCESSFUL_COMMIT}..${GIT_COMMIT} > changelog.txt'
-                sh './gradlew -PincludeSample=false  -Prelease -Pchangelog_file=changelog.txt curseforge308769'
+                sh './gradlew -PincludeSample=false  -Prelease -Pchangelog_file=changelog.txt curseforge308769 --stacktrace'
             }
         }
 
