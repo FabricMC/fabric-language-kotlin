@@ -1,4 +1,4 @@
-import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+//import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import com.matthewprenger.cursegradle.CurseArtifact
 import com.matthewprenger.cursegradle.CurseProject
 import com.matthewprenger.cursegradle.CurseUploadTask
@@ -11,13 +11,12 @@ plugins {
     idea
     `maven-publish`
     id("moe.nikky.persistentCounter") version "0.0.8-SNAPSHOT"
-    id("com.github.johnrengelman.shadow") version "4.0.4"
     id("net.minecrell.licenser") version "0.4.1"
     id("com.matthewprenger.cursegradle") version "1.1.2"
     id("fabric-loom") version Fabric.Loom.version// apply false
 }
 
-evaluationDependsOnChildren()
+//evaluationDependsOnChildren()
 
 base {
     archivesBaseName = Constants.modid
@@ -81,51 +80,15 @@ dependencies {
 
     modCompile(group = "net.fabricmc", name = "fabric-loader", version = Fabric.Loader.version)
 
-    shadow(Jetbrains.Kotlin.stdLibJkd8)
-    shadow(Jetbrains.Kotlin.reflect)
-    shadow(Jetbrains.annotations)
-    shadow(Jetbrains.KotlinX.coroutinesCore)
-    shadow(Jetbrains.KotlinX.coroutinesJdk8)
-//    include(Jetbrains.Kotlin.stdLibJkd8)
-//    include(Jetbrains.Kotlin.reflect)
-//    include(Jetbrains.annotations)
-//    include(Jetbrains.KotlinX.coroutinesCore)
-//    include(Jetbrains.KotlinX.coroutinesJdk8)
+    include(Jetbrains.Kotlin.stdLibJkd8)
+    include(Jetbrains.Kotlin.reflect)
+    include(Jetbrains.annotations)
+    include(Jetbrains.KotlinX.coroutinesCore)
+    include(Jetbrains.KotlinX.coroutinesJdk8)
 }
 
-
-
-fun MavenPublication.includeComponents() {
-    pom.withXml {
-        val dependenciesNode = asNode().appendNode("dependencies")
-
-        project.configurations.shadow.allDependencies.forEach {
-            if (it !is SelfResolvingDependency) {
-                val dependencyNode = dependenciesNode.appendNode("dependency")
-                dependencyNode.appendNode("groupId", it.group)
-                dependencyNode.appendNode("artifactId", it.name)
-                dependencyNode.appendNode("version", it.version)
-                dependencyNode.appendNode("scope", "runtime") // or compileOnly
-            }
-        }
-    }
-}
-val shadowJar by tasks.getting(ShadowJar::class) {
-    classifier = ""
-    configurations = listOf(
-        project.configurations.shadow
-    )
-    exclude("META-INF")
-}
-
-val remapJar = tasks.getByName<RemapJar>("remapJar") {
-    (this as Task).dependsOn(shadowJar)
-    mustRunAfter(shadowJar)
-    jar = shadowJar.archivePath
-}
-val remapSourcesJar = tasks.getByName<RemapSourcesJar>("remapSourcesJar") {
-//    jar = shadowJar.archivePath
-}
+val remapJar = tasks.getByName<RemapJar>("remapJar")
+val remapSourcesJar = tasks.getByName<RemapSourcesJar>("remapSourcesJar")
 
 val sourcesJar = tasks.create<Jar>("sourcesJar") {
     classifier = "sources"
@@ -134,33 +97,20 @@ val sourcesJar = tasks.create<Jar>("sourcesJar") {
 
 publishing {
     publications {
-        val shadowPublication = create("main", MavenPublication::class.java) {
+        create("main", MavenPublication::class.java) {
 
             groupId = project.group.toString()
             artifactId = project.name.toLowerCase()
             version = project.version.toString()
 
-            artifact(shadowJar)
-//            artifact(remapJar.jar) {
-//                builtBy(remapJar)
-//            }
-            artifact(sourcesJar) 
-//            {
-//                builtBy(remapSourcesJar)
-//            }
-
-            includeComponents()
-        }
-//        create("snapshot", MavenPublication::class.java) {
-//            groupId = project.group.toString()
-//            artifactId = project.name.toLowerCase()
-//            version = "${Constants.modVersion}-SNAPSHOT"
-//
 //            artifact(shadowJar)
-//            artifact(sourcesJar)
-//
-//            shadowComponents()
-//        }
+            artifact(remapJar.jar) {
+                builtBy(remapJar)
+            }
+            artifact(sourcesJar) {
+                builtBy(remapSourcesJar)
+            }
+        }
     }
     repositories {
         maven(url = "http://mavenupload.modmuss50.me/") {
@@ -187,6 +137,9 @@ if (curse_api_key != null && project.hasProperty("release")) {
             id = CURSEFORGE_ID
             releaseType = CURSEFORGE_RELEASE_TYPE
             addGameVersion("1.14-Snapshot")
+            addGameVersion("1.14")
+            addGameVersion("1.14.1")
+            addGameVersion("1.14.2")
 
             val changelog_file: String? by project
             if (changelog_file != null) {
