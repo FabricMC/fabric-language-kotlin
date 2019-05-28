@@ -1,4 +1,3 @@
-//import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import com.matthewprenger.cursegradle.CurseArtifact
 import com.matthewprenger.cursegradle.CurseProject
 import com.matthewprenger.cursegradle.CurseUploadTask
@@ -136,7 +135,6 @@ if (curse_api_key != null && project.hasProperty("release")) {
         project(closureOf<CurseProject> {
             id = CURSEFORGE_ID
             releaseType = CURSEFORGE_RELEASE_TYPE
-            addGameVersion("1.14-Snapshot")
             addGameVersion("1.14")
             addGameVersion("1.14.1")
             addGameVersion("1.14.2")
