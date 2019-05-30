@@ -79,6 +79,7 @@ dependencies {
 
     modCompile(group = "net.fabricmc", name = "fabric-loader", version = Fabric.Loader.version)
 
+    include(Jetbrains.Kotlin.stdLib)
     include(Jetbrains.Kotlin.stdLibJkd8)
     include(Jetbrains.Kotlin.reflect)
     include(Jetbrains.annotations)
