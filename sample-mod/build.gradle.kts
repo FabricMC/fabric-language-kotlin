@@ -1,4 +1,4 @@
-import net.fabricmc.loom.task.RemapJar
+import net.fabricmc.loom.task.RemapJarTask
 
 plugins {
     kotlin("jvm")// version Jetbrains.Kotlin.version
@@ -45,17 +45,20 @@ dependencies {
 
     modCompile(group = "net.fabricmc", name = "fabric-loader", version = Fabric.Loader.version)
 //    modCompile(group = "net.fabricmc", name = "fabric", version = Fabric.API.version + "+build.+")
-    include(group = "net.fabricmc", name = "fabric", version = Fabric.API.version + "+build.+")
+//    include(group = "net.fabricmc", name = "fabric-api", version = Fabric.API.version + "+build.+")
+    include(group = "net.fabricmc.fabric-api", name = "fabric-resource-loader-v0", version = "0.1.1" + "+")
 
     modCompile(group = "net.fabricmc", name = "fabric-language-kotlin", version = "${Jetbrains.Kotlin.version}+local")
 //    modCompile(project(":"))
 
-    include(group = "io.github.prospector.modmenu", name = "ModMenu", version = "+")
+    include(group = "io.github.prospector.modmenu", name = "ModMenu", version = "+") { 
+        
+    }
 }
 
 val publishToMavenLocal = rootProject.tasks.getByName<Task>("publishToMavenLocal")
 
-val remapJar = tasks.getByName<RemapJar>("remapJar") {
+val remapJar = tasks.getByName<RemapJarTask>("remapJar") {
     (this as Task).dependsOn(publishToMavenLocal)
 }
 

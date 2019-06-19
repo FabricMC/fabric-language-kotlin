@@ -2,8 +2,8 @@ import com.matthewprenger.cursegradle.CurseArtifact
 import com.matthewprenger.cursegradle.CurseProject
 import com.matthewprenger.cursegradle.CurseUploadTask
 import com.matthewprenger.cursegradle.Options
-import net.fabricmc.loom.task.RemapJar
-import net.fabricmc.loom.task.RemapSourcesJar
+import net.fabricmc.loom.task.RemapJarTask
+import net.fabricmc.loom.task.RemapSourcesJarTask
 
 plugins {
     kotlin("jvm") version Jetbrains.Kotlin.version
@@ -70,7 +70,7 @@ repositories {
 
 configurations.modCompile.extendsFrom(configurations.include)
 //configurations.runtime.extendsFrom(configurations.include)
-configurations.compileOnly.extendsFrom(configurations.modCompile)
+//configurations.compileOnly.extendsFrom(configurations.modCompile)
 
 dependencies {
     // this is ignored anyways
@@ -87,8 +87,8 @@ dependencies {
     include(Jetbrains.KotlinX.coroutinesJdk8)
 }
 
-val remapJar = tasks.getByName<RemapJar>("remapJar")
-val remapSourcesJar = tasks.getByName<RemapSourcesJar>("remapSourcesJar")
+val remapJar = tasks.getByName<RemapJarTask>("remapJar")
+val remapSourcesJar = tasks.getByName<RemapSourcesJarTask>("remapSourcesJar")
 
 val sourcesJar = tasks.create<Jar>("sourcesJar") {
     classifier = "sources"
@@ -104,7 +104,7 @@ publishing {
             version = project.version.toString()
 
 //            artifact(shadowJar)
-            artifact(remapJar.jar) {
+            artifact(remapJar.output) {
                 builtBy(remapJar)
             }
             artifact(sourcesJar) {
