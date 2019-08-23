@@ -38,14 +38,8 @@ dependencies {
 }
 ```
 
-
-Use the `kotlin` adapter for your mod to use by setting the `adapter` property in the `fabric.mod.json` file and 
-add a dependency entry to your `fabric.mod.json` file:
-
-
-For more info reference [format:modjson](https://fabricmc.net/wiki/format:modjson)
-
-Do not forget to set the `schemaVersion` to `1` or it will fall back to schema `0` and will not attempt to load entrypoints
+Use the `kotlin` adapter for your mod by setting the `adapter` property in the `fabric.mod.json` file. 
+Remember to the add a dependency entry to your `fabric.mod.json` file:
 
 ```json
 {
@@ -63,6 +57,10 @@ Do not forget to set the `schemaVersion` to `1` or it will fall back to schema `
     }
 }
 ```
+
+For more info reference [format:modjson](https://fabricmc.net/wiki/format:modjson)
+
+Do not forget to set the `schemaVersion` to `1` or it will fall back to schema `0` and will not attempt to load entrypoints
 
 ### entrypoints samples
 
