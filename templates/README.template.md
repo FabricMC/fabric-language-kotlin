@@ -18,7 +18,7 @@ repositories {
 }
 ```
 
-Repositories for build.gradle
+Repositories for build.gradle:
 ```groovy
 repositories {
     // [...]
@@ -29,7 +29,7 @@ repositories {
 }
 ```
 
-Dependencies (build.gradle and build.gradle.kts)
+Dependencies (build.gradle and build.gradle.kts):
 
 ```kotlin
 dependencies {
@@ -58,9 +58,9 @@ Remember to the add a dependency entry to your `fabric.mod.json` file:
 }
 ```
 
-For more info reference [format:modjson](https://fabricmc.net/wiki/format:modjson)
+For more info reference [format:modjson](https://fabricmc.net/wiki/format:modjson).
 
-Do not forget to set the `schemaVersion` to `1` or it will fall back to schema `0` and will not attempt to load entrypoints
+Do not forget to set the `schemaVersion` to `1` or it will fall back to schema `0` and will not attempt to load entrypoints.
 
 ### entrypoints samples
 
@@ -138,7 +138,7 @@ class MyMod {
 
 Functions do not get returned but executed, 
 so they have to only contain initialization code, 
-not return a initializer type
+not return a initializer type.
 
 In an `object`
 
@@ -190,7 +190,7 @@ As a top level function
 <details>
   <summary>Click to view code</summary><p>
 
-The classname gets constructed by taking the filename and appending `Kt`
+The classname gets constructed by taking the filename and appending `Kt`.
 ```json
 {
     "adapter": "kotlin",
@@ -257,9 +257,9 @@ class MyMod  {
 </p></details>
 
 Companion objects can be used by appending `\$Companion` to the class.
-Take care of `processResource` there, it might try to expand it, in that case escape it
+Take care of `processResource` there, it might try to expand it, in that case escape it.
 
-See examples in [sample-mod/fabric.mod.json](https://github.com/FabricMC/fabric-language-kotlin/blob/master/sample-mod/src/main/resources/fabric.mod.json)
+See examples in [sample-mod/fabric.mod.json](https://github.com/FabricMC/fabric-language-kotlin/blob/master/sample-mod/src/main/resources/fabric.mod.json).
 
 ## Bundled libraries
 
@@ -277,5 +277,5 @@ https://maven.fabricmc.net/net/fabricmc/fabric-language-kotlin/
 
 ## Updating README
 
-update the readme in `temaplates/README.template.md`
-run `./gradlew processMDTemplates`
+- Update the readme in `temaplates/README.template.md`.
+- Run `./gradlew processMDTemplates`.
