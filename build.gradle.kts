@@ -14,8 +14,6 @@ plugins {
     id("fabric-loom") version Fabric.Loom.version
 }
 
-//TODO: update fabric and mc and cursegradle to latest
-//TODO: use the new LanguageAdapter
 //TODO: cleanup readme
 
 base {
