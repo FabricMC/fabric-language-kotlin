@@ -10,12 +10,13 @@ plugins {
     `maven-publish`
     id("moe.nikky.persistentCounter") version "0.0.8-SNAPSHOT"
     id("net.minecrell.licenser") version "0.4.1"
-    id("com.matthewprenger.cursegradle") version "1.1.2"
-    id("fabric-loom") version Fabric.Loom.version// apply false
+    id("com.matthewprenger.cursegradle") version CurseGradle.version
+    id("fabric-loom") version Fabric.Loom.version
 }
 
 //TODO: update fabric and mc and cursegradle to latest
 //TODO: use the new LanguageAdapter
+//TODO: cleanup readme
 
 base {
     archivesBaseName = Constants.modid
@@ -75,7 +76,7 @@ fun DependencyHandlerScope.includeAndExpose(dep: String) {
 
 dependencies {
     minecraft(group = "com.mojang", name = "minecraft", version = Minecraft.version)
-    mappings(group = "net.fabricmc", name = "yarn", version = "${Minecraft.version}+build.${Fabric.Yarn.version}")
+    mappings(group = "net.fabricmc", name = "yarn", version =  Fabric.YarnMappings.version)
 
     modImplementation(group = "net.fabricmc", name = "fabric-loader", version = Fabric.Loader.version)
 
@@ -91,7 +92,7 @@ val remapJar = tasks.getByName<RemapJarTask>("remapJar")
 val remapSourcesJar = tasks.getByName<RemapSourcesJarTask>("remapSourcesJar")
 
 val sourcesJar = tasks.create<Jar>("sourcesJar") {
-    classifier = "sources"
+    archiveClassifier.set("sources")
     from(sourceSets["main"].allSource)
 }
 
@@ -138,6 +139,9 @@ if (curse_api_key != null && project.hasProperty("release")) {
             addGameVersion("1.14")
             addGameVersion("1.14.1")
             addGameVersion("1.14.2")
+            addGameVersion("1.14.3")
+            addGameVersion("1.14.4")
+            addGameVersion("Fabric")
 
             val changelog_file: String? by project
             if (changelog_file != null) {
