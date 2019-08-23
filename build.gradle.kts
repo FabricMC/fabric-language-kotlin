@@ -7,7 +7,6 @@ import net.fabricmc.loom.task.RemapSourcesJarTask
 
 plugins {
     kotlin("jvm") version Jetbrains.Kotlin.version
-    idea
     `maven-publish`
     id("moe.nikky.persistentCounter") version "0.0.8-SNAPSHOT"
     id("net.minecrell.licenser") version "0.4.1"
@@ -73,7 +72,6 @@ repositories {
 
 
 dependencies {
-    // this is ignored anyways
     minecraft(group = "com.mojang", name = "minecraft", version = Minecraft.version)
     mappings(group = "net.fabricmc", name = "yarn", version = "${Minecraft.version}+build.${Fabric.Yarn.version}")
 

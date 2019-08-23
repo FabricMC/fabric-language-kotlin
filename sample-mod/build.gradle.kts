@@ -2,7 +2,6 @@ import net.fabricmc.loom.task.RemapJarTask
 
 plugins {
     kotlin("jvm")
-    idea
     id("fabric-loom")
 }
 
