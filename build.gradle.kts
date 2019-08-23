@@ -68,7 +68,8 @@ repositories {
     jcenter()
 }
 
-configurations.modCompile.extendsFrom(configurations.include)
+
+//configurations.modCompile.get().extendsFrom(superConfigs.include)
 //configurations.runtime.extendsFrom(configurations.include)
 //configurations.compileOnly.extendsFrom(configurations.modCompile)
 
@@ -85,6 +86,12 @@ dependencies {
     include(Jetbrains.annotations)
     include(Jetbrains.KotlinX.coroutinesCore)
     include(Jetbrains.KotlinX.coroutinesJdk8)
+    modCompile(Jetbrains.Kotlin.stdLib)
+    modCompile(Jetbrains.Kotlin.stdLibJkd8)
+    modCompile(Jetbrains.Kotlin.reflect)
+    modCompile(Jetbrains.annotations)
+    modCompile(Jetbrains.KotlinX.coroutinesCore)
+    modCompile(Jetbrains.KotlinX.coroutinesJdk8)
 }
 
 val remapJar = tasks.getByName<RemapJarTask>("remapJar")
@@ -104,7 +111,7 @@ publishing {
             version = project.version.toString()
 
 //            artifact(shadowJar)
-            artifact(remapJar.output) {
+            artifact(remapJar) {
                 builtBy(remapJar)
             }
             artifact(sourcesJar) {
@@ -146,9 +153,11 @@ if (curse_api_key != null && project.hasProperty("release")) {
                 changelogType = "markdown"
                 changelog = file(changelog_file as String)
             }
-            mainArtifact(file("${project.buildDir}/libs/${base.archivesBaseName}-${version}.jar"), closureOf<CurseArtifact> {
-                displayName = "Fabric Language Kotlin $version"
-            })
+            mainArtifact(
+                file("${project.buildDir}/libs/${base.archivesBaseName}-${version}.jar"),
+                closureOf<CurseArtifact> {
+                    displayName = "Fabric Language Kotlin $version"
+                })
         })
     }
     project.afterEvaluate {

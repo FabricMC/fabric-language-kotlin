@@ -44,7 +44,6 @@
     ]
   },
   "depends": {
-    "fabric": ">=${fabricApiVersion}",
-    "fabric-language-kotlin": ">=${kotlinVersion}"
+
   }
 }
