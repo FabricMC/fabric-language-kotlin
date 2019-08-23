@@ -38,10 +38,10 @@ dependencies {
     minecraft(group = "com.mojang", name = "minecraft", version = Minecraft.version)
     mappings(group = "net.fabricmc", name = "yarn", version = "${Minecraft.version}+build.${Fabric.Yarn.version}")
 
-    modCompile(group = "net.fabricmc", name = "fabric-loader", version = Fabric.Loader.version)
+    modImplementation(group = "net.fabricmc", name = "fabric-loader", version = Fabric.Loader.version)
     include(group = "net.fabricmc", name = "fabric-api", version = Fabric.API.version + "+build.+")
 
-    modCompile(project(":"))
+    modImplementation(project(":"))
 
     include(group = "io.github.prospector.modmenu", name = "ModMenu", version = "+")
 }

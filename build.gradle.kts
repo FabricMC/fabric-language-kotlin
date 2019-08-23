@@ -14,10 +14,8 @@ plugins {
     id("fabric-loom") version Fabric.Loom.version// apply false
 }
 
-//TODO: make sample mod use gradle multi-module
 //TODO: update fabric and mc and cursegradle to latest
 //TODO: use the new LanguageAdapter
-//TODO: replace modCompile with modApi and make it so include() automatically does modApi()
 
 base {
     archivesBaseName = Constants.modid
@@ -70,25 +68,23 @@ repositories {
     jcenter()
 }
 
+fun DependencyHandlerScope.includeAndExpose(dep: String) {
+    modApi(dep)
+    include(dep)
+}
 
 dependencies {
     minecraft(group = "com.mojang", name = "minecraft", version = Minecraft.version)
     mappings(group = "net.fabricmc", name = "yarn", version = "${Minecraft.version}+build.${Fabric.Yarn.version}")
 
-    modCompile(group = "net.fabricmc", name = "fabric-loader", version = Fabric.Loader.version)
+    modImplementation(group = "net.fabricmc", name = "fabric-loader", version = Fabric.Loader.version)
 
-    include(Jetbrains.Kotlin.stdLib)
-    include(Jetbrains.Kotlin.stdLibJkd8)
-    include(Jetbrains.Kotlin.reflect)
-    include(Jetbrains.annotations)
-    include(Jetbrains.KotlinX.coroutinesCore)
-    include(Jetbrains.KotlinX.coroutinesJdk8)
-    modCompile(Jetbrains.Kotlin.stdLib)
-    modCompile(Jetbrains.Kotlin.stdLibJkd8)
-    modCompile(Jetbrains.Kotlin.reflect)
-    modCompile(Jetbrains.annotations)
-    modCompile(Jetbrains.KotlinX.coroutinesCore)
-    modCompile(Jetbrains.KotlinX.coroutinesJdk8)
+    includeAndExpose(Jetbrains.Kotlin.stdLib)
+    includeAndExpose(Jetbrains.Kotlin.stdLibJkd8)
+    includeAndExpose(Jetbrains.Kotlin.reflect)
+    includeAndExpose(Jetbrains.annotations)
+    includeAndExpose(Jetbrains.KotlinX.coroutinesCore)
+    includeAndExpose(Jetbrains.KotlinX.coroutinesJdk8)
 }
 
 val remapJar = tasks.getByName<RemapJarTask>("remapJar")
