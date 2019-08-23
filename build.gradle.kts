@@ -14,7 +14,6 @@ plugins {
     id("fabric-loom") version Fabric.Loom.version
 }
 
-//TODO: cleanup readme
 
 base {
     archivesBaseName = Constants.modid
