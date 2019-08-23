@@ -15,7 +15,10 @@ plugins {
     id("fabric-loom") version Fabric.Loom.version// apply false
 }
 
-//evaluationDependsOnChildren()
+//TODO: make sample mod use gradle multi-module
+//TODO: update fabric and mc and cursegradle to latest
+//TODO: use the new LanguageAdapter
+//TODO: replace modCompile with modApi and make it so include() automatically does modApi()
 
 base {
     archivesBaseName = Constants.modid
@@ -69,10 +72,6 @@ repositories {
 }
 
 
-//configurations.modCompile.get().extendsFrom(superConfigs.include)
-//configurations.runtime.extendsFrom(configurations.include)
-//configurations.compileOnly.extendsFrom(configurations.modCompile)
-
 dependencies {
     // this is ignored anyways
     minecraft(group = "com.mojang", name = "minecraft", version = Minecraft.version)
@@ -110,7 +109,6 @@ publishing {
             artifactId = project.name.toLowerCase()
             version = project.version.toString()
 
-//            artifact(shadowJar)
             artifact(remapJar) {
                 builtBy(remapJar)
             }
