@@ -41,7 +41,7 @@ dependencies {
     modCompile(group = "net.fabricmc", name = "fabric-loader", version = Fabric.Loader.version)
     include(group = "net.fabricmc", name = "fabric-api", version = Fabric.API.version + "+build.+")
 
-    modCompile(group = "net.fabricmc", name = "fabric-language-kotlin", version = "${Jetbrains.Kotlin.version}+local")
+    modCompile(project(":"))
 
     include(group = "io.github.prospector.modmenu", name = "ModMenu", version = "+")
 }
