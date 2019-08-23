@@ -16,9 +16,11 @@
 
 package net.fabricmc.language.kotlin
 
+
 import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import net.fabricmc.api.ModInitializer
@@ -51,6 +53,8 @@ object TestModObject : ModInitializer {
             }
             channel.close()
         }
+
+        val coroutines130Feature : Flow<Int>
         logger.info("done")
     }
 }
