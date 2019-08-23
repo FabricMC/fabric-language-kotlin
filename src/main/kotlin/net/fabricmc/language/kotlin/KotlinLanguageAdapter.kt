@@ -20,7 +20,7 @@ import net.fabricmc.loader.language.LanguageAdapter
 
 class KotlinLanguageAdapter : LanguageAdapter {
     override fun createInstance(clazz: Class<*>, options: LanguageAdapter.Options): Any {
-        println("[Fabric-Language-Kotlin/WARN]: Using a deprecated version of the Fabric Loader that will not be supported. Update Fabric Loader.")
+        println("[Fabric-Language-Kotlin/WARN]: $clazz uses a deprecated Fabric Kotlin loader format that will not be supported. Update $clazz.")
         return clazz.kotlin.objectInstance ?: run {
             System.err.println("Unable to find Kotlin object instance for ${clazz.name}, constructing new instance")
             clazz.newInstance()
