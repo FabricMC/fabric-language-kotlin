@@ -1,9 +1,8 @@
 import net.fabricmc.loom.task.RemapJarTask
 
 plugins {
-    kotlin("jvm")// version Jetbrains.Kotlin.version
-    idea
-    id("fabric-loom")// version Fabric.Loom.version
+    kotlin("jvm")
+    id("fabric-loom")
 }
 
 java {
@@ -31,29 +30,20 @@ repositories {
     jcenter()
 }
 
-//configurations.modCompile.extendsFrom(configurations.include)
-//configurations.compileOnly.extendsFrom(configurations.include)
-//configurations.compileOnly.extendsFrom(configurations.modCompile)
-
 minecraft {
 
 }
 
 dependencies {
     minecraft(group = "com.mojang", name = "minecraft", version = Minecraft.version)
-    mappings(group = "net.fabricmc", name = "yarn", version = "${Minecraft.version}+build.${Fabric.Yarn.version}")
+    mappings(group = "net.fabricmc", name = "yarn", version = Fabric.YarnMappings.version)
 
-    modCompile(group = "net.fabricmc", name = "fabric-loader", version = Fabric.Loader.version)
-//    modCompile(group = "net.fabricmc", name = "fabric", version = Fabric.API.version + "+build.+")
-    include(group = "net.fabricmc", name = "fabric-api", version = Fabric.API.version + "+build.+")
-//    include(group = "net.fabricmc.fabric-api", name = "fabric-resource-loader-v0", version = "0.1.1" + "+")
+    modImplementation(group = "net.fabricmc", name = "fabric-loader", version = Fabric.Loader.version)
+    modImplementation(group = "net.fabricmc.fabric-api", name = "fabric-api", version = Fabric.API.version)
 
-    modCompile(group = "net.fabricmc", name = "fabric-language-kotlin", version = "${Jetbrains.Kotlin.version}+local")
-//    modCompile(project(":"))
+    modImplementation(project(":"))
 
-    include(group = "io.github.prospector.modmenu", name = "ModMenu", version = "+") { 
-        
-    }
+    modImplementation(group = "io.github.prospector.modmenu", name = "ModMenu", version = "+")
 }
 
 val publishToMavenLocal = rootProject.tasks.getByName<Task>("publishToMavenLocal")

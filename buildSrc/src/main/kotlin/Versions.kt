@@ -18,19 +18,19 @@ object Jetbrains {
 
 object Fabric {
     object Loader {
-        const val version = "0.4.6+build.141" // https://maven.fabricmc.net/net/fabricmc/fabric-loader/
+        const val version = "0.4.9+build.160" // https://maven.fabricmc.net/net/fabricmc/fabric-loader/
     }
 
     object API {
-        const val version = "0.2.7"
+        const val version = "0.3.1+build.208"
     }
 
     object Loom {
         const val version = "0.2.5-SNAPSHOT"
     }
 
-    object Yarn {
-        const val version = "+"
+    object YarnMappings {
+        const val version = "${Minecraft.version}+build.12"
     }
     object LanguageKotlin {
         const val version = "${Jetbrains.Kotlin.version}+"
@@ -38,5 +38,9 @@ object Fabric {
 }
 
 object Minecraft {
-    const val version = "1.14.2"
+    const val version = "1.14.4"
+}
+
+object CurseGradle{
+    const val version = "1.4.0"
 }

@@ -7,15 +7,13 @@ import net.fabricmc.loom.task.RemapSourcesJarTask
 
 plugins {
     kotlin("jvm") version Jetbrains.Kotlin.version
-    idea
     `maven-publish`
     id("moe.nikky.persistentCounter") version "0.0.8-SNAPSHOT"
     id("net.minecrell.licenser") version "0.4.1"
-    id("com.matthewprenger.cursegradle") version "1.1.2"
-    id("fabric-loom") version Fabric.Loom.version// apply false
+    id("com.matthewprenger.cursegradle") version CurseGradle.version
+    id("fabric-loom") version Fabric.Loom.version
 }
 
-//evaluationDependsOnChildren()
 
 base {
     archivesBaseName = Constants.modid
@@ -68,37 +66,30 @@ repositories {
     jcenter()
 }
 
-
-//configurations.modCompile.get().extendsFrom(superConfigs.include)
-//configurations.runtime.extendsFrom(configurations.include)
-//configurations.compileOnly.extendsFrom(configurations.modCompile)
+fun DependencyHandlerScope.includeAndExpose(dep: String) {
+    modApi(dep)
+    include(dep)
+}
 
 dependencies {
-    // this is ignored anyways
     minecraft(group = "com.mojang", name = "minecraft", version = Minecraft.version)
-    mappings(group = "net.fabricmc", name = "yarn", version = "${Minecraft.version}+build.${Fabric.Yarn.version}")
+    mappings(group = "net.fabricmc", name = "yarn", version =  Fabric.YarnMappings.version)
 
-    modCompile(group = "net.fabricmc", name = "fabric-loader", version = Fabric.Loader.version)
+    modImplementation(group = "net.fabricmc", name = "fabric-loader", version = Fabric.Loader.version)
 
-    include(Jetbrains.Kotlin.stdLib)
-    include(Jetbrains.Kotlin.stdLibJkd8)
-    include(Jetbrains.Kotlin.reflect)
-    include(Jetbrains.annotations)
-    include(Jetbrains.KotlinX.coroutinesCore)
-    include(Jetbrains.KotlinX.coroutinesJdk8)
-    modCompile(Jetbrains.Kotlin.stdLib)
-    modCompile(Jetbrains.Kotlin.stdLibJkd8)
-    modCompile(Jetbrains.Kotlin.reflect)
-    modCompile(Jetbrains.annotations)
-    modCompile(Jetbrains.KotlinX.coroutinesCore)
-    modCompile(Jetbrains.KotlinX.coroutinesJdk8)
+    includeAndExpose(Jetbrains.Kotlin.stdLib)
+    includeAndExpose(Jetbrains.Kotlin.stdLibJkd8)
+    includeAndExpose(Jetbrains.Kotlin.reflect)
+    includeAndExpose(Jetbrains.annotations)
+    includeAndExpose(Jetbrains.KotlinX.coroutinesCore)
+    includeAndExpose(Jetbrains.KotlinX.coroutinesJdk8)
 }
 
 val remapJar = tasks.getByName<RemapJarTask>("remapJar")
 val remapSourcesJar = tasks.getByName<RemapSourcesJarTask>("remapSourcesJar")
 
 val sourcesJar = tasks.create<Jar>("sourcesJar") {
-    classifier = "sources"
+    archiveClassifier.set("sources")
     from(sourceSets["main"].allSource)
 }
 
@@ -110,7 +101,6 @@ publishing {
             artifactId = project.name.toLowerCase()
             version = project.version.toString()
 
-//            artifact(shadowJar)
             artifact(remapJar) {
                 builtBy(remapJar)
             }
@@ -146,6 +136,9 @@ if (curse_api_key != null && project.hasProperty("release")) {
             addGameVersion("1.14")
             addGameVersion("1.14.1")
             addGameVersion("1.14.2")
+            addGameVersion("1.14.3")
+            addGameVersion("1.14.4")
+            addGameVersion("Fabric")
 
             val changelog_file: String? by project
             if (changelog_file != null) {

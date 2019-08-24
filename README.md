@@ -8,60 +8,38 @@ Fabric language module for [Kotlin](https://kotlinlang.org/). Adds support for u
 ## Usage
 Add it as a dependency:
 
-build.gradle.kts
+Repositories for build.gradle.kts
 ```kotlin
 repositories {
+    // [...]
     maven(url = "http://maven.fabricmc.net/") {
         name = "Fabric"
     }
-    maven(url = "https://kotlin.bintray.com/kotlinx") {
-        name = "Kotlin X"
-    }
-    // other repos
-    mavenCentral()
-    jcenter()
-}
-
-dependencies {
-    // TODO: loom 0.3.0 will allow using only modCompile
-	modCompile(group = "net.fabricmc", name = "fabric-loader", version = "0.4.0+build.121")
-    compileOnly(group = "net.fabricmc", name = "fabric-loader", version = "0.4.0+build.121")
-
-    modCompile(group = "net.fabricmc", name = "fabric-language-kotlin", version = "1.3.30-SNAPSHOT")
-	compileOnly(group = "net.fabricmc", name = "fabric-language-kotlin", version = "1.3.30-SNAPSHOT")
 }
 ```
 
-build.gradle
+Repositories for build.gradle:
 ```groovy
 repositories {
+    // [...]
     maven {
         url = "http://maven.fabricmc.net/"
         name = "Fabric"
     }
-    maven {
-        url = "https://kotlin.bintray.com/kotlinx"
-        name = "Kotlin X"
-    }
-}
-
-dependencies {
-    // TODO: loom 0.3.0 will allow using only modCompile
-	modCompile(group: "net.fabricmc", name: "fabric-loader", version: "0.4.0+build.121")
-	compileOnly(group: "net.fabricmc", name: "fabric-loader", version: "0.4.0+build.121")
-
-	modCompile(group: "net.fabricmc", name: "fabric-language-kotlin", version: "1.3.30-SNAPSHOT")
-	compileOnly(group: "net.fabricmc", name: "fabric-language-kotlin", version: "1.3.30-SNAPSHOT")
 }
 ```
 
-use the `kotlin` adapter for your mod to use by setting the `adapter` property in the `fabric.mod.json` file:
-and
-Add a dependency entry to your `fabric.mod.json` file:
+Dependencies (build.gradle and build.gradle.kts):
 
-for more info reference [format:modjson](https://fabricmc.net/wiki/format:modjson)
+```kotlin
+dependencies {
+    // [...]
+    modImplementation(group = "net.fabricmc", name = "fabric-language-kotlin", version = "1.3.50-SNAPSHOT")
+}
+```
 
-do not forget to set the `schemaVersion` to `1` or it will fall back to schema `0` and will not attempt to load entrypoints
+Use the `kotlin` adapter for your mod by setting the `adapter` property in the `fabric.mod.json` file. 
+Remember to the add a dependency entry to your `fabric.mod.json` file:
 
 ```json
 {
@@ -75,16 +53,20 @@ do not forget to set the `schemaVersion` to `1` or it will fall back to schema `
         ]
     },
     "requires": {
-        "fabric-language-kotlin": ">=1.3.30"
+        "fabric-language-kotlin": ">=1.3.50"
     }
 }
 ```
+
+For more info reference [format:modjson](https://fabricmc.net/wiki/format:modjson).
+
+Do not forget to set the `schemaVersion` to `1` or it will fall back to schema `0` and will not attempt to load entrypoints.
 
 ### entrypoints samples
 
 #### class reference
 
-as a `class`
+As a `class`
 
 <details>
   <summary>Click to view code</summary><p>
@@ -106,7 +88,7 @@ class MyMod : ModInitializer {
 ```
 </p></details>
 
-as a`object`
+As an `object`
 
 <details>
   <summary>Click to view code</summary><p>
@@ -128,7 +110,7 @@ object MyMod : ModInitializer {
 ```
 </p></details>
 
-as a `companion object`
+As a `companion object`
 
 <details>
   <summary>Click to view code</summary><p>
@@ -154,11 +136,11 @@ class MyMod {
 
 #### function reference
 
-functions do not get returned but executed, 
+Functions do not get returned but executed, 
 so they have to only contain initialization code, 
-not return a initializer type
+not return a initializer type.
 
-in a `object`
+In an `object`
 
 <details>
   <summary>Click to view code</summary><p>
@@ -180,7 +162,7 @@ object MyMod  {
 ```
 </p></details>
 
-in a `companion object`
+In a `companion object`
 <details>
   <summary>Click to view code</summary><p>
 
@@ -203,12 +185,12 @@ class MyMod  {
 ```
 </p></details>
 
-as top level function
+As a top level function
 
 <details>
   <summary>Click to view code</summary><p>
 
-the classname gets constructed by taking the filename and appending `Kt`
+The classname gets constructed by taking the filename and appending `Kt`.
 ```json
 {
     "adapter": "kotlin",
@@ -216,7 +198,7 @@ the classname gets constructed by taking the filename and appending `Kt`
 }
 ```
 
-file: `src/main/kotlin/mymod/MyMod.kt`
+File: `src/main/kotlin/mymod/MyMod.kt`
 ```kotlin
 package mymod
 
@@ -228,7 +210,7 @@ fun init() {
 
 #### field reference
 
-in a `object`
+In an `object`
 
 <details>
   <summary>Click to view code</summary><p>
@@ -250,7 +232,7 @@ object MyMod  {
 ```
 </p></details>
 
-in a `companion object`
+In a `companion object`
 
 <details>
   <summary>Click to view code</summary><p>
@@ -274,19 +256,19 @@ class MyMod  {
 ```
 </p></details>
 
-Companion objects can be used by appending `$Companion` to the class
-take care of `processResource` there, it might try to expand it, in that case escape it
+Companion objects can be used by appending `$Companion` to the class.
+Take care of `processResource` there, it might try to expand it, in that case escape it.
 
-see examples in [sample-mod/fabric.mod.json](https://github.com/FabricMC/fabric-language-kotlin/blob/master/sample-mod/src/main/resources/fabric.mod.json)
+See examples in [sample-mod/fabric.mod.json](https://github.com/FabricMC/fabric-language-kotlin/blob/master/sample-mod/src/main/resources/fabric.mod.json).
 
 ## Bundled libraries
 
 ```
-org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.3.30
-org.jetbrains.kotlin:kotlin-reflect:1.3.30
-org.jetbrains:annotations:16.0.3
-org.jetbrains.kotlinx:kotlinx-coroutines-core:1.2.0
-org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:1.2.0
+org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.3.50
+org.jetbrains.kotlin:kotlin-reflect:1.3.50
+org.jetbrains:annotations:17.0.0
+org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.0
+org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:1.3.0
 ```
 
 ## Available Versions
@@ -295,5 +277,5 @@ https://maven.fabricmc.net/net/fabricmc/fabric-language-kotlin/
 
 ## Updating README
 
-update the readme in `temaplates/README.template.md`
-run `./gradlew processMDTemplates`
+- Update the readme in `temaplates/README.template.md`.
+- Run `./gradlew processMDTemplates`.
