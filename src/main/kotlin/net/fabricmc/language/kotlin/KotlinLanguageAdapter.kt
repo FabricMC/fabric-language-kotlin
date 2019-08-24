@@ -17,10 +17,13 @@
 package net.fabricmc.language.kotlin
 
 import net.fabricmc.loader.language.LanguageAdapter
+import org.apache.logging.log4j.LogManager
+
+private val Logger = LogManager.getLogger("Fabric-Language-Kotlin")
 
 class KotlinLanguageAdapter : LanguageAdapter {
     override fun createInstance(clazz: Class<*>, options: LanguageAdapter.Options): Any {
-        println("[Fabric-Language-Kotlin/WARN]: $clazz is using a deprecated language adapter, support for this will be dropped in a future update. Update $clazz.")
+        Logger.warn("$clazz is using a deprecated language adapter, support for this will be dropped in a future update. Update $clazz.")
         return clazz.kotlin.objectInstance ?: run {
             System.err.println("Unable to find Kotlin object instance for ${clazz.name}, constructing new instance")
             clazz.newInstance()
