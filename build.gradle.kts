@@ -19,11 +19,6 @@ base {
     archivesBaseName = Constants.modid
 }
 
-val branch = System.getenv("GIT_BRANCH")
-    ?.takeUnless { it == "master" }
-    ?.let { "-$it" }
-    ?: ""
-
 val buildNumber = counter.variable(id = "buildNumber", key = Constants.modVersion + branch)
 
 group = Constants.group
