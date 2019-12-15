@@ -3,7 +3,7 @@ object Jetbrains {
     const val annotations = "org.jetbrains:annotations:$annotationsVersion"
 
     object Kotlin {
-        const val version = "1.3.60"
+        const val version = "1.3.61"
         const val stdLib = "org.jetbrains.kotlin:kotlin-stdlib:$version"
         const val stdLibJkd7 = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$version"
         const val stdLibJkd8 = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$version"
@@ -11,7 +11,7 @@ object Jetbrains {
     }
 
     object KotlinX {
-        private const val coroutinesVersion = "1.3.2"
+        private const val coroutinesVersion = "1.3.3"
         const val coroutinesCore = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion"
         const val coroutinesJdk8 = "org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:$coroutinesVersion"
     }
@@ -32,9 +32,6 @@ object Fabric {
 
     object YarnMappings {
         const val version = "${Minecraft.version}+build.12"
-    }
-    object LanguageKotlin {
-        const val version = "${Jetbrains.Kotlin.version}+"
     }
 }
 
