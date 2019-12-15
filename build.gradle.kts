@@ -74,6 +74,7 @@ dependencies {
 
     includeAndExpose(Jetbrains.Kotlin.stdLib)
     includeAndExpose(Jetbrains.Kotlin.stdLibJkd8)
+    includeAndExpose(Jetbrains.Kotlin.stdLibJkd7)
     includeAndExpose(Jetbrains.Kotlin.reflect)
     includeAndExpose(Jetbrains.annotations)
     includeAndExpose(Jetbrains.KotlinX.coroutinesCore)
