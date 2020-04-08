@@ -68,7 +68,7 @@ fun DependencyHandlerScope.includeAndExpose(dep: String) {
 
 dependencies {
     minecraft(group = "com.mojang", name = "minecraft", version = Minecraft.version)
-    mappings(group = "net.fabricmc", name = "yarn", version =  Fabric.YarnMappings.version)
+    mappings(group = "net.fabricmc", name = "yarn", version = Fabric.YarnMappings.version, classifier = "v2")
 
     modImplementation(group = "net.fabricmc", name = "fabric-loader", version = Fabric.Loader.version)
 
