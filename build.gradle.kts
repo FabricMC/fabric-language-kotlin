@@ -136,6 +136,7 @@ if (curse_api_key != null && project.hasProperty("release")) {
             addGameVersion("1.14.4")
             addGameVersion("1.15-Snapshot")
             addGameVersion("1.15")
+            addGameVersion("1.16")
             addGameVersion("Fabric")
 
             val changelog_file: String? by project
