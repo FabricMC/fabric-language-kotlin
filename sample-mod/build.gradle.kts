@@ -1,4 +1,4 @@
-import net.fabricmc.loom.task.RemapJarTask
+import java.util.Properties
 
 plugins {
     kotlin("jvm")
@@ -10,12 +10,25 @@ java {
     targetCompatibility = JavaVersion.VERSION_1_8
 }
 
-base {
-    archivesBaseName = Constants.modid + "-test"
+// load props from parent project
+val parentProps = rootDir.parentFile.resolve("gradle.properties").bufferedReader().use {
+    Properties().apply {
+        load(it)
+    }
 }
 
-group = Constants.group
-version = Constants.modVersion
+val modId: String by parentProps
+val modVersion: String by parentProps
+val group: String by parentProps
+//val minecraftVersion: String by props
+
+base {
+    archivesBaseName = modId + "-test"
+}
+
+
+project.group = group
+version = modVersion
 
 
 repositories {
@@ -34,32 +47,43 @@ minecraft {
 
 }
 
+val versionProps = rootDir.resolve("versions.properties").bufferedReader().use {
+    Properties().apply {
+        load(it)
+    }
+}
+// load version of api and pick the minecraft part
+val minecraftVersion = versionProps["version.net.fabricmc.fabric-api..fabric-api"].toString().substringAfterLast('-')
+
 dependencies {
-    minecraft(group = "com.mojang", name = "minecraft", version = Minecraft.version)
-    mappings(group = "net.fabricmc", name = "yarn", version = Fabric.YarnMappings.version, classifier = "v2")
+    minecraft(group = "com.mojang", name = "minecraft", version = minecraftVersion)
+    mappings(group = "net.fabricmc", name = "yarn", version = minecraftVersion+"+build.1", classifier = "v2")
 
-    modImplementation(group = "net.fabricmc", name = "fabric-loader", version = Fabric.Loader.version)
-    modImplementation(group = "net.fabricmc.fabric-api", name = "fabric-api", version = Fabric.API.version)
+    modImplementation("net.fabricmc:fabric-loader:_")
+    modImplementation("net.fabricmc.fabric-api:fabric-api:_")
 
-    modImplementation(project(":"))
+    modImplementation("$group:$modId:$modVersion+local")
 
-    modImplementation(group = "io.github.prospector.modmenu", name = "ModMenu", version = "+")
+//    modImplementation("io.github.prospector.modmenu:ModMenu:_")
 }
 
-val publishToMavenLocal = rootProject.tasks.getByName<Task>("publishToMavenLocal")
+//val publishToMavenLocal = rootProject.tasks.getByName<Task>("publishToMavenLocal")
 
-val remapJar = tasks.getByName<RemapJarTask>("remapJar") {
-    (this as Task).dependsOn(publishToMavenLocal)
-}
+//val remapJar = tasks.getByName<RemapJarTask>("remapJar") {
+//    (this as Task).dependsOn(publishToMavenLocal)
+//}
+
+val fabricApiVersion = ""
+val kotlinVersion = ""
 
 tasks.getByName<ProcessResources>("processResources") {
     filesMatching("fabric.mod.json") {
         expand(
             mutableMapOf(
-                "modid" to Constants.modid,
-                "version" to Constants.modVersion,
-                "kotlinVersion" to Jetbrains.Kotlin.version,
-                "fabricApiVersion" to Fabric.API.version
+                "modid" to modId,
+                "version" to modVersion,
+                "kotlinVersion" to kotlinVersion,
+                "fabricApiVersion" to fabricApiVersion
             )
         )
     }

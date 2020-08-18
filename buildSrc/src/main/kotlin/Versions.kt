@@ -11,7 +11,7 @@ object Jetbrains {
     }
 
     object KotlinX {
-        private const val coroutinesVersion = "1.3.7"
+        private const val coroutinesVersion = "1.3.9"
         const val coroutinesCore = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion"
         const val coroutinesJdk8 = "org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:$coroutinesVersion"
     }

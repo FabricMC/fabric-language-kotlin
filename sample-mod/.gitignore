@@ -1,0 +1,20 @@
+# Ignore everything
+/*
+
+# Folders
+!/gradle
+!/buildSrc
+!/src
+
+# Files
+!/.gitattributes
+!/.gitignore
+!/build.gradle.kts
+!/gradle.properties
+!/gradlew
+!/gradlew.bat
+!/HEADER
+!/Jenkinsfile
+!/LICENSE
+!/README.md
+!/settings.gradle.kts

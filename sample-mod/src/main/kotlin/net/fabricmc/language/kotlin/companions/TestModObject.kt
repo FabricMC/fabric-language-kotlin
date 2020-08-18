@@ -34,7 +34,7 @@ class TestModObject {
             logger.info("**************************")
 
             // TODO: figure out how to make the logger actually display the coroutine debug info
-            val prev = System.setProperty("kotlinx.coroutines.debug", "")
+            val prev = System.setProperty("kotlinx.coroutines.debug", "on")
             logger.debug("'kotlinx.coroutines.debug' prev: $prev")
 
             // look we can do coroutines

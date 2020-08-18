@@ -6,6 +6,9 @@
   "entrypoints": {
     "main": [
       {
+        "value": "net.fabricmc.language.kotlin.TestModClass"
+      },
+      {
         "adapter": "kotlin",
         "value": "net.fabricmc.language.kotlin.TestModClass"
       },

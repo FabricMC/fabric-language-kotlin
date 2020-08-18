@@ -22,10 +22,7 @@ import net.fabricmc.loader.api.ModContainer
 import net.fabricmc.loader.launch.common.FabricLauncherBase
 import net.fabricmc.loader.util.DefaultLanguageAdapter
 import java.lang.reflect.Proxy
-import kotlin.reflect.full.createInstance
-import kotlin.reflect.full.declaredFunctions
-import kotlin.reflect.full.declaredMemberProperties
-import kotlin.reflect.full.isSuperclassOf
+import kotlin.reflect.full.*
 import kotlin.reflect.jvm.jvmErasure
 
 open class KotlinAdapter : LanguageAdapter {
@@ -47,6 +44,7 @@ open class KotlinAdapter : LanguageAdapter {
             1 -> {
                 return if (type.isAssignableFrom(c)) {
                     // try to return the objectInstance first
+                    @Suppress("UNCHECKED_CAST")
                     k.objectInstance as? T
                         ?: try {
                             k.createInstance() as T
@@ -62,7 +60,7 @@ open class KotlinAdapter : LanguageAdapter {
                     val instance = k.objectInstance ?: run {
                         throw LanguageAdapterException("$k is not a object")
                     }
-                    val methodList = k.declaredFunctions.filter { m ->
+                    val methodList = instance::class.memberFunctions.filter { m ->
                         m.name == methodSplit[1]
                     }
 
