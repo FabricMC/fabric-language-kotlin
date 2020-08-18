@@ -20,7 +20,7 @@ val parentProps = rootDir.parentFile.resolve("gradle.properties").bufferedReader
 val modId: String by parentProps
 val modVersion: String by parentProps
 val group: String by parentProps
-//val minecraftVersion: String by props
+val minecraftVersion: String by parentProps
 
 base {
     archivesBaseName = modId + "-test"
@@ -47,13 +47,13 @@ minecraft {
 
 }
 
-val versionProps = rootDir.resolve("versions.properties").bufferedReader().use {
-    Properties().apply {
-        load(it)
-    }
-}
-// load version of api and pick the minecraft part
-val minecraftVersion = versionProps["version.net.fabricmc.fabric-api..fabric-api"].toString().substringAfterLast('-')
+//val versionProps = rootDir.resolve("versions.properties").bufferedReader().use {
+//    Properties().apply {
+//        load(it)
+//    }
+//}
+//// load version of api and pick the minecraft part
+//val minecraftVersion = versionProps["version.net.fabricmc.fabric-api..fabric-api"].toString().substringAfterLast('-')
 
 dependencies {
     minecraft(group = "com.mojang", name = "minecraft", version = minecraftVersion)
