@@ -83,7 +83,7 @@ dependencies {
     includeAndExpose(kotlin("stdlib-jdk7", "_"))
     includeAndExpose(kotlin("reflect", "_"))
     includeAndExpose("org.jetbrains:annotations:_")
-    includeAndExpose("org.jetbrains.kotlinx:kotlinx-coroutines-core:_")
+    includeAndExpose("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:_")
     includeAndExpose("org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:_")
 }
 

@@ -24,6 +24,8 @@ import net.fabricmc.loader.util.DefaultLanguageAdapter
 import java.lang.reflect.Proxy
 import kotlin.reflect.full.*
 import kotlin.reflect.jvm.jvmErasure
+import kotlin.reflect.jvm.reflect
+import kotlin.system.exitProcess
 
 open class KotlinAdapter : LanguageAdapter {
     override fun <T : Any> create(mod: ModContainer, value: String, type: Class<T>): T {
@@ -70,7 +72,7 @@ open class KotlinAdapter : LanguageAdapter {
                         try {
                             val fType = field.returnType
 
-                            if (!methodList.isEmpty()) {
+                            if (methodList.isNotEmpty()) {
                                 throw LanguageAdapterException("Ambiguous $value - refers to both field and method!")
                             }
 
@@ -96,12 +98,12 @@ open class KotlinAdapter : LanguageAdapter {
                         throw LanguageAdapterException("Found multiple method entries of name $value!")
                     }
 
-                    val targetMethod = methodList[0]
-
-                    //noinspection unchecked
                     return Proxy.newProxyInstance(
                         FabricLauncherBase.getLauncher().targetClassLoader, arrayOf<Class<*>>(type)
-                    ) { proxy, method, args -> targetMethod.call(instance) } as T
+                    ) { proxy, method, args ->
+                        val targetMethod = methodList[0]
+                        targetMethod.call(instance)
+                    } as T
                 } catch(e: UnsupportedOperationException) {
                     // TODO: detect facades without relying on exceptions
                     return DefaultLanguageAdapter.INSTANCE.create(mod, value, type)

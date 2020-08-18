@@ -28,7 +28,7 @@ class TestModObject {
 
         val logger = LogManager.getFormatterLogger("KotlinLanguageTest")
 
-        override fun onInitialize() = runBlocking {
+        override fun onInitialize() {
             logger.info("**************************")
             logger.info("Hello from Kotlin TestModObject")
             logger.info("**************************")
@@ -37,21 +37,23 @@ class TestModObject {
             val prev = System.setProperty("kotlinx.coroutines.debug", "on")
             logger.debug("'kotlinx.coroutines.debug' prev: $prev")
 
-            // look we can do coroutines
-            val channel = Channel<Int>()
-            launch(CoroutineName("printer")) {
-                for (k in channel) {
-                    logger.info("received: $k")
+            runBlocking {
+                // look we can do coroutines
+                val channel = Channel<Int>()
+                launch(CoroutineName("printer")) {
+                    for (k in channel) {
+                        logger.info("received: $k")
+                    }
                 }
-            }
-            launch(CoroutineName("sender")) {
-                for (i in (0 until 10)) {
-                    delay(100)
-                    channel.send(i)
+                launch(CoroutineName("sender")) {
+                    for (i in (0 until 10)) {
+                        delay(100)
+                        channel.send(i)
+                    }
+                    channel.close()
                 }
-                channel.close()
+                logger.info("done")
             }
-            logger.info("done")
         }
     }
 }
