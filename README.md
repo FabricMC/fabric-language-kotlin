@@ -264,11 +264,11 @@ See examples in [sample-mod/fabric.mod.json](https://github.com/FabricMC/fabric-
 ## Bundled libraries
 
 ```
-1.4.0
-1.4.0
-17.0.0
-1.3.9
-1.3.9
+org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.4.0
+org.jetbrains.kotlin:kotlin-reflect:1.4.0
+org.jetbrains:annotations:20.0.0
+org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.9
+org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:1.3.9
 ```
 
 ## Available Versions
