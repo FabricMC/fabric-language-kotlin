@@ -21,6 +21,7 @@
 
 !/sample-mod
 !/templates/
+!/.github/
 
 build/
 .gradle/
