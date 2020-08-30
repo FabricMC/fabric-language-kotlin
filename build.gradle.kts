@@ -7,11 +7,11 @@ import net.fabricmc.loom.task.RemapSourcesJarTask
 import java.util.Properties
 
 plugins {
-    kotlin("jvm")
-    id("moe.nikky.persistentCounter")
-    id("net.minecrell.licenser")
-    id("com.matthewprenger.cursegradle")
-    id("fabric-loom")
+    kotlin("jvm") version "1.4.0"
+    id("moe.nikky.persistentCounter") version "0.0.8-SNAPSHOT"
+    id("net.minecrell.licenser") version "0.4.1"
+    id("com.matthewprenger.cursegradle") version "1.4.0"
+    id("fabric-loom") version "0.5.12"
     `maven-publish`
 }
 
@@ -76,15 +76,15 @@ dependencies {
     minecraft(group = "com.mojang", name = "minecraft", version = minecraftVersion)
     mappings(group = "net.fabricmc", name = "yarn", version = minecraftVersion+"+build.1", classifier = "v2")
 
-    modImplementation("net.fabricmc:fabric-loader:_")
+    modImplementation("net.fabricmc:fabric-loader:0.9.1+build.205")
 
-    includeAndExpose(kotlin("stdlib", "_"))
-    includeAndExpose(kotlin("stdlib-jdk8", "_"))
-    includeAndExpose(kotlin("stdlib-jdk7", "_"))
-    includeAndExpose(kotlin("reflect", "_"))
-    includeAndExpose("org.jetbrains:annotations:_")
-    includeAndExpose("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:_")
-    includeAndExpose("org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:_")
+    includeAndExpose(kotlin("stdlib"))
+    includeAndExpose(kotlin("stdlib-jdk8"))
+    includeAndExpose(kotlin("stdlib-jdk7"))
+    includeAndExpose(kotlin("reflect"))
+    includeAndExpose("org.jetbrains:annotations:20.0.0")
+    includeAndExpose("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.3.9")
+    includeAndExpose("org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:1.3.9")
 }
 
 val remapJar = tasks.getByName<RemapJarTask>("remapJar")
@@ -167,25 +167,19 @@ if (curse_api_key != null && project.hasProperty("release")) {
 }
 
 tasks.create<Copy>("processMDTemplates") {
-    val versionProps = rootDir.resolve("versions.properties").bufferedReader().use {
-        Properties().apply {
-            load(it)
-        }
-    }
-
     group = "documentation"
     from(rootDir.resolve("templates"))
     include("**/*.template.md")
     filesMatching("**/*.template.md") {
         name = sourceName.substringBeforeLast(".template.md") + ".md"
         expand(
-            "KOTLIN_VERSION" to versionProps["version.kotlin"],
-            "LOADER_VERSION" to versionProps["version.net.fabricmc..fabric-loader"],
-            "BUNDLED_STDLIB" to versionProps["version.kotlin"],
-            "BUNDLED_REFLECT" to versionProps["version.kotlin"],
-            "BUNDLED_ANNOTATIONS" to versionProps["version.org.jetbrains..annotations"],
-            "BUNDLED_COROUTINES_CORE" to versionProps["version.kotlinx.coroutines"],
-            "BUNDLED_COROUTINES_JDK8" to versionProps["version.kotlinx.coroutines"]
+            "KOTLIN_VERSION" to "1.4.0",
+            "LOADER_VERSION" to "0.9.1+build.205",
+            "BUNDLED_STDLIB" to "1.4.0",
+            "BUNDLED_REFLECT" to "1.4.0",
+            "BUNDLED_ANNOTATIONS" to "20.0.0",
+            "BUNDLED_COROUTINES_CORE" to "1.3.9",
+            "BUNDLED_COROUTINES_JDK8" to "1.3.9"
         )
     }
     destinationDir = rootDir

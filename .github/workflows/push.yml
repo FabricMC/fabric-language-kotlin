@@ -10,6 +10,11 @@ jobs:
       image: openjdk:${{ matrix.java }}
       options: --user root
     steps:
-      - uses: actions/checkout@v1
-      - uses: gradle/wrapper-validation-action@v1
-      - run: ./gradlew -PincludeSample=false clean build --refresh-dependencies --full-stacktrace
+      - name: 'Clone Repo'
+        uses: actions/checkout@v2
+
+      - name: 'Validate Gradle Wrapper'
+        uses: gradle/wrapper-validation-action@v1
+
+      - name: 'Build'
+        run: ./gradlew clean build --refresh-dependencies --full-stacktrace --scan

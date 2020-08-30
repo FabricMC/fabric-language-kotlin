@@ -1,8 +1,8 @@
 import java.util.Properties
 
 plugins {
-    kotlin("jvm")
-    id("fabric-loom")
+    kotlin("jvm") version "1.4.0"
+    id("fabric-loom") version "0.5.12"
 }
 
 java {
@@ -59,8 +59,8 @@ dependencies {
     minecraft(group = "com.mojang", name = "minecraft", version = minecraftVersion)
     mappings(group = "net.fabricmc", name = "yarn", version = minecraftVersion+"+build.1", classifier = "v2")
 
-    modImplementation("net.fabricmc:fabric-loader:_")
-    modImplementation("net.fabricmc.fabric-api:fabric-api:_")
+    modImplementation("net.fabricmc:fabric-loader:0.9.1+build.205")
+    modImplementation("net.fabricmc.fabric-api:fabric-api:0.18.0+build.397-1.16")
 
     modImplementation("$group:$modId:$modVersion+local")
 
