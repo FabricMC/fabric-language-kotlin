@@ -46,7 +46,7 @@
       }
     ]
   },
-  "depends": {
-
+  "requires": {
+    "fabric-language-kotlin": ">=1.4.0"
   }
 }

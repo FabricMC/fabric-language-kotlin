@@ -7,11 +7,11 @@ import net.fabricmc.loom.task.RemapSourcesJarTask
 import java.util.Properties
 
 plugins {
-    kotlin("jvm") version "1.4.0"
+    kotlin("jvm") version Jetbrains.Kotlin.version
     id("moe.nikky.persistentCounter") version "0.0.8-SNAPSHOT"
     id("net.minecrell.licenser") version "0.4.1"
-    id("com.matthewprenger.cursegradle") version "1.4.0"
-    id("fabric-loom") version "0.5.12"
+    id("com.matthewprenger.cursegradle") version CurseGradle.version
+    id("fabric-loom") version Fabric.Loom.version
     `maven-publish`
 }
 
@@ -81,15 +81,15 @@ dependencies {
     minecraft(group = "com.mojang", name = "minecraft", version = minecraftVersion)
     mappings(group = "net.fabricmc", name = "yarn", version = minecraftVersion+"+build.1", classifier = "v2")
 
-    modImplementation("net.fabricmc:fabric-loader:0.9.1+build.205")
+    modImplementation("net.fabricmc:fabric-loader:${Fabric.Loader.version}")
 
-    includeAndExpose(kotlin("stdlib"))
-    includeAndExpose(kotlin("stdlib-jdk8"))
-    includeAndExpose(kotlin("stdlib-jdk7"))
-    includeAndExpose(kotlin("reflect"))
-    includeAndExpose("org.jetbrains:annotations:20.0.0")
-    includeAndExpose("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.3.9")
-    includeAndExpose("org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:1.3.9")
+    includeAndExpose(kotlin("stdlib", Jetbrains.Kotlin.version))
+    includeAndExpose(kotlin("stdlib-jdk8", Jetbrains.Kotlin.version))
+    includeAndExpose(kotlin("stdlib-jdk7", Jetbrains.Kotlin.version))
+    includeAndExpose(kotlin("reflect", Jetbrains.Kotlin.version))
+    includeAndExpose(Jetbrains.Annotations.dependency)
+    includeAndExpose(Jetbrains.KotlinX.Coroutines.core)
+    includeAndExpose(Jetbrains.KotlinX.Coroutines.jdk8)
 }
 
 val remapJar = tasks.getByName<RemapJarTask>("remapJar")
@@ -178,13 +178,13 @@ tasks.create<Copy>("processMDTemplates") {
     filesMatching("**/*.template.md") {
         name = sourceName.substringBeforeLast(".template.md") + ".md"
         expand(
-            "KOTLIN_VERSION" to "1.4.0",
-            "LOADER_VERSION" to "0.9.1+build.205",
-            "BUNDLED_STDLIB" to "1.4.0",
-            "BUNDLED_REFLECT" to "1.4.0",
-            "BUNDLED_ANNOTATIONS" to "20.0.0",
-            "BUNDLED_COROUTINES_CORE" to "1.3.9",
-            "BUNDLED_COROUTINES_JDK8" to "1.3.9"
+            "KOTLIN_VERSION" to Jetbrains.Kotlin.version,
+            "LOADER_VERSION" to Fabric.Loader.version,
+            "BUNDLED_STDLIB" to Jetbrains.Kotlin.version,
+            "BUNDLED_REFLECT" to Jetbrains.Kotlin.version,
+            "BUNDLED_ANNOTATIONS" to Jetbrains.Annotations.version,
+            "BUNDLED_COROUTINES_CORE" to Jetbrains.KotlinX.Coroutines.version,
+            "BUNDLED_COROUTINES_JDK8" to Jetbrains.KotlinX.Coroutines.version
         )
     }
     destinationDir = rootDir
