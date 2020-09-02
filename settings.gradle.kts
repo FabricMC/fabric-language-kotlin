@@ -11,6 +11,8 @@ plugins {
     id("com.gradle.enterprise") version "3.4.1"
 }
 
+rootProject.name = "fabric-language-kotlin"
+
 gradleEnterprise {
     buildScan {
         termsOfServiceUrl = "https://gradle.com/terms-of-service"
