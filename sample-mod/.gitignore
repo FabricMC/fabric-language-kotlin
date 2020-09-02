@@ -18,10 +18,3 @@
 !/LICENSE
 !/README.md
 !/settings.gradle.kts
-
-!/sample-mod
-!/templates/
-!/.github/
-
-build/
-.gradle/

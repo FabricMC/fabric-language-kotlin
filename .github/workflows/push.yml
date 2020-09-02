@@ -1,0 +1,20 @@
+name: Run Tests
+on: [push, pull_request]
+jobs:
+  gradle:
+    strategy:
+      matrix:
+        java: [8-jdk, 11-jdk, 14-jdk]
+    runs-on: ubuntu-20.04
+    container:
+      image: openjdk:${{ matrix.java }}
+      options: --user root
+    steps:
+      - name: 'Clone Repo'
+        uses: actions/checkout@v2
+
+      - name: 'Validate Gradle Wrapper'
+        uses: gradle/wrapper-validation-action@v1
+
+      - name: 'Build'
+        run: ./gradlew clean build --refresh-dependencies --full-stacktrace --scan

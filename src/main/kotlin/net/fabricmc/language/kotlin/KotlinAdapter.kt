@@ -22,11 +22,10 @@ import net.fabricmc.loader.api.ModContainer
 import net.fabricmc.loader.launch.common.FabricLauncherBase
 import net.fabricmc.loader.util.DefaultLanguageAdapter
 import java.lang.reflect.Proxy
-import kotlin.reflect.full.createInstance
-import kotlin.reflect.full.declaredFunctions
-import kotlin.reflect.full.declaredMemberProperties
-import kotlin.reflect.full.isSuperclassOf
+import kotlin.reflect.full.*
 import kotlin.reflect.jvm.jvmErasure
+import kotlin.reflect.jvm.reflect
+import kotlin.system.exitProcess
 
 open class KotlinAdapter : LanguageAdapter {
     override fun <T : Any> create(mod: ModContainer, value: String, type: Class<T>): T {
@@ -47,6 +46,7 @@ open class KotlinAdapter : LanguageAdapter {
             1 -> {
                 return if (type.isAssignableFrom(c)) {
                     // try to return the objectInstance first
+                    @Suppress("UNCHECKED_CAST")
                     k.objectInstance as? T
                         ?: try {
                             k.createInstance() as T
@@ -62,7 +62,7 @@ open class KotlinAdapter : LanguageAdapter {
                     val instance = k.objectInstance ?: run {
                         throw LanguageAdapterException("$k is not a object")
                     }
-                    val methodList = k.declaredFunctions.filter { m ->
+                    val methodList = instance::class.memberFunctions.filter { m ->
                         m.name == methodSplit[1]
                     }
 
@@ -72,7 +72,7 @@ open class KotlinAdapter : LanguageAdapter {
                         try {
                             val fType = field.returnType
 
-                            if (!methodList.isEmpty()) {
+                            if (methodList.isNotEmpty()) {
                                 throw LanguageAdapterException("Ambiguous $value - refers to both field and method!")
                             }
 
@@ -98,12 +98,12 @@ open class KotlinAdapter : LanguageAdapter {
                         throw LanguageAdapterException("Found multiple method entries of name $value!")
                     }
 
-                    val targetMethod = methodList[0]
-
-                    //noinspection unchecked
                     return Proxy.newProxyInstance(
                         FabricLauncherBase.getLauncher().targetClassLoader, arrayOf<Class<*>>(type)
-                    ) { proxy, method, args -> targetMethod.call(instance) } as T
+                    ) { proxy, method, args ->
+                        val targetMethod = methodList[0]
+                        targetMethod.call(instance)
+                    } as T
                 } catch(e: UnsupportedOperationException) {
                     // TODO: detect facades without relying on exceptions
                     return DefaultLanguageAdapter.INSTANCE.create(mod, value, type)

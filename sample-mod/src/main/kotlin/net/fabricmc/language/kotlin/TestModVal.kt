@@ -28,15 +28,15 @@ object TestModVal {
     val logger = LogManager.getFormatterLogger("KotlinLanguageTest")
 
     val initializer: ModInitializer = ModInitializer {
+        logger.info("**************************")
+        logger.info("Hello from Kotlin TestModVal")
+        logger.info("**************************")
+
+        // TODO: figure out how to make the logger actually display the coroutine debug info
+        val prev = System.setProperty("kotlinx.coroutines.debug", "")
+        logger.debug("'kotlinx.coroutines.debug' prev: $prev")
+
         runBlocking {
-            logger.info("**************************")
-            logger.info("Hello from Kotlin TestModVal")
-            logger.info("**************************")
-
-            // TODO: figure out how to make the logger actually display the coroutine debug info
-            val prev = System.setProperty("kotlinx.coroutines.debug", "")
-            logger.debug("'kotlinx.coroutines.debug' prev: $prev")
-
             // look we can do coroutines
             val channel = Channel<Int>()
             launch(CoroutineName("printer")) {

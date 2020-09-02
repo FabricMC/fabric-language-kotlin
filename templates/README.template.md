@@ -240,7 +240,7 @@ In a `companion object`
 ```json
 {
     "adapter": "kotlin",
-    "value": "mymod.MyMod\$Comanion::initializer"
+    "value": "mymod.MyMod\$Companion::initializer"
 }
 ```
 
@@ -264,11 +264,11 @@ See examples in [sample-mod/fabric.mod.json](https://github.com/FabricMC/fabric-
 ## Bundled libraries
 
 ```
-${BUNDLED_STDLIB}
-${BUNDLED_REFLECT}
-${BUNDLED_ANNOTATIONS}
-${BUNDLED_COROUTINES_CORE}
-${BUNDLED_COROUTINES_JDK8}
+org.jetbrains.kotlin:kotlin-stdlib-jdk8:${BUNDLED_STDLIB}
+org.jetbrains.kotlin:kotlin-reflect:${BUNDLED_REFLECT}
+org.jetbrains:annotations:${BUNDLED_ANNOTATIONS}
+org.jetbrains.kotlinx:kotlinx-coroutines-core:${BUNDLED_COROUTINES_CORE}
+org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:${BUNDLED_COROUTINES_JDK8}
 ```
 
 ## Available Versions

@@ -4,27 +4,38 @@ import com.matthewprenger.cursegradle.CurseUploadTask
 import com.matthewprenger.cursegradle.Options
 import net.fabricmc.loom.task.RemapJarTask
 import net.fabricmc.loom.task.RemapSourcesJarTask
+import java.util.Properties
 
 plugins {
     kotlin("jvm") version Jetbrains.Kotlin.version
-    `maven-publish`
     id("moe.nikky.persistentCounter") version "0.0.8-SNAPSHOT"
     id("net.minecrell.licenser") version "0.4.1"
     id("com.matthewprenger.cursegradle") version CurseGradle.version
     id("fabric-loom") version Fabric.Loom.version
+    `maven-publish`
 }
 
+val modId: String by project
+val modVersion: String by project
+val group: String by project
+val description: String by project
+val minecraftVersion: String by project
 
 base {
-    archivesBaseName = Constants.modid
+    archivesBaseName = modId
 }
+
+val branch = System.getenv("GIT_BRANCH")
+    ?.takeUnless { it == "master" }
+    ?.let { "-$it" }
+    ?: ""
 
 val buildNumber = counter.variable(id = "buildNumber", key = Constants.modVersion + branch)
 
-group = Constants.group
-description = Constants.description
-version = System.getenv("BUILD_NUMBER")?.let { "${Constants.modVersion}+build.$buildNumber" }
-    ?: "${Constants.modVersion}+local"
+project.group = group
+project.description = description
+version = System.getenv("BUILD_NUMBER")?.let { "${modVersion}+build.$buildNumber" }
+    ?: "${modVersion}+local"
 
 java {
     sourceCompatibility = JavaVersion.VERSION_1_8
@@ -61,24 +72,24 @@ repositories {
     jcenter()
 }
 
-fun DependencyHandlerScope.includeAndExpose(dep: String) {
+fun DependencyHandlerScope.includeAndExpose(dep: Any) {
     modApi(dep)
     include(dep)
 }
 
 dependencies {
-    minecraft(group = "com.mojang", name = "minecraft", version = Minecraft.version)
-    mappings(group = "net.fabricmc", name = "yarn", version = Fabric.YarnMappings.version, classifier = "v2")
+    minecraft(group = "com.mojang", name = "minecraft", version = minecraftVersion)
+    mappings(group = "net.fabricmc", name = "yarn", version = minecraftVersion+"+build.1", classifier = "v2")
 
-    modImplementation(group = "net.fabricmc", name = "fabric-loader", version = Fabric.Loader.version)
+    modImplementation("net.fabricmc:fabric-loader:${Fabric.Loader.version}")
 
-    includeAndExpose(Jetbrains.Kotlin.stdLib)
-    includeAndExpose(Jetbrains.Kotlin.stdLibJkd8)
-    includeAndExpose(Jetbrains.Kotlin.stdLibJkd7)
-    includeAndExpose(Jetbrains.Kotlin.reflect)
-    includeAndExpose(Jetbrains.annotations)
-    includeAndExpose(Jetbrains.KotlinX.coroutinesCore)
-    includeAndExpose(Jetbrains.KotlinX.coroutinesJdk8)
+    includeAndExpose(kotlin("stdlib", Jetbrains.Kotlin.version))
+    includeAndExpose(kotlin("stdlib-jdk8", Jetbrains.Kotlin.version))
+    includeAndExpose(kotlin("stdlib-jdk7", Jetbrains.Kotlin.version))
+    includeAndExpose(kotlin("reflect", Jetbrains.Kotlin.version))
+    includeAndExpose(Jetbrains.Annotations.dependency)
+    includeAndExpose(Jetbrains.KotlinX.Coroutines.core)
+    includeAndExpose(Jetbrains.KotlinX.Coroutines.jdk8)
 }
 
 val remapJar = tasks.getByName<RemapJarTask>("remapJar")
@@ -134,9 +145,10 @@ if (curse_api_key != null && project.hasProperty("release")) {
             addGameVersion("1.14.2")
             addGameVersion("1.14.3")
             addGameVersion("1.14.4")
-            addGameVersion("1.15-Snapshot")
             addGameVersion("1.15")
             addGameVersion("1.16")
+            addGameVersion("1.16.1")
+            addGameVersion("1.16.2")
             addGameVersion("Fabric")
 
             val changelog_file: String? by project
@@ -168,11 +180,11 @@ tasks.create<Copy>("processMDTemplates") {
         expand(
             "KOTLIN_VERSION" to Jetbrains.Kotlin.version,
             "LOADER_VERSION" to Fabric.Loader.version,
-            "BUNDLED_STDLIB" to Jetbrains.Kotlin.stdLibJkd8,
-            "BUNDLED_REFLECT" to Jetbrains.Kotlin.reflect,
-            "BUNDLED_ANNOTATIONS" to Jetbrains.annotations,
-            "BUNDLED_COROUTINES_CORE" to Jetbrains.KotlinX.coroutinesCore,
-            "BUNDLED_COROUTINES_JDK8" to Jetbrains.KotlinX.coroutinesJdk8
+            "BUNDLED_STDLIB" to Jetbrains.Kotlin.version,
+            "BUNDLED_REFLECT" to Jetbrains.Kotlin.version,
+            "BUNDLED_ANNOTATIONS" to Jetbrains.Annotations.version,
+            "BUNDLED_COROUTINES_CORE" to Jetbrains.KotlinX.Coroutines.version,
+            "BUNDLED_COROUTINES_JDK8" to Jetbrains.KotlinX.Coroutines.version
         )
     }
     destinationDir = rootDir
