@@ -60,7 +60,7 @@ dependencies {
     mappings(group = "net.fabricmc", name = "yarn", version = minecraftVersion+"+build.1", classifier = "v2")
 
     modImplementation("net.fabricmc:fabric-loader:0.10.8")
-    modImplementation("net.fabricmc.fabric-api:fabric-api:0.18.0+build.397-1.16")
+    modImplementation("net.fabricmc.fabric-api:fabric-api:0.28.0+1.16")
 
     modImplementation("$group:$modId:$modVersion+local")
 
