@@ -26,7 +26,7 @@ object Jetbrains {
 
 object Fabric {
     object Loader {
-        const val version = "0.9.1+build.205" // https://maven.fabricmc.net/net/fabricmc/fabric-loader/
+        const val version = "0.10.8" // https://maven.fabricmc.net/net/fabricmc/fabric-loader/
     }
 
     object Loom {
@@ -34,6 +34,6 @@ object Fabric {
     }
 }
 
-object CurseGradle{
+object CurseGradle {
     const val version = "1.4.0"
 }
