@@ -47,6 +47,6 @@
     ]
   },
   "requires": {
-    "fabric-language-kotlin": ">=1.4.0"
+    "fabric-language-kotlin": ">=1.4.21"
   }
 }

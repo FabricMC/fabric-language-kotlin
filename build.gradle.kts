@@ -79,7 +79,7 @@ fun DependencyHandlerScope.includeAndExpose(dep: Any) {
 
 dependencies {
     minecraft(group = "com.mojang", name = "minecraft", version = minecraftVersion)
-    mappings(group = "net.fabricmc", name = "yarn", version = minecraftVersion+"+build.1", classifier = "v2")
+    mappings(group = "net.fabricmc", name = "yarn", version = "$minecraftVersion+build.7", classifier = "v2")
 
     modImplementation("net.fabricmc:fabric-loader:${Fabric.Loader.version}")
 
@@ -149,6 +149,8 @@ if (curse_api_key != null && project.hasProperty("release")) {
             addGameVersion("1.16")
             addGameVersion("1.16.1")
             addGameVersion("1.16.2")
+            addGameVersion("1.16.3")
+            addGameVersion("1.16.4")
             addGameVersion("Fabric")
 
             val changelog_file: String? by project
