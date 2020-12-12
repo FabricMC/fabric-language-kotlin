@@ -34,7 +34,7 @@ Dependencies (build.gradle and build.gradle.kts):
 ```kotlin
 dependencies {
     // [...]
-    modImplementation(group = "net.fabricmc", name = "fabric-language-kotlin", version = "1.4.21-SNAPSHOT")
+    modImplementation(group = "net.fabricmc", name = "fabric-language-kotlin", version = "1.4.21+build.1")
 }
 ```
 
