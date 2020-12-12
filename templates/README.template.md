@@ -52,7 +52,7 @@ Remember to the add a dependency entry to your `fabric.mod.json` file:
             }
         ]
     },
-    "requires": {
+    "depends": {
         "fabric-language-kotlin": ">=${KOTLIN_VERSION}"
     }
 }

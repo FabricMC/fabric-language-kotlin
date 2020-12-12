@@ -8,7 +8,6 @@ import java.util.Properties
 
 plugins {
     kotlin("jvm") version Jetbrains.Kotlin.version
-    id("moe.nikky.persistentCounter") version "0.0.8-SNAPSHOT"
     id("net.minecrell.licenser") version "0.4.1"
     id("com.matthewprenger.cursegradle") version CurseGradle.version
     id("fabric-loom") version Fabric.Loom.version
@@ -25,16 +24,11 @@ base {
     archivesBaseName = modId
 }
 
-val branch = System.getenv("GIT_BRANCH")
-    ?.takeUnless { it == "master" }
-    ?.let { "-$it" }
-    ?: ""
-
-val buildNumber = counter.variable(id = "buildNumber", key = Constants.modVersion + branch)
+val buildNumber: String? = System.getenv("GITHUB_RUN_NUMBER")
 
 project.group = group
 project.description = description
-version = System.getenv("BUILD_NUMBER")?.let { "${modVersion}+build.$buildNumber" }
+version = buildNumber?.let { "${modVersion}+build.$buildNumber" }
     ?: "${modVersion}+local"
 
 java {
@@ -89,6 +83,7 @@ dependencies {
     includeAndExpose(kotlin("reflect", Jetbrains.Kotlin.version))
     includeAndExpose(Jetbrains.Annotations.dependency)
     includeAndExpose(Jetbrains.KotlinX.Coroutines.core)
+    includeAndExpose(Jetbrains.KotlinX.Coroutines.coreJvm)
     includeAndExpose(Jetbrains.KotlinX.Coroutines.jdk8)
 }
 
@@ -116,19 +111,24 @@ publishing {
             }
         }
     }
-    repositories {
-        maven(url = "http://mavenupload.modmuss50.me/") {
-            val mavenPass: String? = project.properties["mavenPass"] as String?
-            mavenPass?.let {
-                credentials {
-                    username = "buildslave"
-                    password = mavenPass
+
+    val maven_url: String? = System.getenv("MAVEN_URL")
+
+    if (maven_url != null) {
+        repositories {
+            maven(url = maven_url) {
+                val mavenPass: String? = System.getenv("MAVEN_PASSWORD")
+                mavenPass?.let {
+                    credentials {
+                        username = System.getenv("MAVEN_USERNAME")
+                        password = mavenPass
+                    }
                 }
             }
         }
     }
 }
-val curse_api_key: String? by project
+val curse_api_key: String? = System.getenv("CURSEFORGE_API_KEY")
 if (curse_api_key != null && project.hasProperty("release")) {
     val CURSEFORGE_RELEASE_TYPE: String by project
     val CURSEFORGE_ID: String by project
@@ -151,14 +151,11 @@ if (curse_api_key != null && project.hasProperty("release")) {
             addGameVersion("1.16.2")
             addGameVersion("1.16.3")
             addGameVersion("1.16.4")
+            addGameVersion("1.17")
             addGameVersion("Fabric")
 
-            val changelog_file: String? by project
-            if (changelog_file != null) {
-                println("changelog = $changelog_file")
-                changelogType = "markdown"
-                changelog = file(changelog_file as String)
-            }
+            changelog = "See https://github.com/FabricMC/fabric-language-kotlin/commits/master for a changelog"
+
             mainArtifact(
                 file("${project.buildDir}/libs/${base.archivesBaseName}-${version}.jar"),
                 closureOf<CurseArtifact> {
