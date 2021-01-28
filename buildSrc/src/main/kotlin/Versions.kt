@@ -21,7 +21,11 @@ object Jetbrains {
             const val coreJvm = "org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:$version"
             const val jdk8 = "org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:$version"
         }
-
+        object Serialization {
+            const val version = "1.0.1"
+            const val core = "org.jetbrains.kotlinx:kotlinx-serialization-core-jvm:$version"
+            const val json = "org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:$version"
+        }
     }
 }
 
