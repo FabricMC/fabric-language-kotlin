@@ -4,7 +4,6 @@ import com.matthewprenger.cursegradle.CurseUploadTask
 import com.matthewprenger.cursegradle.Options
 import net.fabricmc.loom.task.RemapJarTask
 import net.fabricmc.loom.task.RemapSourcesJarTask
-import java.util.Properties
 
 plugins {
     kotlin("jvm") version Jetbrains.Kotlin.version
@@ -85,8 +84,8 @@ dependencies {
     includeAndExpose(Jetbrains.KotlinX.Coroutines.core)
     includeAndExpose(Jetbrains.KotlinX.Coroutines.coreJvm)
     includeAndExpose(Jetbrains.KotlinX.Coroutines.jdk8)
-    includeAndExpose(Jetbrains.KotlinX.Serialization.core)
-    includeAndExpose(Jetbrains.KotlinX.Serialization.json)
+    includeAndExpose(Jetbrains.KotlinX.Serialization.coreJvm)
+    includeAndExpose(Jetbrains.KotlinX.Serialization.coreJson)
 }
 
 val remapJar = tasks.getByName<RemapJarTask>("remapJar")
