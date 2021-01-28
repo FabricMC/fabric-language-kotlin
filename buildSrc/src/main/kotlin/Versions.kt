@@ -24,7 +24,7 @@ object Jetbrains {
         object Serialization {
             const val version = "1.0.1"
             const val coreJvm = "org.jetbrains.kotlinx:kotlinx-serialization-core-jvm:$version"
-            const val coreJson = "org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:$version"
+            const val jsonJvm = "org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:$version"
         }
     }
 }

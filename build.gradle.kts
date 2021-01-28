@@ -85,7 +85,7 @@ dependencies {
     includeAndExpose(Jetbrains.KotlinX.Coroutines.coreJvm)
     includeAndExpose(Jetbrains.KotlinX.Coroutines.jdk8)
     includeAndExpose(Jetbrains.KotlinX.Serialization.coreJvm)
-    includeAndExpose(Jetbrains.KotlinX.Serialization.coreJson)
+    includeAndExpose(Jetbrains.KotlinX.Serialization.jsonJvm)
 }
 
 val remapJar = tasks.getByName<RemapJarTask>("remapJar")
