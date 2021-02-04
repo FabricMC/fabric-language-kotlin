@@ -4,7 +4,6 @@ import com.matthewprenger.cursegradle.CurseUploadTask
 import com.matthewprenger.cursegradle.Options
 import net.fabricmc.loom.task.RemapJarTask
 import net.fabricmc.loom.task.RemapSourcesJarTask
-import java.util.Properties
 
 plugins {
     kotlin("jvm") version Jetbrains.Kotlin.version
@@ -85,6 +84,8 @@ dependencies {
     includeAndExpose(Jetbrains.KotlinX.Coroutines.core)
     includeAndExpose(Jetbrains.KotlinX.Coroutines.coreJvm)
     includeAndExpose(Jetbrains.KotlinX.Coroutines.jdk8)
+    includeAndExpose(Jetbrains.KotlinX.Serialization.coreJvm)
+    includeAndExpose(Jetbrains.KotlinX.Serialization.jsonJvm)
 }
 
 val remapJar = tasks.getByName<RemapJarTask>("remapJar")
@@ -183,7 +184,9 @@ tasks.create<Copy>("processMDTemplates") {
             "BUNDLED_REFLECT" to Jetbrains.Kotlin.version,
             "BUNDLED_ANNOTATIONS" to Jetbrains.Annotations.version,
             "BUNDLED_COROUTINES_CORE" to Jetbrains.KotlinX.Coroutines.version,
-            "BUNDLED_COROUTINES_JDK8" to Jetbrains.KotlinX.Coroutines.version
+            "BUNDLED_COROUTINES_JDK8" to Jetbrains.KotlinX.Coroutines.version,
+            "BUNDLED_SERIALIZATION_CORE" to Jetbrains.KotlinX.Serialization.version,
+            "BUNDLED_SERIALIZATION_JSON" to Jetbrains.KotlinX.Serialization.version
         )
     }
     destinationDir = rootDir

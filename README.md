@@ -269,6 +269,8 @@ org.jetbrains.kotlin:kotlin-reflect:1.4.21
 org.jetbrains:annotations:20.0.0
 org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2
 org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:1.4.2
+org.jetbrains.kotlinx:kotlinx-serialization-core-jvm:1.0.1
+org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:1.0.1
 ```
 
 ## Available Versions
