@@ -80,7 +80,6 @@ dependencies {
     includeAndExpose(kotlin("stdlib-jdk8", Jetbrains.Kotlin.version))
     includeAndExpose(kotlin("stdlib-jdk7", Jetbrains.Kotlin.version))
     includeAndExpose(kotlin("reflect", Jetbrains.Kotlin.version))
-    includeAndExpose(Jetbrains.Annotations.dependency)
     includeAndExpose(Jetbrains.KotlinX.Coroutines.core)
     includeAndExpose(Jetbrains.KotlinX.Coroutines.coreJvm)
     includeAndExpose(Jetbrains.KotlinX.Coroutines.jdk8)
@@ -182,7 +181,6 @@ tasks.create<Copy>("processMDTemplates") {
             "LOADER_VERSION" to Fabric.Loader.version,
             "BUNDLED_STDLIB" to Jetbrains.Kotlin.version,
             "BUNDLED_REFLECT" to Jetbrains.Kotlin.version,
-            "BUNDLED_ANNOTATIONS" to Jetbrains.Annotations.version,
             "BUNDLED_COROUTINES_CORE" to Jetbrains.KotlinX.Coroutines.version,
             "BUNDLED_COROUTINES_JDK8" to Jetbrains.KotlinX.Coroutines.version,
             "BUNDLED_SERIALIZATION_CORE" to Jetbrains.KotlinX.Serialization.version,
