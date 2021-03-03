@@ -27,7 +27,7 @@ val ciBuild: Boolean = System.getenv("CI") != null
 
 project.group = group
 project.description = description
-version = "${modVersion}+koltin.${Jetbrains.Kotlin.version}"
+version = "${modVersion}+kotlin.${Jetbrains.Kotlin.version}"
 
 if (!ciBuild) {
     version = version as String + ".local"
@@ -180,7 +180,7 @@ tasks.create<Copy>("processMDTemplates") {
     filesMatching("**/*.template.md") {
         name = sourceName.substringBeforeLast(".template.md") + ".md"
         expand(
-            "KOTLIN_VERSION" to "${modVersion}+koltin.${Jetbrains.Kotlin.version}",
+            "KOTLIN_VERSION" to "${modVersion}+kotlin.${Jetbrains.Kotlin.version}",
             "LOADER_VERSION" to Fabric.Loader.version,
             "BUNDLED_STDLIB" to Jetbrains.Kotlin.version,
             "BUNDLED_REFLECT" to Jetbrains.Kotlin.version,
