@@ -7,7 +7,7 @@ import net.fabricmc.loom.task.RemapSourcesJarTask
 
 plugins {
     kotlin("jvm") version Jetbrains.Kotlin.version
-    id("net.minecrell.licenser") version "0.4.1"
+    id("org.cadixdev.licenser") version "0.5.0"
     id("com.matthewprenger.cursegradle") version CurseGradle.version
     id("fabric-loom") version Fabric.Loom.version
     `maven-publish`
@@ -23,12 +23,15 @@ base {
     archivesBaseName = modId
 }
 
-val buildNumber: String? = System.getenv("GITHUB_RUN_NUMBER")
+val ciBuild: Boolean = System.getenv("CI") != null
 
 project.group = group
 project.description = description
-version = buildNumber?.let { "${modVersion}+build.$buildNumber" }
-    ?: "${modVersion}+local"
+version = "${modVersion}+koltin.${Jetbrains.Kotlin.version}"
+
+if (!ciBuild) {
+    version = version as String + ".local"
+}
 
 java {
     sourceCompatibility = JavaVersion.VERSION_1_8
@@ -72,7 +75,7 @@ fun DependencyHandlerScope.includeAndExpose(dep: Any) {
 
 dependencies {
     minecraft(group = "com.mojang", name = "minecraft", version = minecraftVersion)
-    mappings(group = "net.fabricmc", name = "yarn", version = "$minecraftVersion+build.7", classifier = "v2")
+    mappings(group = "net.fabricmc", name = "yarn", version = "$minecraftVersion+build.5", classifier = "v2")
 
     modImplementation("net.fabricmc:fabric-loader:${Fabric.Loader.version}")
 
@@ -177,7 +180,7 @@ tasks.create<Copy>("processMDTemplates") {
     filesMatching("**/*.template.md") {
         name = sourceName.substringBeforeLast(".template.md") + ".md"
         expand(
-            "KOTLIN_VERSION" to Jetbrains.Kotlin.version,
+            "KOTLIN_VERSION" to "${modVersion}+koltin.${Jetbrains.Kotlin.version}",
             "LOADER_VERSION" to Fabric.Loader.version,
             "BUNDLED_STDLIB" to Jetbrains.Kotlin.version,
             "BUNDLED_REFLECT" to Jetbrains.Kotlin.version,

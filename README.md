@@ -34,7 +34,7 @@ Dependencies (build.gradle and build.gradle.kts):
 ```kotlin
 dependencies {
     // [...]
-    modImplementation(group = "net.fabricmc", name = "fabric-language-kotlin", version = "1.4.30")
+    modImplementation(group = "net.fabricmc", name = "fabric-language-kotlin", version = "1.5.0+koltin.1.4.31")
 }
 ```
 
@@ -53,7 +53,7 @@ Remember to the add a dependency entry to your `fabric.mod.json` file:
         ]
     },
     "depends": {
-        "fabric-language-kotlin": ">=1.4.30"
+        "fabric-language-kotlin": ">=1.5.0+koltin.1.4.31"
     }
 }
 ```
@@ -264,12 +264,12 @@ See examples in [sample-mod/fabric.mod.json](https://github.com/FabricMC/fabric-
 ## Bundled libraries
 
 ```
-org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.4.30
-org.jetbrains.kotlin:kotlin-reflect:1.4.30
+org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.4.31
+org.jetbrains.kotlin:kotlin-reflect:1.4.31
 org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2
 org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:1.4.2
-org.jetbrains.kotlinx:kotlinx-serialization-core-jvm:1.0.1
-org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:1.0.1
+org.jetbrains.kotlinx:kotlinx-serialization-core-jvm:1.1.0
+org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:1.1.0
 ```
 
 ## Available Versions
