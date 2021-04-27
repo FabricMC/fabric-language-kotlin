@@ -278,5 +278,5 @@ https://maven.fabricmc.net/net/fabricmc/fabric-language-kotlin/
 
 ## Updating README
 
-- Update the readme in `temaplates/README.template.md`.
+- Update the readme in `templates/README.template.md`.
 - Run `./gradlew processMDTemplates`.
