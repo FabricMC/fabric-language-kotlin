@@ -12,7 +12,7 @@ Repositories for build.gradle.kts
 ```kotlin
 repositories {
     // [...]
-    maven(url = "https://maven.fabricmc.net/") {
+    maven(url = "http://maven.fabricmc.net/") {
         name = "Fabric"
     }
 }
@@ -23,7 +23,7 @@ Repositories for build.gradle:
 repositories {
     // [...]
     maven {
-        url = "https://maven.fabricmc.net/"
+        url = "http://maven.fabricmc.net/"
         name = "Fabric"
     }
 }
