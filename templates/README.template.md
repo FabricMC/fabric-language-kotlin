@@ -6,30 +6,8 @@
 Fabric language module for [Kotlin](https://kotlinlang.org/). Adds support for using a Kotlin `object` as the main mod class and bundles the Kotlin libraries and runtime for you.
 
 ## Usage
-Add it as a dependency:
 
-Repositories for build.gradle.kts
-```kotlin
-repositories {
-    // [...]
-    maven(url = "http://maven.fabricmc.net/") {
-        name = "Fabric"
-    }
-}
-```
-
-Repositories for build.gradle:
-```groovy
-repositories {
-    // [...]
-    maven {
-        url = "http://maven.fabricmc.net/"
-        name = "Fabric"
-    }
-}
-```
-
-Dependencies (build.gradle and build.gradle.kts):
+Add it as a dependency (build.gradle and build.gradle.kts):
 
 ```kotlin
 dependencies {

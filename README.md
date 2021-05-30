@@ -6,35 +6,13 @@
 Fabric language module for [Kotlin](https://kotlinlang.org/). Adds support for using a Kotlin `object` as the main mod class and bundles the Kotlin libraries and runtime for you.
 
 ## Usage
-Add it as a dependency:
 
-Repositories for build.gradle.kts
-```kotlin
-repositories {
-    // [...]
-    maven(url = "http://maven.fabricmc.net/") {
-        name = "Fabric"
-    }
-}
-```
-
-Repositories for build.gradle:
-```groovy
-repositories {
-    // [...]
-    maven {
-        url = "http://maven.fabricmc.net/"
-        name = "Fabric"
-    }
-}
-```
-
-Dependencies (build.gradle and build.gradle.kts):
+Add it as a dependency (build.gradle and build.gradle.kts):
 
 ```kotlin
 dependencies {
     // [...]
-    modImplementation(group = "net.fabricmc", name = "fabric-language-kotlin", version = "1.6.0+kotlin.1.5.0")
+    modImplementation(group = "net.fabricmc", name = "fabric-language-kotlin", version = "1.6.1+kotlin.1.5.10")
 }
 ```
 
@@ -53,7 +31,7 @@ Remember to the add a dependency entry to your `fabric.mod.json` file:
         ]
     },
     "depends": {
-        "fabric-language-kotlin": ">=1.6.0+kotlin.1.5.0"
+        "fabric-language-kotlin": ">=1.6.1+kotlin.1.5.10"
     }
 }
 ```
@@ -264,12 +242,12 @@ See examples in [sample-mod/fabric.mod.json](https://github.com/FabricMC/fabric-
 ## Bundled libraries
 
 ```
-org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.5.0
-org.jetbrains.kotlin:kotlin-reflect:1.5.0
-org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0-RC
-org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:1.5.0-RC
-org.jetbrains.kotlinx:kotlinx-serialization-core-jvm:1.2.0
-org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:1.2.0
+org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.5.10
+org.jetbrains.kotlin:kotlin-reflect:1.5.10
+org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0
+org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:1.5.0
+org.jetbrains.kotlinx:kotlinx-serialization-core-jvm:1.2.1
+org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:1.2.1
 ```
 
 ## Available Versions
