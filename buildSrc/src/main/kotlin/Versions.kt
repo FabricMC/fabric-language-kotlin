@@ -1,7 +1,7 @@
 object Jetbrains {
 
     object Kotlin {
-        const val version = "1.5.21"
+        const val version = "1.5.30"
         const val stdLib = "org.jetbrains.kotlin:kotlin-stdlib:$version"
         const val stdLibJkd7 = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$version"
         const val stdLibJkd8 = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$version"
