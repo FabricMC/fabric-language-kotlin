@@ -29,7 +29,7 @@ object Fabric {
     }
 
     object Loom {
-        const val version = "0.9-SNAPSHOT"
+        const val version = "0.7-SNAPSHOT"
     }
 }
 
