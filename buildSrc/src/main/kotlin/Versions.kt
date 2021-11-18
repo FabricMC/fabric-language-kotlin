@@ -1,7 +1,7 @@
 object Jetbrains {
 
     object Kotlin {
-        const val version = "1.5.31"
+        const val version = "1.6.0"
         const val stdLib = "org.jetbrains.kotlin:kotlin-stdlib:$version"
         const val stdLibJkd7 = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$version"
         const val stdLibJkd8 = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$version"
@@ -16,7 +16,7 @@ object Jetbrains {
             const val jdk8 = "org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:$version"
         }
         object Serialization {
-            const val version = "1.3.0"
+            const val version = "1.3.1"
             const val coreJvm = "org.jetbrains.kotlinx:kotlinx-serialization-core-jvm:$version"
             const val jsonJvm = "org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:$version"
             const val cborJvm = "org.jetbrains.kotlinx:kotlinx-serialization-cbor-jvm:$version"
