@@ -36,7 +36,7 @@ Remember to the add a dependency entry to your `fabric.mod.json` file:
 }
 ```
 
-For more info reference [format:modjson](https://fabricmc.net/wiki/format:modjson).
+For more info reference [documentation:fabric_mod_json](https://fabricmc.net/wiki/documentation:fabric_mod_json).
 
 Do not forget to set the `schemaVersion` to `1` or it will fall back to schema `0` and will not attempt to load entrypoints.
 
