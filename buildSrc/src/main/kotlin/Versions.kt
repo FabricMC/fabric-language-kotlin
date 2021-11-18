@@ -19,6 +19,7 @@ object Jetbrains {
             const val version = "1.3.1"
             const val coreJvm = "org.jetbrains.kotlinx:kotlinx-serialization-core-jvm:$version"
             const val jsonJvm = "org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:$version"
+            const val cborJvm = "org.jetbrains.kotlinx:kotlinx-serialization-cbor-jvm:$version"
         }
     }
 }
