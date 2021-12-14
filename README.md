@@ -242,8 +242,8 @@ See examples in [sample-mod/fabric.mod.json](https://github.com/FabricMC/fabric-
 ## Bundled libraries
 
 ```
-org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.6.0
-org.jetbrains.kotlin:kotlin-reflect:1.6.0
+org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.6.10
+org.jetbrains.kotlin:kotlin-reflect:1.6.10
 org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2
 org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:1.5.2
 org.jetbrains.kotlinx:kotlinx-serialization-core-jvm:1.3.1
