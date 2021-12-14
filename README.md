@@ -31,7 +31,7 @@ Remember to the add a dependency entry to your `fabric.mod.json` file:
         ]
     },
     "depends": {
-        "fabric-language-kotlin": ">=1.7.0+kotlin.1.6.0"
+        "fabric-language-kotlin": ">=1.7.1+kotlin.1.6.10"
     }
 }
 ```
