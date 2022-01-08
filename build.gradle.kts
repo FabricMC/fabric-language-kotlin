@@ -115,7 +115,6 @@ publishing {
 }
 val curse_api_key: String? = System.getenv("CURSEFORGE_API_KEY")
 if (curse_api_key != null && project.hasProperty("release")) {
-    val CURSEFORGE_RELEASE_TYPE: String by project
     val CURSEFORGE_ID: String by project
     curseforge {
         options(closureOf<Options> {
@@ -124,7 +123,7 @@ if (curse_api_key != null && project.hasProperty("release")) {
         apiKey = curse_api_key
         project(closureOf<CurseProject> {
             id = CURSEFORGE_ID
-            releaseType = CURSEFORGE_RELEASE_TYPE
+            releaseType = "beta"
             addGameVersion("1.14")
             addGameVersion("1.14.1")
             addGameVersion("1.14.2")

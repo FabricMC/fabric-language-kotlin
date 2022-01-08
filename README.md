@@ -237,8 +237,6 @@ class MyMod  {
 Companion objects can be used by appending `$Companion` to the class.
 Take care of `processResource` there, it might try to expand it, in that case escape it.
 
-See examples in [sample-mod/fabric.mod.json](https://github.com/FabricMC/fabric-language-kotlin/blob/master/sample-mod/src/main/resources/fabric.mod.json).
-
 ## Bundled libraries
 
 ```
