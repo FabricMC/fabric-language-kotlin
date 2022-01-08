@@ -4,12 +4,12 @@ jobs:
   build:
     runs-on: ubuntu-20.04
     container:
-      image: openjdk:16-jdk
+      image: openjdk:17-jdk
       options: --user root
     steps:
       - uses: actions/checkout@v1
       - uses: gradle/wrapper-validation-action@v1
-      - run: ./gradlew -PincludeSample=false -Prelease build curseforge308769 publish --full-stacktrace
+      - run: ./gradlew -PincludeSample=false -Prelease build curseforge308769 publish --stacktrace --warning-mode=fail
         env:
           MAVEN_URL: ${{ secrets.MAVEN_URL }}
           MAVEN_USERNAME: ${{ secrets.MAVEN_USERNAME }}

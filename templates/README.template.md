@@ -12,7 +12,7 @@ Add it as a dependency (build.gradle and build.gradle.kts):
 ```kotlin
 dependencies {
     // [...]
-    modImplementation(group = "net.fabricmc", name = "fabric-language-kotlin", version = "${KOTLIN_VERSION}")
+    modImplementation(group = "net.fabricmc", name = "fabric-language-kotlin", version = "${MOD_VERSION}")
 }
 ```
 
@@ -31,7 +31,7 @@ Remember to the add a dependency entry to your `fabric.mod.json` file:
         ]
     },
     "depends": {
-        "fabric-language-kotlin": ">=${KOTLIN_VERSION}"
+        "fabric-language-kotlin": ">=${MOD_VERSION}"
     }
 }
 ```
@@ -242,12 +242,13 @@ See examples in [sample-mod/fabric.mod.json](https://github.com/FabricMC/fabric-
 ## Bundled libraries
 
 ```
-org.jetbrains.kotlin:kotlin-stdlib-jdk8:${BUNDLED_STDLIB}
-org.jetbrains.kotlin:kotlin-reflect:${BUNDLED_REFLECT}
-org.jetbrains.kotlinx:kotlinx-coroutines-core:${BUNDLED_COROUTINES_CORE}
-org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:${BUNDLED_COROUTINES_JDK8}
-org.jetbrains.kotlinx:kotlinx-serialization-core-jvm:${BUNDLED_SERIALIZATION_CORE}
-org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:${BUNDLED_SERIALIZATION_JSON}
+org.jetbrains.kotlin:kotlin-stdlib-jdk8:${KOTLIN_VERSION}
+org.jetbrains.kotlin:kotlin-reflect:${KOTLIN_VERSION}
+org.jetbrains.kotlinx:kotlinx-coroutines-core:${COROUTINES_VERSION}
+org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:${COROUTINES_VERSION}
+org.jetbrains.kotlinx:kotlinx-serialization-core-jvm:${SERIALIZATION_VERSION}
+org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:${SERIALIZATION_VERSION}
+org.jetbrains.kotlinx:kotlinx-serialization-cbor-jvm:${SERIALIZATION_VERSION}
 ```
 
 ## Available Versions

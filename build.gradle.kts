@@ -6,10 +6,10 @@ import net.fabricmc.loom.task.RemapJarTask
 import net.fabricmc.loom.task.RemapSourcesJarTask
 
 plugins {
-    kotlin("jvm") version Jetbrains.Kotlin.version
-    id("org.cadixdev.licenser") version "0.5.0"
-    id("com.matthewprenger.cursegradle") version CurseGradle.version
-    id("fabric-loom") version Fabric.Loom.version
+    kotlin("jvm") version "1.6.10"
+    id("org.cadixdev.licenser") version "0.6.1"
+    id("com.matthewprenger.cursegradle") version "1.4.0"
+    id("fabric-loom") version "0.10-SNAPSHOT"
     `maven-publish`
 }
 
@@ -18,6 +18,10 @@ val modVersion: String by project
 val group: String by project
 val description: String by project
 val minecraftVersion: String by project
+val loaderVersion: String by project
+val kotlinVersion: String by project
+val coroutinesVersion: String by project
+val serializationVersion: String by project
 
 base {
     archivesBaseName = modId
@@ -27,7 +31,7 @@ val ciBuild: Boolean = System.getenv("CI") != null
 
 project.group = group
 project.description = description
-version = "${modVersion}+kotlin.${Jetbrains.Kotlin.version}"
+version = "${modVersion}+kotlin.${kotlinVersion}"
 
 if (!ciBuild) {
     version = version as String + ".local"
@@ -49,23 +53,9 @@ tasks.getByName<ProcessResources>("processResources") {
 }
 
 license {
-    header = file("HEADER")
+    header.set(project.resources.text.fromFile(file("HEADER")))
     include("**/*.java")
     include("**/*.kt")
-}
-
-repositories {
-    maven(url = "https://maven.fabricmc.net") {
-        name = "Fabric"
-    }
-    maven(url = "https://libraries.minecraft.net/") {
-        name = "Mojang"
-    }
-    maven(url = "https://kotlin.bintray.com/kotlinx/") {
-        name = "KotlinX"
-    }
-    mavenCentral()
-    jcenter()
 }
 
 fun DependencyHandlerScope.includeAndExpose(dep: Any) {
@@ -77,26 +67,22 @@ dependencies {
     minecraft(group = "com.mojang", name = "minecraft", version = minecraftVersion)
     mappings(group = "net.fabricmc", name = "yarn", version = "$minecraftVersion+build.5", classifier = "v2")
 
-    modImplementation("net.fabricmc:fabric-loader:${Fabric.Loader.version}")
+    modImplementation("net.fabricmc:fabric-loader:${loaderVersion}")
 
-    includeAndExpose(kotlin("stdlib", Jetbrains.Kotlin.version))
-    includeAndExpose(kotlin("stdlib-jdk8", Jetbrains.Kotlin.version))
-    includeAndExpose(kotlin("stdlib-jdk7", Jetbrains.Kotlin.version))
-    includeAndExpose(kotlin("reflect", Jetbrains.Kotlin.version))
-    includeAndExpose(Jetbrains.KotlinX.Coroutines.core)
-    includeAndExpose(Jetbrains.KotlinX.Coroutines.coreJvm)
-    includeAndExpose(Jetbrains.KotlinX.Coroutines.jdk8)
-    includeAndExpose(Jetbrains.KotlinX.Serialization.coreJvm)
-    includeAndExpose(Jetbrains.KotlinX.Serialization.jsonJvm)
-    includeAndExpose(Jetbrains.KotlinX.Serialization.cborJvm)
+    includeAndExpose(kotlin("stdlib", kotlinVersion))
+    includeAndExpose(kotlin("stdlib-jdk8", kotlinVersion))
+    includeAndExpose(kotlin("stdlib-jdk7", kotlinVersion))
+    includeAndExpose(kotlin("reflect", kotlinVersion))
+    includeAndExpose("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
+    includeAndExpose("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:$coroutinesVersion")
+    includeAndExpose("org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:$coroutinesVersion")
+    includeAndExpose("org.jetbrains.kotlinx:kotlinx-serialization-core-jvm:$serializationVersion")
+    includeAndExpose("org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:$serializationVersion")
+    includeAndExpose("org.jetbrains.kotlinx:kotlinx-serialization-cbor-jvm:$serializationVersion")
 }
 
-val remapJar = tasks.getByName<RemapJarTask>("remapJar")
-val remapSourcesJar = tasks.getByName<RemapSourcesJarTask>("remapSourcesJar")
-
-val sourcesJar = tasks.create<Jar>("sourcesJar") {
-    archiveClassifier.set("sources")
-    from(sourceSets["main"].allSource)
+java {
+    withSourcesJar()
 }
 
 publishing {
@@ -107,12 +93,7 @@ publishing {
             artifactId = project.name.toLowerCase()
             version = project.version.toString()
 
-            artifact(remapJar) {
-                builtBy(remapJar)
-            }
-            artifact(sourcesJar) {
-                builtBy(remapSourcesJar)
-            }
+            from(components["java"])
         }
     }
 
@@ -157,12 +138,14 @@ if (curse_api_key != null && project.hasProperty("release")) {
             addGameVersion("1.16.4")
             addGameVersion("1.17")
             addGameVersion("1.17.1")
+            addGameVersion("1.18")
+            addGameVersion("1.18.1")
             addGameVersion("Fabric")
 
             changelog = "See https://github.com/FabricMC/fabric-language-kotlin/commits/master for a changelog"
 
             mainArtifact(
-                file("${project.buildDir}/libs/${base.archivesBaseName}-${version}.jar"),
+                file("${project.buildDir}/libs/${base.archivesName.get()}-${version}.jar"),
                 closureOf<CurseArtifact> {
                     displayName = "Fabric Language Kotlin $version"
                 })
@@ -170,7 +153,7 @@ if (curse_api_key != null && project.hasProperty("release")) {
     }
     project.afterEvaluate {
         tasks.getByName<CurseUploadTask>("curseforge${CURSEFORGE_ID}") {
-            dependsOn(remapJar)
+            dependsOn(tasks.getByName<RemapJarTask>("remapJar"))
         }
     }
 }
@@ -182,39 +165,12 @@ tasks.create<Copy>("processMDTemplates") {
     filesMatching("**/*.template.md") {
         name = sourceName.substringBeforeLast(".template.md") + ".md"
         expand(
-            "KOTLIN_VERSION" to "${modVersion}+kotlin.${Jetbrains.Kotlin.version}",
-            "LOADER_VERSION" to Fabric.Loader.version,
-            "BUNDLED_STDLIB" to Jetbrains.Kotlin.version,
-            "BUNDLED_REFLECT" to Jetbrains.Kotlin.version,
-            "BUNDLED_COROUTINES_CORE" to Jetbrains.KotlinX.Coroutines.version,
-            "BUNDLED_COROUTINES_JDK8" to Jetbrains.KotlinX.Coroutines.version,
-            "BUNDLED_SERIALIZATION_CORE" to Jetbrains.KotlinX.Serialization.version,
-            "BUNDLED_SERIALIZATION_JSON" to Jetbrains.KotlinX.Serialization.version
+            "MOD_VERSION" to "${modVersion}+kotlin.${kotlinVersion}",
+            "LOADER_VERSION" to loaderVersion,
+            "KOTLIN_VERSION" to kotlinVersion,
+            "COROUTINES_VERSION" to coroutinesVersion,
+            "SERIALIZATION_VERSION" to serializationVersion
         )
     }
     destinationDir = rootDir
-}
-
-task<DefaultTask>("depsize") {
-    group = "help"
-    description = "prints dependency sizes"
-    doLast {
-        val formatStr = "%,10.2f"
-        val size = configurations.default.resolve()
-            .map { it.length() / (1024.0 * 1024.0) }.sum()
-
-        val out = buildString {
-            append("Total dependencies size:".padEnd(45))
-            append("${String.format(formatStr, size)} Mb\n\n")
-            configurations
-                .default
-                .resolve()
-                .sortedWith(compareBy { -it.length() })
-                .forEach {
-                    append(it.name.padEnd(45))
-                    append("${String.format(formatStr, (it.length() / 1024.0))} kb\n")
-                }
-        }
-        println(out)
-    }
 }
