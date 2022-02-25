@@ -35,6 +35,7 @@ Remember to the add a dependency entry to your `fabric.mod.json` file:
     }
 }
 ```
+**NOTE: You can't write Mixins with Kotlin at the moment, write them in Java instead!**
 
 For more info reference [format:modjson](https://fabricmc.net/wiki/format:modjson).
 
