@@ -139,6 +139,7 @@ if (curse_api_key != null && project.hasProperty("release")) {
             addGameVersion("1.17.1")
             addGameVersion("1.18")
             addGameVersion("1.18.1")
+            addGameVersion("1.18.2")
             addGameVersion("Fabric")
 
             changelog = "See https://github.com/FabricMC/fabric-language-kotlin/commits/master for a changelog"
