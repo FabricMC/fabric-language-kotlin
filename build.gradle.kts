@@ -6,7 +6,7 @@ import net.fabricmc.loom.task.RemapJarTask
 import net.fabricmc.loom.task.RemapSourcesJarTask
 
 plugins {
-    kotlin("jvm") version "1.6.10"
+    kotlin("jvm") version "1.6.20"
     id("org.cadixdev.licenser") version "0.6.1"
     id("com.matthewprenger.cursegradle") version "1.4.0"
     id("fabric-loom") version "0.10-SNAPSHOT"
