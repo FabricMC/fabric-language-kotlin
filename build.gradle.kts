@@ -114,7 +114,7 @@ publishing {
     }
 }
 val curse_api_key: String? = System.getenv("CURSEFORGE_API_KEY")
-if (curse_api_key != null && project.hasProperty("release")) {
+if (curse_api_key != null) {
     val CURSEFORGE_ID: String by project
     curseforge {
         options(closureOf<Options> {
