@@ -12,7 +12,7 @@ Add it as a dependency (build.gradle and build.gradle.kts):
 ```kotlin
 dependencies {
     // [...]
-    modImplementation(group = "net.fabricmc", name = "fabric-language-kotlin", version = "1.7.1+kotlin.1.6.10")
+    modImplementation(group = "net.fabricmc", name = "fabric-language-kotlin", version = "1.7.2+kotlin.1.6.20")
 }
 ```
 
@@ -31,7 +31,7 @@ Remember to the add a dependency entry to your `fabric.mod.json` file:
         ]
     },
     "depends": {
-        "fabric-language-kotlin": ">=1.7.1+kotlin.1.6.10"
+        "fabric-language-kotlin": ">=1.7.2+kotlin.1.6.20"
     }
 }
 ```
@@ -240,8 +240,8 @@ Take care of `processResource` there, it might try to expand it, in that case es
 ## Bundled libraries
 
 ```
-org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.6.10
-org.jetbrains.kotlin:kotlin-reflect:1.6.10
+org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.6.20
+org.jetbrains.kotlin:kotlin-reflect:1.6.20
 org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0
 org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:1.6.0
 org.jetbrains.kotlinx:kotlinx-serialization-core-jvm:1.3.2
