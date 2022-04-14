@@ -12,7 +12,7 @@ Add it as a dependency (build.gradle and build.gradle.kts):
 ```kotlin
 dependencies {
     // [...]
-    modImplementation(group = "net.fabricmc", name = "fabric-language-kotlin", version = "1.7.2+kotlin.1.6.20")
+    modImplementation(group = "net.fabricmc", name = "fabric-language-kotlin", version = "1.7.3+kotlin.1.6.20")
 }
 ```
 
@@ -31,7 +31,7 @@ Remember to the add a dependency entry to your `fabric.mod.json` file:
         ]
     },
     "depends": {
-        "fabric-language-kotlin": ">=1.7.2+kotlin.1.6.20"
+        "fabric-language-kotlin": ">=1.7.3+kotlin.1.6.20"
     }
 }
 ```
