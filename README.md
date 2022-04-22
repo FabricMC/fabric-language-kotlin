@@ -12,7 +12,7 @@ Add it as a dependency (build.gradle and build.gradle.kts):
 ```kotlin
 dependencies {
     // [...]
-    modImplementation(group = "net.fabricmc", name = "fabric-language-kotlin", version = "1.7.3+kotlin.1.6.20")
+    modImplementation(group = "net.fabricmc", name = "fabric-language-kotlin", version = "1.7.4+kotlin.1.6.21")
 }
 ```
 
@@ -31,7 +31,7 @@ Remember to the add a dependency entry to your `fabric.mod.json` file:
         ]
     },
     "depends": {
-        "fabric-language-kotlin": ">=1.7.3+kotlin.1.6.20"
+        "fabric-language-kotlin": ">=1.7.4+kotlin.1.6.21"
     }
 }
 ```
@@ -237,11 +237,13 @@ class MyMod  {
 Companion objects can be used by appending `$Companion` to the class.
 Take care of `processResource` there, it might try to expand it, in that case escape it.
 
+See examples in [sample-mod/fabric.mod.json](https://github.com/FabricMC/fabric-language-kotlin/blob/master/sample-mod/src/main/resources/fabric.mod.json).
+
 ## Bundled libraries
 
 ```
-org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.6.20
-org.jetbrains.kotlin:kotlin-reflect:1.6.20
+org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.6.21
+org.jetbrains.kotlin:kotlin-reflect:1.6.21
 org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1
 org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:1.6.1
 org.jetbrains.kotlinx:kotlinx-serialization-core-jvm:1.3.2
