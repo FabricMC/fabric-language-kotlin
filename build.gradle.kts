@@ -10,7 +10,7 @@ plugins {
     kotlin("jvm") version "1.6.20"
     id("org.cadixdev.licenser") version "0.6.1"
     id("com.matthewprenger.cursegradle") version "1.4.0"
-	id("com.modrinth.minotaur") version "2.2.0"
+    id("com.modrinth.minotaur") version "2.2.0"
     id("fabric-loom") version "0.10-SNAPSHOT"
     `maven-publish`
 }
@@ -161,29 +161,31 @@ if (curse_api_key != null) {
 }
 val modrinth_api_key: String? = System.getenv("MODRINTH_TOKEN")
 if (modrinth_api_key != null) {
-	val MODRINTH_ID: String by project
-	modrinth {
-		projectId.set(MODRINTH_ID)
-		gameVersions.set(listOf(
-			"1.14", "1.14.1", "1.14.2", "1.14.3", "1.14.4",
-			"1.15", "1.15.1", "1.15.2",
-			"1.16", "1.16.1", "1.16.2", "1.16.3", "1.16.4", "1.16.5",
-			"1.17", "1.17.1",
-			"1.18", "1.18.1", "1.18.2",
-			// "1.19",
-		))
+    val MODRINTH_ID: String by project
+    modrinth {
+        projectId.set(MODRINTH_ID)
+        gameVersions.set(
+            listOf(
+                "1.14", "1.14.1", "1.14.2", "1.14.3", "1.14.4",
+                "1.15", "1.15.1", "1.15.2",
+                "1.16", "1.16.1", "1.16.2", "1.16.3", "1.16.4", "1.16.5",
+                "1.17", "1.17.1",
+                "1.18", "1.18.1", "1.18.2",
+                // "1.19",
+            )
+        )
 
-		changelog.set("See https://github.com/FabricMC/fabric-language-kotlin/commits/master for a changelog")
+        changelog.set("See https://github.com/FabricMC/fabric-language-kotlin/commits/master for a changelog")
 
-		uploadFile.set(tasks.getByName<RemapJarTask>("remapJar"))
+        uploadFile.set(tasks.getByName<RemapJarTask>("remapJar"))
 
-		versionName.set("Fabric Language Kotlin $version")
-	}
-	project.afterEvaluate {
-		tasks.getByName<TaskModrinthUpload>("modrinth") {
-			dependsOn(tasks.getByName<RemapJarTask>("remapJar"))
-		}
-	}
+        versionName.set("Fabric Language Kotlin $version")
+    }
+    project.afterEvaluate {
+        tasks.getByName<TaskModrinthUpload>("modrinth") {
+            dependsOn(tasks.getByName<RemapJarTask>("remapJar"))
+        }
+    }
 }
 
 tasks.create<Copy>("processMDTemplates") {
