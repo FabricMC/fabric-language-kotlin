@@ -181,9 +181,9 @@ if (modrinth_api_key != null) {
 
         versionName.set("Fabric Language Kotlin $version")
     }
-    project.afterEvaluate {
-        tasks.getByName<TaskModrinthUpload>("modrinth") {
-            dependsOn(tasks.getByName<RemapJarTask>("remapJar"))
+    tasks {
+        named("modrinth") {
+            dependsOn(remapJar)
         }
     }
 }
