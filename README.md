@@ -249,6 +249,7 @@ org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:1.6.1
 org.jetbrains.kotlinx:kotlinx-serialization-core-jvm:1.3.2
 org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:1.3.2
 org.jetbrains.kotlinx:kotlinx-serialization-cbor-jvm:1.3.2
+org.jetbrains.kotlinx:kotlinx-datetime-jvm:0.3.2
 ```
 
 ## Available Versions
