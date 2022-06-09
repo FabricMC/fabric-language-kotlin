@@ -22,6 +22,7 @@ val loaderVersion: String by project
 val kotlinVersion: String by project
 val coroutinesVersion: String by project
 val serializationVersion: String by project
+val atomicfuVersion: String by project
 val datetimeVersion: String by project
 
 base {
@@ -80,6 +81,7 @@ dependencies {
     includeAndExpose("org.jetbrains.kotlinx:kotlinx-serialization-core-jvm:$serializationVersion")
     includeAndExpose("org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:$serializationVersion")
     includeAndExpose("org.jetbrains.kotlinx:kotlinx-serialization-cbor-jvm:$serializationVersion")
+    includeAndExpose("org.jetbrains.kotlinx:atomicfu-jvm:$atomicfuVersion")
     includeAndExpose("org.jetbrains.kotlinx:kotlinx-datetime-jvm:$datetimeVersion")
 }
 
@@ -172,6 +174,7 @@ tasks.create<Copy>("processMDTemplates") {
             "KOTLIN_VERSION" to kotlinVersion,
             "COROUTINES_VERSION" to coroutinesVersion,
             "SERIALIZATION_VERSION" to serializationVersion,
+            "ATOMICFU_VERSION" to atomicfuVersion,
             "DATETIME_VERSION" to datetimeVersion,
         )
     }
