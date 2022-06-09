@@ -10,6 +10,8 @@ jobs:
       - run: apt update && apt install git -y && git --version
       - run: git config --global --add safe.directory /__w/fabric-language-kotlin/fabric-language-kotlin
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
       - uses: gradle/wrapper-validation-action@v1
       - uses: FabricMC/fabric-action-scripts@v1
         id: changelog
