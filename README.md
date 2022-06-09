@@ -12,7 +12,7 @@ Add it as a dependency (build.gradle and build.gradle.kts):
 ```kotlin
 dependencies {
     // [...]
-    modImplementation(group = "net.fabricmc", name = "fabric-language-kotlin", version = "1.7.4+kotlin.1.6.21")
+    modImplementation(group = "net.fabricmc", name = "fabric-language-kotlin", version = "1.8.0+kotlin.1.7.0")
 }
 ```
 
@@ -31,7 +31,7 @@ Remember to the add a dependency entry to your `fabric.mod.json` file:
         ]
     },
     "depends": {
-        "fabric-language-kotlin": ">=1.7.4+kotlin.1.6.21"
+        "fabric-language-kotlin": ">=1.8.0+kotlin.1.7.0"
     }
 }
 ```
@@ -242,13 +242,13 @@ See examples in [sample-mod/fabric.mod.json](https://github.com/FabricMC/fabric-
 ## Bundled libraries
 
 ```
-org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.6.21
-org.jetbrains.kotlin:kotlin-reflect:1.6.21
-org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1
-org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:1.6.1
-org.jetbrains.kotlinx:kotlinx-serialization-core-jvm:1.3.2
-org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:1.3.2
-org.jetbrains.kotlinx:kotlinx-serialization-cbor-jvm:1.3.2
+org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.7.0
+org.jetbrains.kotlin:kotlin-reflect:1.7.0
+org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.2
+org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:1.6.2
+org.jetbrains.kotlinx:kotlinx-serialization-core-jvm:1.3.3
+org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:1.3.3
+org.jetbrains.kotlinx:kotlinx-serialization-cbor-jvm:1.3.3
 org.jetbrains.kotlinx:atomicfu-jvm:0.17.3
 org.jetbrains.kotlinx:kotlinx-datetime-jvm:0.3.3
 ```
