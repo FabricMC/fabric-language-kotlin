@@ -5,7 +5,7 @@
   "name": "Fabric Language Kotlin",
   "description": "Fabric language module for Kotlin.",
   "authors": [
-    "Nikky"
+    "FabricMC"
   ],
   "contact": {
     "homepage": "https://minecraft.curseforge.com/projects/fabric-language-kotlin",
@@ -17,5 +17,8 @@
     "kotlin": "net.fabricmc.language.kotlin.KotlinAdapter"
   },
   "license": "Apache-2.0",
-  "icon": "assets/fabric-language-kotlin/icon500.png"
+  "icon": "assets/fabric-language-kotlin/icon500.png",
+  "depends": {
+    "fabricloader": ">=0.14.7"
+  }
 }

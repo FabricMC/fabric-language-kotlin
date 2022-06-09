@@ -1,0 +1,253 @@
+buildscript {
+    dependencies {
+        classpath 'org.kohsuke:github-api:1.135'
+    }
+}
+
+plugins {
+    id 'fabric-loom' version '0.12.48'
+    id 'maven-publish'
+    id "com.matthewprenger.cursegradle" version "1.4.0"
+    id "org.jetbrains.kotlin.jvm" version "1.7.0"
+    id "com.diffplug.spotless" version "6.5.1"
+    id "com.modrinth.minotaur" version "1.1.0"
+}
+
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
+group = project.group
+
+def ENV = System.getenv()
+
+version = "${project.modVersion}+kotlin.${project.kotlinVersion}" + (ENV.GITHUB_ACTIONS ? "" : ".local")
+
+loom {
+    mods {
+        flk {
+            sourceSet sourceSets.main
+        }
+    }
+}
+
+configurations {
+    includeAndExpose
+
+    modApi {
+        extendsFrom includeAndExpose
+    }
+    include {
+        extendsFrom includeAndExpose
+    }
+}
+
+configurations.all {
+    resolutionStrategy {
+        failOnNonReproducibleResolution()
+    }
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:${project.minecraftVersion}"
+    mappings "net.fabricmc:yarn:${project.mappingsVersion}:v2"
+    modImplementation "net.fabricmc:fabric-loader:${project.loaderVersion}"
+
+    includeAndExpose("org.jetbrains.kotlin:kotlin-stdlib:${project.kotlinVersion}")
+    includeAndExpose("org.jetbrains.kotlin:kotlin-stdlib-jdk8:${project.kotlinVersion}")
+    includeAndExpose("org.jetbrains.kotlin:kotlin-stdlib-jdk7:${project.kotlinVersion}")
+    includeAndExpose("org.jetbrains.kotlin:kotlin-reflect:${project.kotlinVersion}")
+
+    includeAndExpose("org.jetbrains.kotlinx:kotlinx-coroutines-core:${project.coroutinesVersion}")
+    includeAndExpose("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:${project.coroutinesVersion}")
+    includeAndExpose("org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:${project.coroutinesVersion}")
+    includeAndExpose("org.jetbrains.kotlinx:kotlinx-serialization-core-jvm:${project.serializationVersion}")
+    includeAndExpose("org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:${project.serializationVersion}")
+    includeAndExpose("org.jetbrains.kotlinx:kotlinx-serialization-cbor-jvm:${project.serializationVersion}")
+    includeAndExpose("org.jetbrains.kotlinx:atomicfu-jvm:${project.atomicfuVersion}")
+    includeAndExpose("org.jetbrains.kotlinx:kotlinx-datetime-jvm:${project.datetimeVersion}")
+}
+
+processResources {
+    inputs.property "version", project.version
+
+    filesMatching("fabric.mod.json") {
+        expand "version": project.version
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    it.options.release = 8
+}
+
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
+
+java {
+    withSourcesJar()
+}
+
+spotless {
+    kotlin {
+        licenseHeaderFile(rootProject.file("HEADER"))
+    }
+}
+
+jar {
+    from("LICENSE") {
+        rename { "${it}_${project.archivesBaseName}"}
+    }
+}
+
+task processMDTemplates(type: Copy) {
+    group = "documentation"
+    from(file("templates"))
+    include("**/*.template.md")
+    filesMatching("**/*.template.md") {
+        name = sourceName.replace("template.", "")
+        expand(
+                "MOD_VERSION": "${project.modVersion}+kotlin.${project.kotlinVersion}",
+                "LOADER_VERSION": project.loaderVersion,
+                "KOTLIN_VERSION": project.kotlinVersion,
+                "COROUTINES_VERSION": project.coroutinesVersion,
+                "SERIALIZATION_VERSION": project.serializationVersion,
+                "ATOMICFU_VERSION": project.atomicfuVersion,
+                "DATETIME_VERSION": project.datetimeVersion,
+        )
+    }
+    destinationDir = rootDir
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            groupId = project.group
+            artifactId = project.name.toLowerCase()
+            version = project.version
+
+            from components.java
+        }
+    }
+
+    repositories {
+        if (ENV.MAVEN_URL) {
+            maven {
+                url ENV.MAVEN_URL
+                credentials {
+                    username ENV.MAVEN_USERNAME
+                    password ENV.MAVEN_PASSWORD
+                }
+            }
+        }
+    }
+}
+
+def gameVersions = [
+        "1.19",
+        "1.18.2", "1.18.1", "1.18",
+        "1.17.1", "1.17",
+        "1.16.4", "1.16.3", "1.16.2", "1.16.1", "1.16",
+        "1.15.2", "1.15.1", "1.15",
+        "1.14.4", "1.14.2", "1.14.1", "1.14"
+]
+
+curseforge {
+    if (ENV.CURSEFORGE_API_KEY) {
+        apiKey = ENV.CURSEFORGE_API_KEY
+    }
+
+    project {
+        id = "308769"
+        changelog = ENV.CHANGELOG ?: "No changelog provided"
+        releaseType = "release"
+        addGameVersion "Fabric"
+
+        gameVersions.each {
+            addGameVersion it
+        }
+
+        mainArtifact(remapJar) {
+            displayName = "Fabric Language Kotlin $version"
+        }
+
+        afterEvaluate {
+            uploadTask.dependsOn("remapJar")
+        }
+    }
+
+    options {
+        forgeGradleIntegration = false
+    }
+}
+
+task modrinth(type: com.modrinth.minotaur.TaskModrinthUpload, dependsOn: remapJar) {
+    onlyIf {
+        ENV.MODRINTH_TOKEN
+    }
+
+    token = ENV.MODRINTH_TOKEN
+    projectId = "Ha28R6CL"
+    versionNumber = version
+    versionName = "Fabric Language Kotlin $version"
+    releaseType = "release"
+    changelog = ENV.CHANGELOG ?: "No changelog provided"
+
+    uploadFile = remapJar
+
+    gameVersions.each {
+        addGameVersion it
+    }
+
+    addLoader('fabric')
+}
+
+import org.kohsuke.github.GHReleaseBuilder
+import org.kohsuke.github.GitHub
+
+static def getBranch() {
+    def ENV = System.getenv()
+    if (ENV.GITHUB_REF) {
+        def branch = ENV.GITHUB_REF
+        return branch.substring(branch.lastIndexOf("/") + 1)
+    }
+
+    throw new RuntimeException("Unable to get branch")
+}
+
+task github(dependsOn: remapJar) {
+    onlyIf {
+        ENV.GITHUB_TOKEN
+    }
+
+    doLast {
+        def github = GitHub.connectUsingOAuth(ENV.GITHUB_TOKEN as String)
+        def repository = github.getRepository(ENV.GITHUB_REPOSITORY)
+
+        def releaseBuilder = new GHReleaseBuilder(repository, version as String)
+        releaseBuilder.name("Fabric Language Kotlin $version")
+        releaseBuilder.body(ENV.CHANGELOG ?: "No changelog provided")
+        releaseBuilder.commitish(getBranch())
+        releaseBuilder.prerelease(false)
+
+        def ghRelease = releaseBuilder.create()
+        ghRelease.uploadAsset(remapJar.archiveFile.get().getAsFile(), "application/java-archive");
+    }
+}
+
+// A task to ensure that the version being released has not already been released.
+task checkVersion {
+    doFirst {
+        def xml = new URL("https://maven.fabricmc.net/net/fabricmc/fabric-language-kotlin/maven-metadata.xml").text
+        def metadata = new groovy.xml.XmlSlurper().parseText(xml)
+        def versions = metadata.versioning.versions.version*.text();
+        if (versions.contains(version)) {
+            throw new RuntimeException("${version} has already been released!")
+        }
+    }
+}
+
+github.dependsOn checkVersion
+modrinth.dependsOn checkVersion
+publish.dependsOn checkVersion
+project.tasks.curseforge.dependsOn checkVersion
