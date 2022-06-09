@@ -250,6 +250,7 @@ org.jetbrains.kotlinx:kotlinx-serialization-core-jvm:1.3.2
 org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:1.3.2
 org.jetbrains.kotlinx:kotlinx-serialization-cbor-jvm:1.3.2
 org.jetbrains.kotlinx:atomicfu-jvm:0.17.3
+org.jetbrains.kotlinx:kotlinx-datetime-jvm:0.3.3
 ```
 
 ## Available Versions
