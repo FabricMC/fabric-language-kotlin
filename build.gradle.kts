@@ -22,6 +22,7 @@ val loaderVersion: String by project
 val kotlinVersion: String by project
 val coroutinesVersion: String by project
 val serializationVersion: String by project
+val atomicfuVersion: String by project
 
 base {
     archivesBaseName = modId
@@ -79,6 +80,7 @@ dependencies {
     includeAndExpose("org.jetbrains.kotlinx:kotlinx-serialization-core-jvm:$serializationVersion")
     includeAndExpose("org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:$serializationVersion")
     includeAndExpose("org.jetbrains.kotlinx:kotlinx-serialization-cbor-jvm:$serializationVersion")
+    includeAndExpose("org.jetbrains.kotlinx:atomicfu-jvm:$atomicfuVersion")
 }
 
 java {
@@ -169,7 +171,8 @@ tasks.create<Copy>("processMDTemplates") {
             "LOADER_VERSION" to loaderVersion,
             "KOTLIN_VERSION" to kotlinVersion,
             "COROUTINES_VERSION" to coroutinesVersion,
-            "SERIALIZATION_VERSION" to serializationVersion
+            "SERIALIZATION_VERSION" to serializationVersion,
+            "ATOMICFU_VERSION" to atomicfuVersion,
         )
     }
     destinationDir = rootDir
