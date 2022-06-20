@@ -75,13 +75,8 @@ class MyMod : ModInitializer {
 ```
 
 </td>
-
-<td>
-
-
-
-</td>
-
+<td></td>
+<td></td>
 </tr>
 <tr>
 <td><code>object</code></td>
@@ -231,6 +226,7 @@ fun init() {
 ```
 
 </td>
+<td></td>
 </tr>
 </table>
 
