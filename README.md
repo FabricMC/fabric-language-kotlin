@@ -1,20 +1,24 @@
-[![maven-badge](https://img.shields.io/maven-metadata/v/https/maven.fabricmc.net/net/fabricmc/fabric-language-kotlin/maven-metadata.xml.svg?style=flat-square&logo=Kotlin)](https://maven.fabricmc.net/net/fabricmc/fabric-language-kotlin)
-[![Files](https://curse.nikky.moe/api/img/308769/files?logo&style=flat-square)](https://minecraft.curseforge.com/projects/308769/files)
-[![Download](https://curse.nikky.moe/api/img/308769?logo&style=flat-square)](https://curse.nikky.moe/api/url/308769?version=1.14-Snapshot)
-
 # fabric-language-kotlin
-Fabric language module for [Kotlin](https://kotlinlang.org/). Adds support for using a Kotlin `object` as the main mod class and bundles the Kotlin libraries and runtime for you.
+
+[![maven-badge](https://img.shields.io/maven-metadata/v/https/maven.fabricmc.net/net/fabricmc/fabric-language-kotlin/maven-metadata.xml.svg?style=flat-square&logo=Kotlin&label=Maven)](https://maven.fabricmc.net/net/fabricmc/fabric-language-kotlin)
+[![modrinth-badge](https://img.shields.io/modrinth/dt/fabric-language-kotlin?label=Modrinth&logo=Modrinth&style=flat-square)](https://modrinth.com/mod/fabric-language-kotlin/versions)
+[![curseforge-badge](https://curse.nikky.moe/api/img/308769/files?logo&style=flat-square&label=Curseforge)](https://minecraft.curseforge.com/projects/308769/files)
+
+Fabric language module for [Kotlin](https://kotlinlang.org/). Adds support for Kotlin exclusive entrypoints and bundles the Kotlin Stdlib as well as common kotlinx libraries.
 
 ## Usage
 
-Add it as a dependency (build.gradle and build.gradle.kts):
+### Dependency
+
+Add it as a dependency to your Gradle project:
 
 ```kotlin
 dependencies {
-    // [...]
-    modImplementation(group = "net.fabricmc", name = "fabric-language-kotlin", version = "1.8.0+kotlin.1.7.0")
+    modImplementation("net.fabricmc:fabric-language-kotlin:1.8.0+kotlin.1.7.0")
 }
 ```
+
+### Adapter
 
 Use the `kotlin` adapter for your mod by setting the `adapter` property in the `fabric.mod.json` file. 
 Remember to the add a dependency entry to your `fabric.mod.json` file:
@@ -36,18 +40,23 @@ Remember to the add a dependency entry to your `fabric.mod.json` file:
 }
 ```
 
-For more info reference [format:modjson](https://fabricmc.net/wiki/format:modjson).
+For more info reference the [fabric.mod.json documentation](https://fabricmc.net/wiki/documentation:fabric_mod_json).
 
 Do not forget to set the `schemaVersion` to `1` or it will fall back to schema `0` and will not attempt to load entrypoints.
 
-### entrypoints samples
+### Entrypoint samples
 
-#### class reference
+<table>
+<tr>
+<th><i>Kind</i></th>
+<th>Class reference</th>
+<th>Function reference</th>
+<th>Field reference</th>
+</tr>
 
-As a `class`
-
-<details>
-  <summary>Click to view code</summary><p>
+<tr>
+<td><code>class</code></td>
+<td>
 
 ```json
 {
@@ -64,12 +73,14 @@ class MyMod : ModInitializer {
     }
 }
 ```
-</p></details>
 
-As an `object`
-
-<details>
-  <summary>Click to view code</summary><p>
+</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>object</code></td>
+<td>
 
 ```json
 {
@@ -86,12 +97,50 @@ object MyMod : ModInitializer {
     }
 }
 ```
-</p></details>
 
-As a `companion object`
+</td>
+<td>
 
-<details>
-  <summary>Click to view code</summary><p>
+```json
+{
+    "adapter": "kotlin",
+    "value": "mymod.MyMod::init"
+}
+```
+
+```kotlin
+package mymod
+object MyMod  {
+    fun init() {
+        TODO()
+    }
+}
+```
+
+</td>
+<td>
+
+```json
+{
+    "adapter": "kotlin",
+    "value": "mymod.MyMod::initializer"
+}
+```
+
+```kotlin
+package mymod
+object MyMod  {
+    val initializer = ModInitializer {
+        TODO()
+    }
+}
+```
+
+</td>
+</tr>
+<tr>
+<td><code>companion object</code></td>
+<td>
 
 ```json
 {
@@ -110,39 +159,9 @@ class MyMod {
     }
 }
 ```
-</p></details>
 
-#### function reference
-
-Functions do not get returned but executed, 
-so they have to only contain initialization code, 
-not return a initializer type.
-
-In an `object`
-
-<details>
-  <summary>Click to view code</summary><p>
-
-```json
-{
-    "adapter": "kotlin",
-    "value": "mymod.MyMod::init"
-}
-```
-
-```kotlin
-package mymod
-object MyMod  {
-    fun init() {
-        TODO()
-    }
-}
-```
-</p></details>
-
-In a `companion object`
-<details>
-  <summary>Click to view code</summary><p>
+</td>
+<td>
 
 ```json
 {
@@ -161,59 +180,9 @@ class MyMod  {
     }
 }
 ```
-</p></details>
 
-As a top level function
-
-<details>
-  <summary>Click to view code</summary><p>
-
-The classname gets constructed by taking the filename and appending `Kt`.
-```json
-{
-    "adapter": "kotlin",
-    "value": "mymod.MyModKt::init"
-}
-```
-
-File: `src/main/kotlin/mymod/MyMod.kt`
-```kotlin
-package mymod
-
-fun init() {
-    TODO()
-}
-```
-</p></details>
-
-#### field reference
-
-In an `object`
-
-<details>
-  <summary>Click to view code</summary><p>
-
-```json
-{
-    "adapter": "kotlin",
-    "value": "mymod.MyMod::initializer"
-}
-```
-
-```kotlin
-package mymod
-object MyMod  {
-    val initializer = ModInitializer {
-        TODO()
-    }
-}
-```
-</p></details>
-
-In a `companion object`
-
-<details>
-  <summary>Click to view code</summary><p>
+</td>
+<td>
 
 ```json
 {
@@ -232,26 +201,52 @@ class MyMod  {
     }
 }
 ```
-</p></details>
+
+</td>
+</tr>
+<tr>
+<td><code>top level</code></td>
+<td></td>
+<td>
+
+```json
+{
+    "adapter": "kotlin",
+    "value": "mymod.MyModKt::init"
+}
+```
+
+File: `src/main/kotlin/mymod/MyMod.kt`
+```kotlin
+package mymod
+
+fun init() {
+    TODO()
+}
+```
+
+</td>
+<td></td>
+</tr>
+</table>
 
 Companion objects can be used by appending `$Companion` to the class.
-Take care of `processResource` there, it might try to expand it, in that case escape it.
-
-See examples in [sample-mod/fabric.mod.json](https://github.com/FabricMC/fabric-language-kotlin/blob/master/sample-mod/src/main/resources/fabric.mod.json).
+**Take care of `processResources` there**, it might try to expand it, in that case escape it.
 
 ## Bundled libraries
 
-```
-org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.7.0
-org.jetbrains.kotlin:kotlin-reflect:1.7.0
-org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.2
-org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:1.6.2
-org.jetbrains.kotlinx:kotlinx-serialization-core-jvm:1.3.3
-org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:1.3.3
-org.jetbrains.kotlinx:kotlinx-serialization-cbor-jvm:1.3.3
-org.jetbrains.kotlinx:atomicfu-jvm:0.17.3
-org.jetbrains.kotlinx:kotlinx-datetime-jvm:0.3.3
-```
+`org.jetbrains.kotlin` namespace:
+- **`kotlin-stdlib`** 1.7.0 [Docs](https://kotlinlang.org/docs/home.html), [API docs](https://kotlinlang.org/api/latest/jvm/stdlib/), [GitHub](https://github.com/JetBrains/kotlin)
+- **`kotlin-reflect`** 1.7.0 [Docs](https://kotlinlang.org/docs/reflection.html), [API docs](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.reflect/)
+
+`org.jetbrains.kotlinx` namespace:
+- **`kotlinx-coroutines-core`** 1.6.2 [Guide](https://kotlinlang.org/docs/coroutines-guide.html), [API docs](https://kotlin.github.io/kotlinx.coroutines/), [GitHub](https://github.com/Kotlin/kotlinx.coroutines)
+- **`kotlinx-coroutines-jdk8`** 1.6.2 [API docs](https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-jdk8/index.html)
+- **`kotlinx-serialization-core`** 1.3.3 [Guide](https://github.com/Kotlin/kotlinx.serialization/blob/master/docs/serialization-guide.md), [API docs](https://kotlin.github.io/kotlinx.serialization/kotlinx-serialization-core/index.html), [GitHub](https://github.com/Kotlin/kotlinx.serialization)
+- **`kotlinx-serialization-json`** 1.3.3 [API docs](https://kotlin.github.io/kotlinx.serialization/kotlinx-serialization-json/index.html)
+- **`kotlinx-serialization-cbor`** 1.3.3 [API docs](https://kotlin.github.io/kotlinx.serialization/kotlinx-serialization-cbor/index.html)
+- **`atomicfu`** 0.17.3 [GitHub](https://github.com/Kotlin/kotlinx.atomicfu)
+- **`kotlinx-datetime`** 0.3.3 [GitHub](https://github.com/Kotlin/kotlinx-datetime)
 
 ## Available Versions
 
