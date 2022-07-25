@@ -248,6 +248,16 @@ Companion objects can be used by appending `$Companion` to the class.
 - **`atomicfu`** 0.18.2 [GitHub](https://github.com/Kotlin/kotlinx.atomicfu)
 - **`kotlinx-datetime`** 0.4.0 [GitHub](https://github.com/Kotlin/kotlinx-datetime)
 
+`io.ktor` namespace:
+- **ktor-client-core** 2.0.3 [Guide](https://ktor.io/docs/getting-started-ktor-client.html), [GitHub](https://github.com/ktorio/ktor)
+- **ktor-client-cio** 2.0.3 [GitHub](https://github.com/ktorio/ktor)
+- **ktor-client-content-negotiation** 2.0.3 [Guide](https://ktor.io/docs/serialization-client.html), [GitHub](https://github.com/ktorio/ktor)
+- **ktor-client-auth** 2.0.3 [Guide](https://ktor.io/docs/auth.html), [GitHub](https://github.com/ktorio/ktor)
+- **ktor-client-encoding** 2.0.3 [Guide](hhttps://ktor.io/docs/content-encoding.html), [GitHub](https://github.com/ktorio/ktor)
+- **ktor-client-serialization-kotlinx-json** 2.0.3 [Guide](https://ktor.io/docs/serialization-client.html#register_json), [GitHub](https://github.com/ktorio/ktor)
+- **ktor-client-serialization-kotlinx-xml** 2.0.3 [Guide](https://ktor.io/docs/serialization-client.html#register_xml), [GitHub](https://github.com/ktorio/ktor)
+- **ktor-client-serialization-kotlinx-cbor** 2.0.3 [Guide](https://ktor.io/docs/serialization-client.html#register_cbor), [GitHub](https://github.com/ktorio/ktor)
+
 ## Available Versions
 
 https://maven.fabricmc.net/net/fabricmc/fabric-language-kotlin/
