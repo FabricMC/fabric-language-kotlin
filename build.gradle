@@ -65,14 +65,14 @@ dependencies {
     includeAndExpose("org.jetbrains.kotlinx:atomicfu-jvm:${project.atomicfuVersion}")
     includeAndExpose("org.jetbrains.kotlinx:kotlinx-datetime-jvm:${project.datetimeVersion}")
 
-    includeAndExpose("io.ktor:ktor-client-core:${project.ktorVersion}")
-    includeAndExpose("io.ktor:ktor-client-cio:${project.ktorVersion}")
-    includeAndExpose("io.ktor:ktor-client-content-negotiation:${project.ktorVersion}")
-    includeAndExpose("io.ktor:ktor-client-auth:${project.ktorVersion}")
-    includeAndExpose("io.ktor:ktor-client-encoding:${project.ktorVersion}")
-    includeAndExpose("io.ktor:ktor-serialization-kotlinx-json:${project.ktorVersion}")
-    includeAndExpose("io.ktor:ktor-serialization-kotlinx-xml:${project.ktorVersion}")
-    includeAndExpose("io.ktor:ktor-serialization-kotlinx-cbor:${project.ktorVersion}")
+    includeAndExpose("io.ktor:ktor-client-core-jvm:${project.ktorVersion}")
+    includeAndExpose("io.ktor:ktor-client-cio-jvm:${project.ktorVersion}")
+    includeAndExpose("io.ktor:ktor-client-content-negotiation-jvm:${project.ktorVersion}")
+    includeAndExpose("io.ktor:ktor-client-auth-jvm:${project.ktorVersion}")
+    includeAndExpose("io.ktor:ktor-client-encoding-jvm:${project.ktorVersion}")
+    includeAndExpose("io.ktor:ktor-serialization-kotlinx-json-jvm:${project.ktorVersion}")
+    includeAndExpose("io.ktor:ktor-serialization-kotlinx-xml-jvm:${project.ktorVersion}")
+    includeAndExpose("io.ktor:ktor-serialization-kotlinx-cbor-jvm:${project.ktorVersion}")
 
 }
 
