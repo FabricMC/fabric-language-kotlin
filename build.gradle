@@ -5,7 +5,7 @@ buildscript {
 }
 
 plugins {
-    id 'fabric-loom' version '0.12.54'
+    id 'fabric-loom' version '0.13-SNAPSHOT'
     id 'maven-publish'
     id "com.matthewprenger.cursegradle" version "1.4.0"
     id "org.jetbrains.kotlin.jvm" version "1.7.10"
