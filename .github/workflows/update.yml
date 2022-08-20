@@ -13,6 +13,7 @@ jobs:
           java-version: 18
       - uses: gradle/wrapper-validation-action@v1
       - run: ./gradlew updateVersions
+      - run: ./gradlew processMDTemplates
       - uses: peter-evans/create-pull-request@v4
         with:
           branch: update-versions
