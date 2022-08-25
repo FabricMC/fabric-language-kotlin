@@ -1,25 +1,60 @@
 buildscript {
     dependencies {
         classpath 'org.kohsuke:github-api:1.135'
+
+        def kotlinVersion = file("generated/kotlin_version.txt").text
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
     }
 }
 
 plugins {
-    id 'fabric-loom' version '0.12.48'
+    id 'fabric-loom' version '0.12.54'
     id 'maven-publish'
     id "com.matthewprenger.cursegradle" version "1.4.0"
-    id "org.jetbrains.kotlin.jvm" version "1.7.0"
     id "com.diffplug.spotless" version "6.5.1"
     id "com.modrinth.minotaur" version "2.3.1"
 }
+
+apply plugin: "org.jetbrains.kotlin.jvm"
 
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
 group = project.group
 
 def ENV = System.getenv()
+def MINECRAFT_VERSIONS_FILE = "generated/minecraft_versions.txt"
+def LIBRARY_VERSIONS_FILE = "generated/library_versions.json"
+def KOTLIN_VERSION_FILE = "generated/kotlin_version.txt"
 
-version = "${project.modVersion}+kotlin.${project.kotlinVersion}" + (ENV.GITHUB_ACTIONS ? "" : ".local")
+def kotlinLib = "org.jetbrains.kotlin:kotlin-stdlib"
+def libraries = [
+        kotlinLib,
+        "org.jetbrains.kotlin:kotlin-stdlib-jdk8",
+        "org.jetbrains.kotlin:kotlin-stdlib-jdk7",
+        "org.jetbrains.kotlin:kotlin-reflect",
+
+        "org.jetbrains.kotlinx:kotlinx-coroutines-core",
+        "org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm",
+        "org.jetbrains.kotlinx:kotlinx-coroutines-jdk8",
+        "org.jetbrains.kotlinx:kotlinx-serialization-core-jvm",
+        "org.jetbrains.kotlinx:kotlinx-serialization-json-jvm",
+        "org.jetbrains.kotlinx:kotlinx-serialization-cbor-jvm",
+        "org.jetbrains.kotlinx:atomicfu-jvm",
+        "org.jetbrains.kotlinx:kotlinx-datetime-jvm"
+]
+
+def minecraftVersions = file(MINECRAFT_VERSIONS_FILE).text.readLines()
+def libVersions = new JsonSlurper().parse(file(LIBRARY_VERSIONS_FILE))
+def hasMissingLibVersion = !libVersions.keySet().containsAll(libraries)
+def kotlinVersion = file(KOTLIN_VERSION_FILE).text
+
+println("Kotlin: ${kotlinVersion}")
+println("Libraries:")
+libVersions.forEach { k, v ->
+    println("\t${k}:${v}")
+}
+
+version = "${project.modVersion}+kotlin.${kotlinVersion}" + (ENV.GITHUB_ACTIONS ? "" : ".local")
 
 loom {
     mods {
@@ -51,19 +86,13 @@ dependencies {
     mappings "net.fabricmc:yarn:${project.mappingsVersion}:v2"
     modImplementation "net.fabricmc:fabric-loader:${project.loaderVersion}"
 
-    includeAndExpose("org.jetbrains.kotlin:kotlin-stdlib:${project.kotlinVersion}")
-    includeAndExpose("org.jetbrains.kotlin:kotlin-stdlib-jdk8:${project.kotlinVersion}")
-    includeAndExpose("org.jetbrains.kotlin:kotlin-stdlib-jdk7:${project.kotlinVersion}")
-    includeAndExpose("org.jetbrains.kotlin:kotlin-reflect:${project.kotlinVersion}")
-
-    includeAndExpose("org.jetbrains.kotlinx:kotlinx-coroutines-core:${project.coroutinesVersion}")
-    includeAndExpose("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:${project.coroutinesVersion}")
-    includeAndExpose("org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:${project.coroutinesVersion}")
-    includeAndExpose("org.jetbrains.kotlinx:kotlinx-serialization-core-jvm:${project.serializationVersion}")
-    includeAndExpose("org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:${project.serializationVersion}")
-    includeAndExpose("org.jetbrains.kotlinx:kotlinx-serialization-cbor-jvm:${project.serializationVersion}")
-    includeAndExpose("org.jetbrains.kotlinx:atomicfu-jvm:${project.atomicfuVersion}")
-    includeAndExpose("org.jetbrains.kotlinx:kotlinx-datetime-jvm:${project.datetimeVersion}")
+    if (hasMissingLibVersion) {
+        println("Contains missing library version, run updateLibraryVersions task!")
+    } else {
+        libraries.forEach {
+            includeAndExpose("${it}:${libVersions[it]}")
+        }
+    }
 }
 
 processResources {
@@ -96,25 +125,31 @@ spotless {
 
 jar {
     from("LICENSE") {
-        rename { "${it}_${project.archivesBaseName}"}
+        rename { "${it}_${project.archivesBaseName}" }
     }
 }
 
 task processMDTemplates(type: Copy) {
     group = "documentation"
+    doFirst {
+        if (hasMissingLibVersion) {
+            throw new GradleException("Contains missing library version, run updateLibraryVersions task first!")
+        }
+    }
+
     from(file("templates"))
     include("**/*.template.md")
     filesMatching("**/*.template.md") {
         name = sourceName.replace("template.", "")
-        expand(
-                "MOD_VERSION": "${project.modVersion}+kotlin.${project.kotlinVersion}",
-                "LOADER_VERSION": project.loaderVersion,
-                "KOTLIN_VERSION": project.kotlinVersion,
-                "COROUTINES_VERSION": project.coroutinesVersion,
-                "SERIALIZATION_VERSION": project.serializationVersion,
-                "ATOMICFU_VERSION": project.atomicfuVersion,
-                "DATETIME_VERSION": project.datetimeVersion,
-        )
+        def template = [
+                MOD_VERSION   : "${project.modVersion}+kotlin.${kotlinVersion}",
+                LOADER_VERSION: project.loaderVersion
+        ]
+        libraries.forEach {
+            def key = it.split(":", 2)[1].replace("-", "_").toUpperCase(Locale.ROOT) + "_VERSION"
+            template.put(key, libVersions[it])
+        }
+        expand(template)
     }
     destinationDir = rootDir
 }
@@ -143,14 +178,6 @@ publishing {
     }
 }
 
-def supportedGameVersions = [
-        "1.19",
-        "1.18.2", "1.18.1", "1.18",
-        "1.17.1", "1.17",
-        "1.16.4", "1.16.3", "1.16.2", "1.16.1", "1.16",
-        "1.15.2", "1.15.1", "1.15",
-        "1.14.4", "1.14.2", "1.14.1", "1.14"
-]
 
 curseforge {
     if (ENV.CURSEFORGE_API_KEY) {
@@ -163,7 +190,7 @@ curseforge {
         releaseType = "release"
         addGameVersion "Fabric"
 
-        supportedGameVersions.each {
+        minecraftVersions.each {
             addGameVersion it
         }
 
@@ -191,13 +218,19 @@ modrinth {
 
     uploadFile = remapJar
 
-    gameVersions = supportedGameVersions
+    gameVersions = minecraftVersions
 
     loaders = ["fabric"]
 }
 
+import groovy.json.JsonBuilder
+import groovy.json.JsonSlurper
+import groovy.xml.XmlSlurper
+import org.gradle.util.VersionNumber
 import org.kohsuke.github.GHReleaseBuilder
 import org.kohsuke.github.GitHub
+
+import java.nio.charset.StandardCharsets
 
 static def getBranch() {
     def ENV = System.getenv()
@@ -233,12 +266,72 @@ task github(dependsOn: remapJar) {
 task checkVersion {
     doFirst {
         def xml = new URL("https://maven.fabricmc.net/net/fabricmc/fabric-language-kotlin/maven-metadata.xml").text
-        def metadata = new groovy.xml.XmlSlurper().parseText(xml)
-        def versions = metadata.versioning.versions.version*.text();
+        def metadata = new XmlSlurper().parseText(xml)
+        def versions = metadata.versioning.versions.version*.text()
         if (versions.contains(version)) {
             throw new RuntimeException("${version} has already been released!")
         }
     }
+}
+
+task updateMinecraftVersions {
+    group = "update"
+    doFirst {
+        def json = new URL("https://meta.fabricmc.net/v2/versions/game").text
+        def versions = new JsonSlurper().parseText(json)
+        def output = new StringBuilder()
+        def i = 0
+        for (def version : versions) {
+            if (version.stable) {
+                if (i > 0) {
+                    output.append("\n")
+                }
+                output.append("${version.version}")
+                i++
+            }
+        }
+        file(MINECRAFT_VERSIONS_FILE).setText(output.toString(), StandardCharsets.UTF_8.name())
+    }
+}
+
+task updateLibraryVersions {
+    group = "update"
+    doFirst {
+        def output = [:]
+        def slurper = new XmlSlurper()
+        for (def lib : libraries) {
+            def split = lib.split(":", 2)
+            def group = split[0].replace(".", "/")
+            def artifact = split[1]
+            def xml = new URL("https://repo1.maven.org/maven2/${group}/${artifact}/maven-metadata.xml").text
+            def metadata = slurper.parseText(xml)
+            def versions = metadata.versioning.versions.version*.text()
+
+            def latest = versions[0]
+            def latestParsed = VersionNumber.parse(latest)
+            for (def version : versions) {
+                def parsed = VersionNumber.parse(version)
+                if (parsed.qualifier == null && parsed > latestParsed) {
+                    latestParsed = parsed
+                    latest = version
+                }
+            }
+
+            println("${lib} = ${latest}")
+            output.put(lib, latest)
+
+            if (lib == kotlinLib) {
+                file(KOTLIN_VERSION_FILE).setText(latest, StandardCharsets.UTF_8.name())
+            }
+        }
+        def json = new JsonBuilder(output)
+        file(LIBRARY_VERSIONS_FILE).setText(json.toPrettyString(), StandardCharsets.UTF_8.name())
+    }
+}
+
+task updateVersions {
+    group = "update"
+    dependsOn(updateMinecraftVersions, updateLibraryVersions)
 }
 
 github.dependsOn checkVersion
