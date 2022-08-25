@@ -12,7 +12,7 @@ plugins {
     id 'maven-publish'
     id "com.matthewprenger.cursegradle" version "1.4.0"
     id "com.diffplug.spotless" version "6.5.1"
-    id "com.modrinth.minotaur" version "1.1.0"
+    id "com.modrinth.minotaur" version "2.3.1"
 }
 
 apply plugin: "org.jetbrains.kotlin.jvm"
@@ -208,25 +208,19 @@ curseforge {
     }
 }
 
-task modrinth(type: com.modrinth.minotaur.TaskModrinthUpload, dependsOn: remapJar) {
-    onlyIf {
-        ENV.MODRINTH_TOKEN
-    }
-
+modrinth {
     token = ENV.MODRINTH_TOKEN
     projectId = "Ha28R6CL"
     versionNumber = version
     versionName = "Fabric Language Kotlin $version"
-    releaseType = "release"
+    versionType = "release"
     changelog = ENV.CHANGELOG ?: "No changelog provided"
 
     uploadFile = remapJar
 
-    minecraftVersions.each {
-        addGameVersion it
-    }
+    gameVersions = minecraftVersions
 
-    addLoader('fabric')
+    loaders = ["fabric"]
 }
 
 import groovy.json.JsonBuilder
@@ -341,6 +335,6 @@ task updateVersions {
 }
 
 github.dependsOn checkVersion
-modrinth.dependsOn checkVersion
 publish.dependsOn checkVersion
 project.tasks.curseforge.dependsOn checkVersion
+project.tasks.modrinth.dependsOn checkVersion
