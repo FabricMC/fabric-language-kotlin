@@ -14,7 +14,7 @@ Add it as a dependency to your Gradle project:
 
 ```kotlin
 dependencies {
-    modImplementation("net.fabricmc:fabric-language-kotlin:1.8.2+kotlin.1.7.10")
+    modImplementation("net.fabricmc:fabric-language-kotlin:1.8.3+kotlin.1.7.10")
 }
 ```
 
@@ -35,7 +35,7 @@ Remember to the add a dependency entry to your `fabric.mod.json` file:
         ]
     },
     "depends": {
-        "fabric-language-kotlin": ">=1.8.2+kotlin.1.7.10"
+        "fabric-language-kotlin": ">=1.8.3+kotlin.1.7.10"
     }
 }
 ```
@@ -242,10 +242,10 @@ Companion objects can be used by appending `$Companion` to the class.
 `org.jetbrains.kotlinx` namespace:
 - **`kotlinx-coroutines-core`** 1.6.4 [Guide](https://kotlinlang.org/docs/coroutines-guide.html), [API docs](https://kotlin.github.io/kotlinx.coroutines/), [GitHub](https://github.com/Kotlin/kotlinx.coroutines)
 - **`kotlinx-coroutines-jdk8`** 1.6.4 [API docs](https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-jdk8/index.html)
-- **`kotlinx-serialization-core`** 1.3.3 [Guide](https://github.com/Kotlin/kotlinx.serialization/blob/master/docs/serialization-guide.md), [API docs](https://kotlin.github.io/kotlinx.serialization/kotlinx-serialization-core/index.html), [GitHub](https://github.com/Kotlin/kotlinx.serialization)
-- **`kotlinx-serialization-json`** 1.3.3 [API docs](https://kotlin.github.io/kotlinx.serialization/kotlinx-serialization-json/index.html)
-- **`kotlinx-serialization-cbor`** 1.3.3 [API docs](https://kotlin.github.io/kotlinx.serialization/kotlinx-serialization-cbor/index.html)
-- **`atomicfu`** 0.18.2 [GitHub](https://github.com/Kotlin/kotlinx.atomicfu)
+- **`kotlinx-serialization-core`** 1.4.0 [Guide](https://github.com/Kotlin/kotlinx.serialization/blob/master/docs/serialization-guide.md), [API docs](https://kotlin.github.io/kotlinx.serialization/kotlinx-serialization-core/index.html), [GitHub](https://github.com/Kotlin/kotlinx.serialization)
+- **`kotlinx-serialization-json`** 1.4.0 [API docs](https://kotlin.github.io/kotlinx.serialization/kotlinx-serialization-json/index.html)
+- **`kotlinx-serialization-cbor`** 1.4.0 [API docs](https://kotlin.github.io/kotlinx.serialization/kotlinx-serialization-cbor/index.html)
+- **`atomicfu`** 0.18.3 [GitHub](https://github.com/Kotlin/kotlinx.atomicfu)
 - **`kotlinx-datetime`** 0.4.0 [GitHub](https://github.com/Kotlin/kotlinx-datetime)
 
 ## Available Versions
