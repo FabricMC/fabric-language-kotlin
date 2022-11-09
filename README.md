@@ -14,7 +14,7 @@ Add it as a dependency to your Gradle project:
 
 ```kotlin
 dependencies {
-    modImplementation("net.fabricmc:fabric-language-kotlin:1.8.5+kotlin.1.7.21")
+    modImplementation("net.fabricmc:fabric-language-kotlin:1.8.6+kotlin.1.7.21")
 }
 ```
 
@@ -35,7 +35,7 @@ Remember to the add a dependency entry to your `fabric.mod.json` file:
         ]
     },
     "depends": {
-        "fabric-language-kotlin": ">=1.8.5+kotlin.1.7.21"
+        "fabric-language-kotlin": ">=1.8.6+kotlin.1.7.21"
     }
 }
 ```
