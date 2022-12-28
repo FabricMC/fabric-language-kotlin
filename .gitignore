@@ -18,7 +18,7 @@
 !/Jenkinsfile
 !/LICENSE
 !/README.md
-!/settings.gradle.kts
+!/settings.gradle
 
 !/sample-mod
 !/templates/
