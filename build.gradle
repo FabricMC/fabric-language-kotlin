@@ -8,7 +8,7 @@ buildscript {
 }
 
 plugins {
-    id 'fabric-loom' version '0.12.54'
+    id 'fabric-loom' version '1.0.16'
     id 'maven-publish'
     id "com.matthewprenger.cursegradle" version "1.4.0"
     id "com.diffplug.spotless" version "6.5.1"

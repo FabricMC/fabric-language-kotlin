@@ -4,17 +4,24 @@ jobs:
   gradle:
     strategy:
       matrix:
-        java: [17-jdk, 18-jdk]
+        java: [17, 18]
     runs-on: ubuntu-22.04
     container:
-      image: openjdk:${{ matrix.java }}
+      image: eclipse-temurin:${{ matrix.java }}
       options: --user root
     steps:
-      - name: 'Clone Repo'
-        uses: actions/checkout@v2
-
-      - name: 'Validate Gradle Wrapper'
-        uses: gradle/wrapper-validation-action@v1
+      - uses: actions/checkout@v3
+      - uses: actions/setup-java@v3
+        with:
+          java-version: ${{ matrix.java }}
+          distribution: 'temurin'
 
       - name: 'Build'
         run: ./gradlew build --stacktrace --warning-mode=fail
+
+      - name: 'Upload artifacts'
+        if: ${{ matrix.java == '18' }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: Artifacts
+          path: build/libs/
