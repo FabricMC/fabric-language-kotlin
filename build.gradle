@@ -29,8 +29,6 @@ def KOTLIN_VERSION_FILE = "generated/kotlin_version.txt"
 def kotlinLib = "org.jetbrains.kotlin:kotlin-stdlib"
 def libraries = [
         kotlinLib,
-        "org.jetbrains.kotlin:kotlin-stdlib-jdk8",
-        "org.jetbrains.kotlin:kotlin-stdlib-jdk7",
         "org.jetbrains.kotlin:kotlin-reflect",
 
         "org.jetbrains.kotlinx:kotlinx-coroutines-core",
