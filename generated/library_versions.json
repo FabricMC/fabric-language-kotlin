@@ -6,9 +6,9 @@
     "org.jetbrains.kotlinx:kotlinx-coroutines-core": "1.6.4",
     "org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm": "1.6.4",
     "org.jetbrains.kotlinx:kotlinx-coroutines-jdk8": "1.6.4",
-    "org.jetbrains.kotlinx:kotlinx-serialization-core-jvm": "1.4.1",
-    "org.jetbrains.kotlinx:kotlinx-serialization-json-jvm": "1.4.1",
-    "org.jetbrains.kotlinx:kotlinx-serialization-cbor-jvm": "1.4.1",
-    "org.jetbrains.kotlinx:atomicfu-jvm": "0.19.0",
+    "org.jetbrains.kotlinx:kotlinx-serialization-core-jvm": "1.5.0",
+    "org.jetbrains.kotlinx:kotlinx-serialization-json-jvm": "1.5.0",
+    "org.jetbrains.kotlinx:kotlinx-serialization-cbor-jvm": "1.5.0",
+    "org.jetbrains.kotlinx:atomicfu-jvm": "0.20.0",
     "org.jetbrains.kotlinx:kotlinx-datetime-jvm": "0.4.0"
 }
