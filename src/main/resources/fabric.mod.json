@@ -20,5 +20,12 @@
   "icon": "assets/fabric-language-kotlin/icon500.png",
   "depends": {
     "fabricloader": ">=0.14.7"
+  },
+  "custom": {
+    "modmenu": {
+      "badges": [
+        "library"
+      ]
+    }
   }
 }
