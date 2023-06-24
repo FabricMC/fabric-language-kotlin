@@ -9,6 +9,6 @@
     "org.jetbrains.kotlinx:kotlinx-serialization-core-jvm": "1.5.1",
     "org.jetbrains.kotlinx:kotlinx-serialization-json-jvm": "1.5.1",
     "org.jetbrains.kotlinx:kotlinx-serialization-cbor-jvm": "1.5.1",
-    "org.jetbrains.kotlinx:atomicfu-jvm": "0.20.2",
+    "org.jetbrains.kotlinx:atomicfu-jvm": "0.21.0",
     "org.jetbrains.kotlinx:kotlinx-datetime-jvm": "0.4.0"
 }
