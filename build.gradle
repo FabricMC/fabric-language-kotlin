@@ -8,17 +8,15 @@ buildscript {
 }
 
 plugins {
-    id 'fabric-loom' version '1.0.16'
+    id 'fabric-loom' version '1.3.8'
     id 'maven-publish'
     id "com.matthewprenger.cursegradle" version "1.4.0"
-    id "com.diffplug.spotless" version "6.5.1"
+    id "com.diffplug.spotless" version "6.19.0"
     id "com.modrinth.minotaur" version "2.3.1"
 }
 
 apply plugin: "org.jetbrains.kotlin.jvm"
 
-sourceCompatibility = JavaVersion.VERSION_1_8
-targetCompatibility = JavaVersion.VERSION_1_8
 group = project.group
 
 def ENV = System.getenv()
@@ -115,6 +113,8 @@ tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
 
 java {
     withSourcesJar()
+	sourceCompatibility = JavaVersion.VERSION_1_8
+	targetCompatibility = JavaVersion.VERSION_1_8
 }
 
 spotless {
@@ -125,7 +125,7 @@ spotless {
 
 jar {
     from("LICENSE") {
-        rename { "${it}_${project.archivesBaseName}" }
+        rename { "${it}_${project.base.archivesName.get()}" }
     }
 }
 
