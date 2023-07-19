@@ -9,7 +9,7 @@ plugins {
     id 'fabric-loom' version '1.3.8'
     id 'maven-publish'
     id "com.diffplug.spotless" version "6.19.0"
-	id 'me.modmuss50.mod-publish-plugin' version '0.0.4'
+    id 'me.modmuss50.mod-publish-plugin' version '0.0.4'
 }
 
 apply plugin: "org.jetbrains.kotlin.jvm"
@@ -109,8 +109,8 @@ tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
 
 java {
     withSourcesJar()
-	sourceCompatibility = JavaVersion.VERSION_1_8
-	targetCompatibility = JavaVersion.VERSION_1_8
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
 }
 
 spotless {
@@ -177,28 +177,28 @@ publishing {
 def mcVersions = file(MINECRAFT_VERSIONS_FILE).text.readLines()
 
 publishMods {
-	file = remapJar.archiveFile
-	changelog = ENV.CHANGELOG ?: "No changelog provided"
-	type = STABLE
-	displayName = "Fabric Language Kotlin $version"
-	modLoaders.add("fabric")
-	dryRun = ENV.GITHUB_TOKEN == null
+    file = remapJar.archiveFile
+    changelog = ENV.CHANGELOG ?: "No changelog provided"
+    type = STABLE
+    displayName = "Fabric Language Kotlin $version"
+    modLoaders.add("fabric")
+    dryRun = ENV.GITHUB_TOKEN == null
 
-	curseforge {
-		accessToken = providers.environmentVariable("CURSEFORGE_API_KEY")
-		projectId = "308769"
-		minecraftVersions = mcVersions
-	}
-	modrinth {
-		accessToken = providers.environmentVariable("MODRINTH_TOKEN")
-		projectId = "Ha28R6CL"
-		minecraftVersions = mcVersions
-	}
-	github {
-		accessToken = providers.environmentVariable("GITHUB_TOKEN")
-		repository = ENV.CI != null ? providers.environmentVariable("GITHUB_REPOSITORY") : "FabricMC/dryrun"
-		commitish = ENV.CI != null ? getBranch() : "dryrun"
-	}
+    curseforge {
+        accessToken = providers.environmentVariable("CURSEFORGE_API_KEY")
+        projectId = "308769"
+        minecraftVersions = mcVersions
+    }
+    modrinth {
+        accessToken = providers.environmentVariable("MODRINTH_TOKEN")
+        projectId = "Ha28R6CL"
+        minecraftVersions = mcVersions
+    }
+    github {
+        accessToken = providers.environmentVariable("GITHUB_TOKEN")
+        repository = ENV.CI != null ? providers.environmentVariable("GITHUB_REPOSITORY") : "FabricMC/dryrun"
+        commitish = ENV.CI != null ? getBranch() : "dryrun"
+    }
 }
 
 import groovy.json.JsonBuilder
