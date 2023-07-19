@@ -4,7 +4,7 @@ jobs:
   gradle:
     strategy:
       matrix:
-        java: [17, 18]
+        java: [17, 20]
     runs-on: ubuntu-22.04
     container:
       image: eclipse-temurin:${{ matrix.java }}
@@ -20,7 +20,7 @@ jobs:
         run: ./gradlew build publishMods --stacktrace --warning-mode=fail
 
       - name: 'Upload artifacts'
-        if: ${{ matrix.java == '18' }}
+        if: ${{ matrix.java == '20' }}
         uses: actions/upload-artifact@v3
         with:
           name: Artifacts
