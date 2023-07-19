@@ -1,7 +1,5 @@
 buildscript {
     dependencies {
-        classpath 'org.kohsuke:github-api:1.135'
-
         def kotlinVersion = file("generated/kotlin_version.txt").text
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
     }
@@ -10,9 +8,8 @@ buildscript {
 plugins {
     id 'fabric-loom' version '1.3.8'
     id 'maven-publish'
-    id "com.matthewprenger.cursegradle" version "1.4.0"
     id "com.diffplug.spotless" version "6.19.0"
-    id "com.modrinth.minotaur" version "2.3.1"
+	id 'me.modmuss50.mod-publish-plugin' version '0.0.4'
 }
 
 apply plugin: "org.jetbrains.kotlin.jvm"
@@ -41,7 +38,6 @@ def libraries = [
         "org.jetbrains.kotlinx:kotlinx-datetime-jvm"
 ]
 
-def minecraftVersions = file(MINECRAFT_VERSIONS_FILE).text.readLines()
 def libVersions = new JsonSlurper().parse(file(LIBRARY_VERSIONS_FILE))
 def hasMissingLibVersion = !libVersions.keySet().containsAll(libraries)
 def kotlinVersion = file(KOTLIN_VERSION_FILE).text
@@ -178,57 +174,37 @@ publishing {
     }
 }
 
+def mcVersions = file(MINECRAFT_VERSIONS_FILE).text.readLines()
 
-curseforge {
-    if (ENV.CURSEFORGE_API_KEY) {
-        apiKey = ENV.CURSEFORGE_API_KEY
-    }
+publishMods {
+	file = remapJar.archiveFile
+	changelog = ENV.CHANGELOG ?: "No changelog provided"
+	type = STABLE
+	displayName = "Fabric Language Kotlin $version"
+	modLoaders.add("fabric")
+	dryRun = ENV.GITHUB_TOKEN == null
 
-    project {
-        id = "308769"
-        changelog = ENV.CHANGELOG ?: "No changelog provided"
-        releaseType = "release"
-        addGameVersion "Fabric"
-
-        minecraftVersions.each {
-            addGameVersion it
-        }
-
-        mainArtifact(remapJar) {
-            displayName = "Fabric Language Kotlin $version"
-        }
-
-        afterEvaluate {
-            uploadTask.dependsOn("remapJar")
-        }
-    }
-
-    options {
-        forgeGradleIntegration = false
-    }
-}
-
-modrinth {
-    token = ENV.MODRINTH_TOKEN
-    projectId = "Ha28R6CL"
-    versionNumber = version
-    versionName = "Fabric Language Kotlin $version"
-    versionType = "release"
-    changelog = ENV.CHANGELOG ?: "No changelog provided"
-
-    uploadFile = remapJar
-
-    gameVersions = minecraftVersions
-
-    loaders = ["fabric"]
+	curseforge {
+		accessToken = providers.environmentVariable("CURSEFORGE_API_KEY")
+		projectId = "308769"
+		minecraftVersions = mcVersions
+	}
+	modrinth {
+		accessToken = providers.environmentVariable("MODRINTH_TOKEN")
+		projectId = "Ha28R6CL"
+		minecraftVersions = mcVersions
+	}
+	github {
+		accessToken = providers.environmentVariable("GITHUB_TOKEN")
+		repository = ENV.CI != null ? providers.environmentVariable("GITHUB_REPOSITORY") : "FabricMC/dryrun"
+		commitish = ENV.CI != null ? getBranch() : "dryrun"
+	}
 }
 
 import groovy.json.JsonBuilder
 import groovy.json.JsonSlurper
 import groovy.xml.XmlSlurper
 import org.gradle.util.VersionNumber
-import org.kohsuke.github.GHReleaseBuilder
-import org.kohsuke.github.GitHub
 
 import java.nio.charset.StandardCharsets
 
@@ -240,26 +216,6 @@ static def getBranch() {
     }
 
     throw new RuntimeException("Unable to get branch")
-}
-
-task github(dependsOn: remapJar) {
-    onlyIf {
-        ENV.GITHUB_TOKEN
-    }
-
-    doLast {
-        def github = GitHub.connectUsingOAuth(ENV.GITHUB_TOKEN as String)
-        def repository = github.getRepository(ENV.GITHUB_REPOSITORY)
-
-        def releaseBuilder = new GHReleaseBuilder(repository, version as String)
-        releaseBuilder.name("Fabric Language Kotlin $version")
-        releaseBuilder.body(ENV.CHANGELOG ?: "No changelog provided")
-        releaseBuilder.commitish(getBranch())
-        releaseBuilder.prerelease(false)
-
-        def ghRelease = releaseBuilder.create()
-        ghRelease.uploadAsset(remapJar.archiveFile.get().getAsFile(), "application/java-archive");
-    }
 }
 
 // A task to ensure that the version being released has not already been released.
@@ -334,7 +290,5 @@ task updateVersions {
     dependsOn(updateMinecraftVersions, updateLibraryVersions)
 }
 
-github.dependsOn checkVersion
+tasks.publishMods.dependsOn checkVersion
 publish.dependsOn checkVersion
-project.tasks.curseforge.dependsOn checkVersion
-project.tasks.modrinth.dependsOn checkVersion
