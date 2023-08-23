@@ -180,7 +180,7 @@ publishMods {
     file = remapJar.archiveFile
     changelog = ENV.CHANGELOG ?: "No changelog provided"
     type = STABLE
-    displayName = "Fabric Language Kotlin $version"
+    displayName = "Fabric Language Kotlin ${project.version}"
     modLoaders.add("fabric")
     dryRun = ENV.GITHUB_TOKEN == null
 
