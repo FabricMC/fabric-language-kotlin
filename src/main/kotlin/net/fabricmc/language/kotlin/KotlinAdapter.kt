@@ -19,15 +19,17 @@ package net.fabricmc.language.kotlin
 import net.fabricmc.loader.api.LanguageAdapter
 import net.fabricmc.loader.api.LanguageAdapterException
 import net.fabricmc.loader.api.ModContainer
-import net.fabricmc.loader.launch.common.FabricLauncherBase
-import java.lang.reflect.Proxy
-import kotlin.reflect.full.*
+import java.lang.invoke.MethodHandleProxies
+import java.lang.invoke.MethodHandles
+import kotlin.reflect.full.createInstance
+import kotlin.reflect.full.declaredMemberProperties
+import kotlin.reflect.full.isSuperclassOf
+import kotlin.reflect.full.memberFunctions
+import kotlin.reflect.jvm.javaMethod
 import kotlin.reflect.jvm.jvmErasure
 
 open class KotlinAdapter : LanguageAdapter {
     override fun <T : Any> create(mod: ModContainer, value: String, type: Class<T>): T {
-        // TODO dont use none API fabric loader
-        val targetClassLoader = FabricLauncherBase.getLauncher().targetClassLoader
         val methodSplit = value.split("::").dropLastWhile { it.isEmpty() }.toTypedArray()
         val methodSplitSize = methodSplit.size
         if (methodSplitSize >= 3) {
@@ -35,7 +37,7 @@ open class KotlinAdapter : LanguageAdapter {
         }
 
         val c: Class<Any> = try {
-            Class.forName(methodSplit[0], true, targetClassLoader) as Class<Any>
+            Class.forName(methodSplit[0]) as Class<Any>
         } catch (e: ClassNotFoundException) {
             throw LanguageAdapterException(e)
         }
@@ -99,12 +101,19 @@ open class KotlinAdapter : LanguageAdapter {
                     throw LanguageAdapterException("Found multiple method entries of name $value!")
                 }
 
-                return Proxy.newProxyInstance(
-                    targetClassLoader, arrayOf<Class<*>>(type)
-                ) { proxy, method, args ->
-                    val targetMethod = methodList[0]
-                    targetMethod.call(instance)
-                } as T
+                val handle = try {
+                    MethodHandles.lookup()
+                        .unreflect(methodList[0].javaMethod)
+                        .bindTo(instance)
+                } catch (ex: java.lang.Exception) {
+                    throw LanguageAdapterException("Failed to create method handle for $value!", ex)
+                }
+
+                try {
+                    return MethodHandleProxies.asInterfaceInstance(type, handle)
+                } catch (ex: Exception) {
+                    throw LanguageAdapterException(ex)
+                }
             }
             else -> throw LanguageAdapterException("Invalid handle format: $value")
         }
