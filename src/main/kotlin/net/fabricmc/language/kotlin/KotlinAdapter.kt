@@ -105,7 +105,7 @@ open class KotlinAdapter : LanguageAdapter {
                     MethodHandles.lookup()
                         .unreflect(methodList[0].javaMethod)
                         .bindTo(instance)
-                } catch (ex: java.lang.Exception) {
+                } catch (ex: Exception) {
                     throw LanguageAdapterException("Failed to create method handle for $value!", ex)
                 }
 
