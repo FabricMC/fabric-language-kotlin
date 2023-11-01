@@ -19,6 +19,6 @@
   "license": "Apache-2.0",
   "icon": "assets/fabric-language-kotlin/icon500.png",
   "depends": {
-    "fabricloader": ">=0.14.21"
+    "fabricloader": ">=0.14.24"
   }
 }

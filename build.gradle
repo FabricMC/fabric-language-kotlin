@@ -6,10 +6,10 @@ buildscript {
 }
 
 plugins {
-    id 'fabric-loom' version '1.3.8'
+    id 'fabric-loom' version '1.4.4'
     id 'maven-publish'
     id "com.diffplug.spotless" version "6.19.0"
-    id 'me.modmuss50.mod-publish-plugin' version '0.3.4'
+    id 'me.modmuss50.mod-publish-plugin' version '0.4.1'
 }
 
 apply plugin: "org.jetbrains.kotlin.jvm"
@@ -17,7 +17,6 @@ apply plugin: "org.jetbrains.kotlin.jvm"
 group = project.group
 
 def ENV = System.getenv()
-def MINECRAFT_VERSIONS_FILE = "generated/minecraft_versions.txt"
 def LIBRARY_VERSIONS_FILE = "generated/library_versions.json"
 def KOTLIN_VERSION_FILE = "generated/kotlin_version.txt"
 
@@ -79,6 +78,8 @@ dependencies {
     minecraft "com.mojang:minecraft:${project.minecraftVersion}"
     mappings "net.fabricmc:yarn:${project.mappingsVersion}:v2"
     modImplementation "net.fabricmc:fabric-loader:${project.loaderVersion}"
+	testImplementation "net.fabricmc:fabric-loader-junit:${project.loaderVersion}"
+	testImplementation "org.jetbrains.kotlin:kotlin-test"
 
     if (hasMissingLibVersion) {
         println("Contains missing library version, run updateLibraryVersions task!")
@@ -123,6 +124,22 @@ jar {
     from("LICENSE") {
         rename { "${it}_${project.base.archivesName.get()}" }
     }
+}
+
+test {
+	useJUnitPlatform()
+	afterEvaluate {
+		// See: https://github.com/FabricMC/fabric-loader/pull/585
+		def classPathGroups = loom.mods.stream()
+			.map { modSettings ->
+				net.fabricmc.loom.util.gradle.SourceSetHelper.getClasspath(modSettings, getProject()).stream()
+					.map(File.&getAbsolutePath)
+					.collect(java.util.stream.Collectors.joining(File.pathSeparator))
+			}
+			.collect(java.util.stream.Collectors.joining(File.pathSeparator+File.pathSeparator))
+
+		systemProperty("fabric.classPathGroups", classPathGroups)
+	}
 }
 
 task processMDTemplates(type: Copy) {
@@ -174,8 +191,6 @@ publishing {
     }
 }
 
-def mcVersions = file(MINECRAFT_VERSIONS_FILE).text.readLines()
-
 publishMods {
     file = remapJar.archiveFile
     changelog = ENV.CHANGELOG ?: "No changelog provided"
@@ -187,12 +202,18 @@ publishMods {
     curseforge {
         accessToken = providers.environmentVariable("CURSEFORGE_API_KEY")
         projectId = "308769"
-        minecraftVersions = mcVersions
+        minecraftVersionRange {
+			start = "1.14"
+			end = "latest"
+		}
     }
     modrinth {
         accessToken = providers.environmentVariable("MODRINTH_TOKEN")
         projectId = "Ha28R6CL"
-        minecraftVersions = mcVersions
+		minecraftVersionRange {
+			start = "1.14"
+			end = "latest"
+		}
     }
     github {
         accessToken = providers.environmentVariable("GITHUB_TOKEN")
@@ -227,26 +248,6 @@ task checkVersion {
         if (versions.contains(version)) {
             throw new RuntimeException("${version} has already been released!")
         }
-    }
-}
-
-task updateMinecraftVersions {
-    group = "update"
-    doFirst {
-        def json = new URL("https://meta.fabricmc.net/v2/versions/game").text
-        def versions = new JsonSlurper().parseText(json)
-        def output = new StringBuilder()
-        def i = 0
-        for (def version : versions) {
-            if (version.stable) {
-                if (i > 0) {
-                    output.append("\n")
-                }
-                output.append("${version.version}")
-                i++
-            }
-        }
-        file(MINECRAFT_VERSIONS_FILE).setText(output.toString(), StandardCharsets.UTF_8.name())
     }
 }
 
@@ -287,7 +288,7 @@ task updateLibraryVersions {
 
 task updateVersions {
     group = "update"
-    dependsOn(updateMinecraftVersions, updateLibraryVersions)
+    dependsOn(updateLibraryVersions)
 }
 
 tasks.publishMods.dependsOn checkVersion
