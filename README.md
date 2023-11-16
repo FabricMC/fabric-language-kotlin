@@ -242,10 +242,10 @@ Companion objects can be used by appending `$Companion` to the class.
 `org.jetbrains.kotlinx` namespace:
 - **`kotlinx-coroutines-core`** 1.7.3 [Guide](https://kotlinlang.org/docs/coroutines-guide.html), [API docs](https://kotlin.github.io/kotlinx.coroutines/), [GitHub](https://github.com/Kotlin/kotlinx.coroutines)
 - **`kotlinx-coroutines-jdk8`** 1.7.3 [API docs](https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-jdk8/index.html)
-- **`kotlinx-serialization-core`** 1.6.0 [Guide](https://github.com/Kotlin/kotlinx.serialization/blob/master/docs/serialization-guide.md), [API docs](https://kotlin.github.io/kotlinx.serialization/kotlinx-serialization-core/index.html), [GitHub](https://github.com/Kotlin/kotlinx.serialization)
-- **`kotlinx-serialization-json`** 1.6.0 [API docs](https://kotlin.github.io/kotlinx.serialization/kotlinx-serialization-json/index.html)
-- **`kotlinx-serialization-cbor`** 1.6.0 [API docs](https://kotlin.github.io/kotlinx.serialization/kotlinx-serialization-cbor/index.html)
-- **`atomicfu`** 0.22.0 [GitHub](https://github.com/Kotlin/kotlinx.atomicfu)
+- **`kotlinx-serialization-core`** 1.6.1 [Guide](https://github.com/Kotlin/kotlinx.serialization/blob/master/docs/serialization-guide.md), [API docs](https://kotlin.github.io/kotlinx.serialization/kotlinx-serialization-core/index.html), [GitHub](https://github.com/Kotlin/kotlinx.serialization)
+- **`kotlinx-serialization-json`** 1.6.1 [API docs](https://kotlin.github.io/kotlinx.serialization/kotlinx-serialization-json/index.html)
+- **`kotlinx-serialization-cbor`** 1.6.1 [API docs](https://kotlin.github.io/kotlinx.serialization/kotlinx-serialization-cbor/index.html)
+- **`atomicfu`** 0.23.0 [GitHub](https://github.com/Kotlin/kotlinx.atomicfu)
 - **`kotlinx-datetime`** 0.4.1 [GitHub](https://github.com/Kotlin/kotlinx-datetime)
 
 ## Available Versions
