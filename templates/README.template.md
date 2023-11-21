@@ -2,7 +2,7 @@
 
 [![maven-badge](https://img.shields.io/maven-metadata/v/https/maven.fabricmc.net/net/fabricmc/fabric-language-kotlin/maven-metadata.xml.svg?style=flat-square&logo=Kotlin&label=Maven)](https://maven.fabricmc.net/net/fabricmc/fabric-language-kotlin)
 [![modrinth-badge](https://img.shields.io/modrinth/dt/fabric-language-kotlin?label=Modrinth&logo=Modrinth&style=flat-square)](https://modrinth.com/mod/fabric-language-kotlin/versions)
-[![curseforge-badge](https://curse.nikky.moe/api/img/308769/files?logo&style=flat-square&label=Curseforge)](https://minecraft.curseforge.com/projects/308769/files)
+[![curseforge-badge](https://img.shields.io/curseforge/dt/308769?style=flat-square&logo=curseforge&label=CurseForge)](https://minecraft.curseforge.com/projects/308769/files)
 
 Fabric language module for [Kotlin](https://kotlinlang.org/). Adds support for Kotlin exclusive entrypoints and bundles the Kotlin Stdlib as well as common kotlinx libraries.
 
