@@ -3,12 +3,12 @@
     "org.jetbrains.kotlin:kotlin-stdlib-jdk8": "1.9.22",
     "org.jetbrains.kotlin:kotlin-stdlib-jdk7": "1.9.22",
     "org.jetbrains.kotlin:kotlin-reflect": "1.9.22",
-    "org.jetbrains.kotlinx:kotlinx-coroutines-core": "1.7.3",
-    "org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm": "1.7.3",
-    "org.jetbrains.kotlinx:kotlinx-coroutines-jdk8": "1.7.3",
+    "org.jetbrains.kotlinx:kotlinx-coroutines-core": "1.8.0",
+    "org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm": "1.8.0",
+    "org.jetbrains.kotlinx:kotlinx-coroutines-jdk8": "1.8.0",
     "org.jetbrains.kotlinx:kotlinx-serialization-core-jvm": "1.6.2",
     "org.jetbrains.kotlinx:kotlinx-serialization-json-jvm": "1.6.2",
     "org.jetbrains.kotlinx:kotlinx-serialization-cbor-jvm": "1.6.2",
-    "org.jetbrains.kotlinx:atomicfu-jvm": "0.23.1",
+    "org.jetbrains.kotlinx:atomicfu-jvm": "0.23.2",
     "org.jetbrains.kotlinx:kotlinx-datetime-jvm": "0.5.0"
 }
