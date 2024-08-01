@@ -247,6 +247,8 @@ Companion objects can be used by appending `$Companion` to the class.
 - **`kotlinx-serialization-cbor`** 1.6.3 [API docs](https://kotlin.github.io/kotlinx.serialization/kotlinx-serialization-cbor/index.html)
 - **`atomicfu`** 0.24.0 [GitHub](https://github.com/Kotlin/kotlinx.atomicfu)
 - **`kotlinx-datetime`** 0.6.0 [GitHub](https://github.com/Kotlin/kotlinx-datetime)
+- **`kotlinx-io-core`** 0.5.1 [API docs](https://kotlin.github.io/kotlinx-io/kotlinx-io-core/index.html) [GitHub](https://github.com/Kotlin/kotlinx-io)
+- **`kotlinx-io-bytestring`** 0.5.1 [API docs](https://kotlin.github.io/kotlinx-io/kotlinx-io-bytestring/index.html)
 
 ## Available Versions
 
