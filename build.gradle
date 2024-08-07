@@ -34,7 +34,9 @@ def libraries = [
         "org.jetbrains.kotlinx:kotlinx-serialization-json-jvm",
         "org.jetbrains.kotlinx:kotlinx-serialization-cbor-jvm",
         "org.jetbrains.kotlinx:atomicfu-jvm",
-        "org.jetbrains.kotlinx:kotlinx-datetime-jvm"
+        "org.jetbrains.kotlinx:kotlinx-datetime-jvm",
+        "org.jetbrains.kotlinx:kotlinx-io-core-jvm",
+        "org.jetbrains.kotlinx:kotlinx-io-bytestring-jvm"
 ]
 
 def libVersions = new JsonSlurper().parse(file(LIBRARY_VERSIONS_FILE))
