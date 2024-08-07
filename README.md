@@ -14,7 +14,7 @@ Add it as a dependency to your Gradle project:
 
 ```kotlin
 dependencies {
-    modImplementation("net.fabricmc:fabric-language-kotlin:1.11.0+kotlin.2.0.10")
+    modImplementation("net.fabricmc:fabric-language-kotlin:1.12.0+kotlin.2.0.10")
 }
 ```
 
@@ -35,7 +35,7 @@ Remember to the add a dependency entry to your `fabric.mod.json` file:
         ]
     },
     "depends": {
-        "fabric-language-kotlin": ">=1.11.0+kotlin.2.0.10"
+        "fabric-language-kotlin": ">=1.12.0+kotlin.2.0.10"
     }
 }
 ```
@@ -247,7 +247,7 @@ Companion objects can be used by appending `$Companion` to the class.
 - **`kotlinx-serialization-cbor`** 1.7.1 [API docs](https://kotlin.github.io/kotlinx.serialization/kotlinx-serialization-cbor/index.html)
 - **`atomicfu`** 0.25.0 [GitHub](https://github.com/Kotlin/kotlinx.atomicfu)
 - **`kotlinx-datetime`** 0.6.0 [GitHub](https://github.com/Kotlin/kotlinx-datetime)
-- **`kotlinx-io-core`** 0.5.1 [API docs](https://kotlin.github.io/kotlinx-io/kotlinx-io-core/index.html) [GitHub](https://github.com/Kotlin/kotlinx-io)
+- **`kotlinx-io-core`** 0.5.1 [API docs](https://kotlin.github.io/kotlinx-io/kotlinx-io-core/index.html), [GitHub](https://github.com/Kotlin/kotlinx-io)
 - **`kotlinx-io-bytestring`** 0.5.1 [API docs](https://kotlin.github.io/kotlinx-io/kotlinx-io-bytestring/index.html)
 
 ## Available Versions
