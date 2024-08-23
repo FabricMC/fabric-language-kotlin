@@ -1,8 +1,8 @@
 {
-    "org.jetbrains.kotlin:kotlin-stdlib": "2.0.10",
-    "org.jetbrains.kotlin:kotlin-stdlib-jdk8": "2.0.10",
-    "org.jetbrains.kotlin:kotlin-stdlib-jdk7": "2.0.10",
-    "org.jetbrains.kotlin:kotlin-reflect": "2.0.10",
+    "org.jetbrains.kotlin:kotlin-stdlib": "2.0.20",
+    "org.jetbrains.kotlin:kotlin-stdlib-jdk8": "2.0.20",
+    "org.jetbrains.kotlin:kotlin-stdlib-jdk7": "2.0.20",
+    "org.jetbrains.kotlin:kotlin-reflect": "2.0.20",
     "org.jetbrains.kotlinx:kotlinx-coroutines-core": "1.8.1",
     "org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm": "1.8.1",
     "org.jetbrains.kotlinx:kotlinx-coroutines-jdk8": "1.8.1",
@@ -10,7 +10,7 @@
     "org.jetbrains.kotlinx:kotlinx-serialization-json-jvm": "1.7.1",
     "org.jetbrains.kotlinx:kotlinx-serialization-cbor-jvm": "1.7.1",
     "org.jetbrains.kotlinx:atomicfu-jvm": "0.25.0",
-    "org.jetbrains.kotlinx:kotlinx-datetime-jvm": "0.6.0",
-    "org.jetbrains.kotlinx:kotlinx-io-core-jvm": "0.5.1",
-    "org.jetbrains.kotlinx:kotlinx-io-bytestring-jvm": "0.5.1"
+    "org.jetbrains.kotlinx:kotlinx-datetime-jvm": "0.6.1",
+    "org.jetbrains.kotlinx:kotlinx-io-core-jvm": "0.5.3",
+    "org.jetbrains.kotlinx:kotlinx-io-bytestring-jvm": "0.5.3"
 }
