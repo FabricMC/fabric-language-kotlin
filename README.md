@@ -18,6 +18,8 @@ dependencies {
 }
 ```
 
+> **_NOTE:_** Kotlin 2.1 or later requires Loom 1.9 or later.
+
 ### Adapter
 
 Use the `kotlin` adapter for your mod by setting the `adapter` property in the `fabric.mod.json` file. 
