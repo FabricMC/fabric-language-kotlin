@@ -14,11 +14,9 @@ Add it as a dependency to your Gradle project:
 
 ```kotlin
 dependencies {
-    modImplementation("net.fabricmc:fabric-language-kotlin:1.12.3+kotlin.2.1.0")
+    modImplementation("net.fabricmc:fabric-language-kotlin:1.13.0+kotlin.2.1.0")
 }
 ```
-
-> **_NOTE:_** Kotlin 2.1 or later requires Loom 1.9 or later.
 
 ### Adapter
 
@@ -37,7 +35,7 @@ Remember to the add a dependency entry to your `fabric.mod.json` file:
         ]
     },
     "depends": {
-        "fabric-language-kotlin": ">=1.12.3+kotlin.2.1.0"
+        "fabric-language-kotlin": ">=1.13.0+kotlin.2.1.0"
     }
 }
 ```
