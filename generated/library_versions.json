@@ -9,7 +9,7 @@
     "org.jetbrains.kotlinx:kotlinx-serialization-core-jvm": "1.8.1",
     "org.jetbrains.kotlinx:kotlinx-serialization-json-jvm": "1.8.1",
     "org.jetbrains.kotlinx:kotlinx-serialization-cbor-jvm": "1.8.1",
-    "org.jetbrains.kotlinx:atomicfu-jvm": "0.27.0",
+    "org.jetbrains.kotlinx:atomicfu-jvm": "0.28.0",
     "org.jetbrains.kotlinx:kotlinx-datetime-jvm": "0.6.2",
     "org.jetbrains.kotlinx:kotlinx-io-core-jvm": "0.7.0",
     "org.jetbrains.kotlinx:kotlinx-io-bytestring-jvm": "0.7.0"
