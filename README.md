@@ -242,13 +242,13 @@ Companion objects can be used by appending `$Companion` to the class.
 `org.jetbrains.kotlinx` namespace:
 - **`kotlinx-coroutines-core`** 1.10.2 [Guide](https://kotlinlang.org/docs/coroutines-guide.html), [API docs](https://kotlin.github.io/kotlinx.coroutines/), [GitHub](https://github.com/Kotlin/kotlinx.coroutines)
 - **`kotlinx-coroutines-jdk8`** 1.10.2 [API docs](https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-jdk8/index.html)
-- **`kotlinx-serialization-core`** 1.8.1 [Guide](https://github.com/Kotlin/kotlinx.serialization/blob/master/docs/serialization-guide.md), [API docs](https://kotlin.github.io/kotlinx.serialization/kotlinx-serialization-core/index.html), [GitHub](https://github.com/Kotlin/kotlinx.serialization)
-- **`kotlinx-serialization-json`** 1.8.1 [API docs](https://kotlin.github.io/kotlinx.serialization/kotlinx-serialization-json/index.html)
-- **`kotlinx-serialization-cbor`** 1.8.1 [API docs](https://kotlin.github.io/kotlinx.serialization/kotlinx-serialization-cbor/index.html)
-- **`atomicfu`** 0.28.0 [GitHub](https://github.com/Kotlin/kotlinx.atomicfu)
-- **`kotlinx-datetime`** 0.6.2 [GitHub](https://github.com/Kotlin/kotlinx-datetime)
-- **`kotlinx-io-core`** 0.7.0 [API docs](https://kotlin.github.io/kotlinx-io/kotlinx-io-core/index.html), [GitHub](https://github.com/Kotlin/kotlinx-io)
-- **`kotlinx-io-bytestring`** 0.7.0 [API docs](https://kotlin.github.io/kotlinx-io/kotlinx-io-bytestring/index.html)
+- **`kotlinx-serialization-core`** 1.9.0 [Guide](https://github.com/Kotlin/kotlinx.serialization/blob/master/docs/serialization-guide.md), [API docs](https://kotlin.github.io/kotlinx.serialization/kotlinx-serialization-core/index.html), [GitHub](https://github.com/Kotlin/kotlinx.serialization)
+- **`kotlinx-serialization-json`** 1.9.0 [API docs](https://kotlin.github.io/kotlinx.serialization/kotlinx-serialization-json/index.html)
+- **`kotlinx-serialization-cbor`** 1.9.0 [API docs](https://kotlin.github.io/kotlinx.serialization/kotlinx-serialization-cbor/index.html)
+- **`atomicfu`** 0.29.0 [GitHub](https://github.com/Kotlin/kotlinx.atomicfu)
+- **`kotlinx-datetime`** 0.7.0 [GitHub](https://github.com/Kotlin/kotlinx-datetime)
+- **`kotlinx-io-core`** 0.8.0 [API docs](https://kotlin.github.io/kotlinx-io/kotlinx-io-core/index.html), [GitHub](https://github.com/Kotlin/kotlinx-io)
+- **`kotlinx-io-bytestring`** 0.8.0 [API docs](https://kotlin.github.io/kotlinx-io/kotlinx-io-bytestring/index.html)
 
 ## Available Versions
 
