@@ -14,7 +14,7 @@ Add it as a dependency to your Gradle project:
 
 ```kotlin
 dependencies {
-    modImplementation("net.fabricmc:fabric-language-kotlin:1.13.5+kotlin.2.2.10")
+    modImplementation("net.fabricmc:fabric-language-kotlin:1.13.5+kotlin.2.2.20")
 }
 ```
 
@@ -35,7 +35,7 @@ Remember to the add a dependency entry to your `fabric.mod.json` file:
         ]
     },
     "depends": {
-        "fabric-language-kotlin": ">=1.13.5+kotlin.2.2.10"
+        "fabric-language-kotlin": ">=1.13.5+kotlin.2.2.20"
     }
 }
 ```
@@ -236,8 +236,8 @@ Companion objects can be used by appending `$Companion` to the class.
 ## Bundled libraries
 
 `org.jetbrains.kotlin` namespace:
-- **`kotlin-stdlib`** 2.2.10 [Docs](https://kotlinlang.org/docs/home.html), [API docs](https://kotlinlang.org/api/latest/jvm/stdlib/), [GitHub](https://github.com/JetBrains/kotlin)
-- **`kotlin-reflect`** 2.2.10 [Docs](https://kotlinlang.org/docs/reflection.html), [API docs](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.reflect/)
+- **`kotlin-stdlib`** 2.2.20 [Docs](https://kotlinlang.org/docs/home.html), [API docs](https://kotlinlang.org/api/latest/jvm/stdlib/), [GitHub](https://github.com/JetBrains/kotlin)
+- **`kotlin-reflect`** 2.2.20 [Docs](https://kotlinlang.org/docs/reflection.html), [API docs](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.reflect/)
 
 `org.jetbrains.kotlinx` namespace:
 - **`kotlinx-coroutines-core`** 1.10.2 [Guide](https://kotlinlang.org/docs/coroutines-guide.html), [API docs](https://kotlin.github.io/kotlinx.coroutines/), [GitHub](https://github.com/Kotlin/kotlinx.coroutines)
