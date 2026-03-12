@@ -205,7 +205,7 @@ publishMods {
         accessToken = providers.environmentVariable("CURSEFORGE_API_KEY")
         projectId = "308769"
         minecraftVersionRange {
-			start = "1.14"
+			start = "1.0"
 			end = "latest"
 		}
     }
@@ -213,9 +213,13 @@ publishMods {
         accessToken = providers.environmentVariable("MODRINTH_TOKEN")
         projectId = "Ha28R6CL"
 		minecraftVersionRange {
-			start = "1.14"
+			start = "rd-132211"
 			end = "latest"
 		}
+		// Modrinth differentiate pre-1.14 Fabric projects now and PrismLauncher takes that into account so we might as well include them.
+		modLoaders.add("ornithe")
+		modLoaders.add("legacy-fabric")
+		modLoaders.add("babric")
     }
     github {
         accessToken = providers.environmentVariable("GITHUB_TOKEN")
