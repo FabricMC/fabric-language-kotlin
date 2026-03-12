@@ -213,7 +213,7 @@ publishMods {
         accessToken = providers.environmentVariable("MODRINTH_TOKEN")
         projectId = "Ha28R6CL"
 		minecraftVersionRange {
-			start = "rd-132211"
+			start = "1.0"
 			end = "latest"
 		}
 		// Modrinth differentiate pre-1.14 Fabric projects now and PrismLauncher takes that into account so we might as well include them.
