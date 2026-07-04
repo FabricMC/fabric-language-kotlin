@@ -10,7 +10,7 @@
 # Files
 !/.gitattributes
 !/.gitignore
-!/build.gradle
+!/build.gradle.unused
 !/gradle.properties
 !/gradlew
 !/gradlew.bat
@@ -18,7 +18,7 @@
 !/Jenkinsfile
 !/LICENSE
 !/README.md
-!/settings.gradle
+!/settings.gradle.kts
 
 !/sample-mod
 !/templates/

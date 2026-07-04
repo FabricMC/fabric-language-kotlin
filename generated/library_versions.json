@@ -11,6 +11,6 @@
     "org.jetbrains.kotlinx:kotlinx-serialization-cbor-jvm": "1.11.0",
     "org.jetbrains.kotlinx:atomicfu-jvm": "0.33.0",
     "org.jetbrains.kotlinx:kotlinx-datetime-jvm": "0.8.0",
-    "org.jetbrains.kotlinx:kotlinx-io-core-jvm": "0.9.0",
-    "org.jetbrains.kotlinx:kotlinx-io-bytestring-jvm": "0.9.0"
+    "org.jetbrains.kotlinx:kotlinx-io-core-jvm": "0.9.1",
+    "org.jetbrains.kotlinx:kotlinx-io-bytestring-jvm": "0.9.1"
 }
