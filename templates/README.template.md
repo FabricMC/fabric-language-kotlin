@@ -14,7 +14,9 @@ Add it as a dependency to your Gradle project:
 
 ```kotlin
 dependencies {
-    modImplementation("net.fabricmc:fabric-language-kotlin:${MOD_VERSION}")
+    implementation("net.fabricmc:fabric-language-kotlin:${MOD_VERSION}")
+    // Or, for legacy versions of Loom:
+    // modImplementation("net.fabricmc:fabric-language-kotlin:${MOD_VERSION}")
 }
 ```
 
