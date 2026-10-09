@@ -14,9 +14,9 @@ Add it as a dependency to your Gradle project:
 
 ```kotlin
 dependencies {
-    implementation("net.fabricmc:fabric-language-kotlin:1.14.1+kotlin.2.4.20")
+    implementation("net.fabricmc:fabric-language-kotlin:1.14.1+kotlin.2.4.21")
     // Or, for legacy versions of Loom:
-    // modImplementation("net.fabricmc:fabric-language-kotlin:1.14.1+kotlin.2.4.20")
+    // modImplementation("net.fabricmc:fabric-language-kotlin:1.14.1+kotlin.2.4.21")
 }
 ```
 
@@ -37,7 +37,7 @@ Remember to the add a dependency entry to your `fabric.mod.json` file:
         ]
     },
     "depends": {
-        "fabric-language-kotlin": ">=1.14.1+kotlin.2.4.20"
+        "fabric-language-kotlin": ">=1.14.1+kotlin.2.4.21"
     }
 }
 ```
@@ -238,8 +238,8 @@ Companion objects can be used by appending `$Companion` to the class.
 ## Bundled libraries
 
 `org.jetbrains.kotlin` namespace:
-- **`kotlin-stdlib`** 2.4.20 [Docs](https://kotlinlang.org/docs/home.html), [API docs](https://kotlinlang.org/api/latest/jvm/stdlib/), [GitHub](https://github.com/JetBrains/kotlin)
-- **`kotlin-reflect`** 2.4.20 [Docs](https://kotlinlang.org/docs/reflection.html), [API docs](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.reflect/)
+- **`kotlin-stdlib`** 2.4.21 [Docs](https://kotlinlang.org/docs/home.html), [API docs](https://kotlinlang.org/api/latest/jvm/stdlib/), [GitHub](https://github.com/JetBrains/kotlin)
+- **`kotlin-reflect`** 2.4.21 [Docs](https://kotlinlang.org/docs/reflection.html), [API docs](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.reflect/)
 
 `org.jetbrains.kotlinx` namespace:
 - **`kotlinx-coroutines-core`** 1.11.0 [Guide](https://kotlinlang.org/docs/coroutines-guide.html), [API docs](https://kotlin.github.io/kotlinx.coroutines/), [GitHub](https://github.com/Kotlin/kotlinx.coroutines)
