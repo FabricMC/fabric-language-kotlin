@@ -2,16 +2,16 @@ name: Release
 on: [workflow_dispatch] # Manual trigger
 jobs:
   build:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-26.04
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
-      - uses: actions/setup-java@v3
+      - uses: actions/setup-java@v6
         with:
-          java-version: 21
+          java-version: 25
           distribution: 'temurin'
-      - uses: FabricMC/fabric-action-scripts@v2
+      - uses: FabricMC/fabric-action-scripts@v3
         id: changelog
         with:
           context: changelog
@@ -25,8 +25,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
           CHANGELOG: ${{ steps.changelog.outputs.changelog }}
-      - run: ./gradlew processMDTemplates
-      - uses: stefanzweifel/git-auto-commit-action@v4
+      - run: ./gradlew processMDTemplates --warning-mode=fail
+      - uses: stefanzweifel/git-auto-commit-action@v7
         with:
           commit_message: Update readme
           commit_author: github-actions <41898282+github-actions[bot]@users.noreply.github.com>

@@ -14,7 +14,9 @@ Add it as a dependency to your Gradle project:
 
 ```kotlin
 dependencies {
-    modImplementation("net.fabricmc:fabric-language-kotlin:1.13.9+kotlin.2.3.10")
+    implementation("net.fabricmc:fabric-language-kotlin:1.14.2+kotlin.2.4.21")
+    // Or, for legacy versions of Loom:
+    // modImplementation("net.fabricmc:fabric-language-kotlin:1.14.2+kotlin.2.4.21")
 }
 ```
 
@@ -35,7 +37,7 @@ Remember to the add a dependency entry to your `fabric.mod.json` file:
         ]
     },
     "depends": {
-        "fabric-language-kotlin": ">=1.13.9+kotlin.2.3.10"
+        "fabric-language-kotlin": ">=1.14.2+kotlin.2.4.21"
     }
 }
 ```
@@ -236,19 +238,19 @@ Companion objects can be used by appending `$Companion` to the class.
 ## Bundled libraries
 
 `org.jetbrains.kotlin` namespace:
-- **`kotlin-stdlib`** 2.3.10 [Docs](https://kotlinlang.org/docs/home.html), [API docs](https://kotlinlang.org/api/latest/jvm/stdlib/), [GitHub](https://github.com/JetBrains/kotlin)
-- **`kotlin-reflect`** 2.3.10 [Docs](https://kotlinlang.org/docs/reflection.html), [API docs](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.reflect/)
+- **`kotlin-stdlib`** 2.4.21 [Docs](https://kotlinlang.org/docs/home.html), [API docs](https://kotlinlang.org/api/latest/jvm/stdlib/), [GitHub](https://github.com/JetBrains/kotlin)
+- **`kotlin-reflect`** 2.4.21 [Docs](https://kotlinlang.org/docs/reflection.html), [API docs](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.reflect/)
 
 `org.jetbrains.kotlinx` namespace:
-- **`kotlinx-coroutines-core`** 1.10.2 [Guide](https://kotlinlang.org/docs/coroutines-guide.html), [API docs](https://kotlin.github.io/kotlinx.coroutines/), [GitHub](https://github.com/Kotlin/kotlinx.coroutines)
-- **`kotlinx-coroutines-jdk8`** 1.10.2 [API docs](https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-jdk8/index.html)
-- **`kotlinx-serialization-core`** 1.10.0 [Guide](https://github.com/Kotlin/kotlinx.serialization/blob/master/docs/serialization-guide.md), [API docs](https://kotlin.github.io/kotlinx.serialization/kotlinx-serialization-core/index.html), [GitHub](https://github.com/Kotlin/kotlinx.serialization)
-- **`kotlinx-serialization-json`** 1.10.0 [API docs](https://kotlin.github.io/kotlinx.serialization/kotlinx-serialization-json/index.html)
-- **`kotlinx-serialization-cbor`** 1.10.0 [API docs](https://kotlin.github.io/kotlinx.serialization/kotlinx-serialization-cbor/index.html)
-- **`atomicfu`** 0.31.0 [GitHub](https://github.com/Kotlin/kotlinx.atomicfu)
-- **`kotlinx-datetime`** 0.7.1 [GitHub](https://github.com/Kotlin/kotlinx-datetime)
-- **`kotlinx-io-core`** 0.8.2 [API docs](https://kotlin.github.io/kotlinx-io/kotlinx-io-core/index.html), [GitHub](https://github.com/Kotlin/kotlinx-io)
-- **`kotlinx-io-bytestring`** 0.8.2 [API docs](https://kotlin.github.io/kotlinx-io/kotlinx-io-bytestring/index.html)
+- **`kotlinx-coroutines-core`** 1.11.0 [Guide](https://kotlinlang.org/docs/coroutines-guide.html), [API docs](https://kotlin.github.io/kotlinx.coroutines/), [GitHub](https://github.com/Kotlin/kotlinx.coroutines)
+- **`kotlinx-coroutines-jdk8`** 1.11.0 [API docs](https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-jdk8/index.html)
+- **`kotlinx-serialization-core`** 1.11.0 [Guide](https://github.com/Kotlin/kotlinx.serialization/blob/master/docs/serialization-guide.md), [API docs](https://kotlin.github.io/kotlinx.serialization/kotlinx-serialization-core/index.html), [GitHub](https://github.com/Kotlin/kotlinx.serialization)
+- **`kotlinx-serialization-json`** 1.11.0 [API docs](https://kotlin.github.io/kotlinx.serialization/kotlinx-serialization-json/index.html)
+- **`kotlinx-serialization-cbor`** 1.11.0 [API docs](https://kotlin.github.io/kotlinx.serialization/kotlinx-serialization-cbor/index.html)
+- **`atomicfu`** 0.33.0 [GitHub](https://github.com/Kotlin/kotlinx.atomicfu)
+- **`kotlinx-datetime`** 0.8.0 [GitHub](https://github.com/Kotlin/kotlinx-datetime)
+- **`kotlinx-io-core`** 0.9.1 [API docs](https://kotlin.github.io/kotlinx-io/kotlinx-io-core/index.html), [GitHub](https://github.com/Kotlin/kotlinx-io)
+- **`kotlinx-io-bytestring`** 0.9.1 [API docs](https://kotlin.github.io/kotlinx-io/kotlinx-io-bytestring/index.html)
 
 ## Available Versions
 

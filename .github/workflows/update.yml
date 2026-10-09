@@ -5,16 +5,16 @@ on:
     - cron: "0 0 * * *"
 jobs:
   build:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-26.04
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-java@v3
+      - uses: actions/checkout@v7
+      - uses: actions/setup-java@v6
         with:
-          java-version: 21
+          java-version: 25
           distribution: 'temurin'
-      - run: ./gradlew updateVersions
-      - run: ./gradlew processMDTemplates
-      - uses: peter-evans/create-pull-request@v6
+      - run: ./gradlew updateVersions --warning-mode=fail
+      - run: ./gradlew processMDTemplates --warning-mode=fail
+      - uses: peter-evans/create-pull-request@v8
         with:
           branch: update-versions
           title: Update versions
