@@ -14,9 +14,9 @@ Add it as a dependency to your Gradle project:
 
 ```kotlin
 dependencies {
-    implementation("net.fabricmc:fabric-language-kotlin:1.14.1+kotlin.2.4.21")
+    implementation("net.fabricmc:fabric-language-kotlin:1.14.2+kotlin.2.4.21")
     // Or, for legacy versions of Loom:
-    // modImplementation("net.fabricmc:fabric-language-kotlin:1.14.1+kotlin.2.4.21")
+    // modImplementation("net.fabricmc:fabric-language-kotlin:1.14.2+kotlin.2.4.21")
 }
 ```
 
@@ -37,7 +37,7 @@ Remember to the add a dependency entry to your `fabric.mod.json` file:
         ]
     },
     "depends": {
-        "fabric-language-kotlin": ">=1.14.1+kotlin.2.4.21"
+        "fabric-language-kotlin": ">=1.14.2+kotlin.2.4.21"
     }
 }
 ```
